@@ -6,10 +6,17 @@ from typing import Protocol
 
 
 class Backend(Enum):
-    """Robot communication backend."""
+    """Robot communication backend.
+
+    Available backends:
+        SDK: Production mode using Reachy SDK via Zenoh
+        MOCK: Testing mode with in-memory mock (no physics)
+        SIM: Simulation mode using MuJoCo physics engine
+    """
 
     SDK = "sdk"  # Production: Reachy SDK via Zenoh
-    MOCK = "mock"  # Testing: In-memory mock
+    MOCK = "mock"  # Testing: In-memory mock (no physics)
+    SIM = "sim"  # Simulation: MuJoCo physics engine
 
 
 @dataclass

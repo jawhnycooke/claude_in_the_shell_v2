@@ -29,8 +29,29 @@ memory:
   cleanup_interval: 3600  # seconds
 
 robot:
-  backend: sdk  # or "mock" for testing
+  backend: sdk  # or "mock" or "sim" for simulation
   connect_timeout: 5.0
+
+simulation:
+  model_path: data/models/reachy_mini/reachy_mini.xml
+  timestep: 0.002  # 500Hz physics
+  n_substeps: 4
+  realtime: true
+  viewer: false
+  headless: false
+  render:
+    width: 640
+    height: 480
+    quality: medium  # low, medium, high
+    shadows: true
+    antialiasing: true
+  physics:
+    gravity: [0, 0, -9.81]
+    friction: 0.8
+    damping: 1.0
+  recording:
+    fps: 30
+    format: mp4
 
 cache:
   status_ttl: 0.2   # 200ms

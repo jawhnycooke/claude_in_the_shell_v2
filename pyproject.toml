@@ -28,6 +28,14 @@ voice = [
     "openwakeword>=0.6.0",
     "websockets>=12.0",
 ]
+sim = [
+    "mujoco>=3.0.0",
+    "dm_control>=1.0.0",
+    "imageio>=2.31.0",
+    "imageio-ffmpeg>=0.4.8",
+    "glfw>=2.6.0",
+    "gymnasium>=0.29.0",
+]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23.0",

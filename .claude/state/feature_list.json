@@ -2452,7 +2452,7 @@
       "Run: uv pip install -e '.[sim]'",
       "Verify mujoco imports correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F212",
@@ -2464,7 +2464,7 @@
       "Create src/reachy_agent/simulation/physics.py placeholder",
       "Verify package imports correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F213",
@@ -2476,7 +2476,7 @@
       "Create meshes/ subdirectory for STL/OBJ files",
       "Create textures/ subdirectory for visual assets"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F214",
@@ -2488,7 +2488,7 @@
       "Define z-axis (height) joint for head lift",
       "Verify joint limits match spec: pitch -45/+35, yaw -60/+60, roll -35/+35"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F215",
@@ -2500,7 +2500,7 @@
       "Set joint limits: -150 to +150 degrees",
       "Add antenna mesh geometry"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F216",
@@ -2512,7 +2512,7 @@
       "Define correct mass and inertia properties",
       "Add visual mesh for body shell"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F217",
@@ -2524,7 +2524,7 @@
       "Add collision geometry for all bodies",
       "Verify model loads without errors: Run mujoco.MjModel.from_xml_path()"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F218",
@@ -2536,7 +2536,7 @@
       "Add velocity limits matching real hardware",
       "Verify actuators respond to control inputs"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F219",
@@ -2548,7 +2548,7 @@
       "Add IMU sensor (accelerometer + gyroscope)",
       "Verify sensor data can be read from simulation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F220",
@@ -2560,7 +2560,7 @@
       "Set camera resolution (640x480 default)",
       "Verify camera renders images correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F221",
@@ -2573,7 +2573,7 @@
       "Add error handling for missing files",
       "Run: uv run pytest tests/test_simulation.py::test_model_loader"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F222",
@@ -2585,7 +2585,7 @@
       "Add render settings (resolution, quality)",
       "Verify config loads with SimulationConfig Pydantic model"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F223",
@@ -2598,7 +2598,7 @@
       "Define physics parameters (gravity, friction coefficients)",
       "Run: uv run pytest tests/test_simulation.py::test_sim_config"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F224",
@@ -2611,7 +2611,7 @@
       "Implement reset() method to restore initial state",
       "Run: uv run pytest tests/test_simulation.py::test_sim_environment"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F225",
@@ -2623,7 +2623,7 @@
       "Add skybox or background color option",
       "Verify scene renders correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F226",
@@ -2635,7 +2635,7 @@
       "Add test_sim_environment fixture",
       "Run: uv run pytest tests/test_simulation.py --co"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F227",
@@ -2647,7 +2647,7 @@
       "Document actuator configuration",
       "Include model diagram or description"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F228",
@@ -2659,7 +2659,7 @@
       "Update docstring to document simulation backend",
       "Run: uv run mypy src/reachy_agent/robot/client.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F229",
@@ -2671,7 +2671,7 @@
       "Initialize with SimulationEnvironment",
       "Run: uv run mypy src/reachy_agent/simulation/client.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F230",
@@ -2684,7 +2684,7 @@
       "Emit connected event",
       "Run: uv run pytest tests/test_simulation.py::test_sim_connect"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F231",
@@ -2697,7 +2697,7 @@
       "Emit disconnected event",
       "Run: uv run pytest tests/test_simulation.py::test_sim_disconnect"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F232",
@@ -2709,7 +2709,7 @@
       "Reset to initial standing pose",
       "Run: uv run pytest tests/test_simulation.py::test_sim_wake_up"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F233",
@@ -2721,7 +2721,7 @@
       "Allow joints to be compliant",
       "Run: uv run pytest tests/test_simulation.py::test_sim_sleep"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F234",
@@ -2734,7 +2734,7 @@
       "Block until motion complete or timeout",
       "Run: uv run pytest tests/test_simulation.py::test_sim_move_head"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F235",
@@ -2746,7 +2746,7 @@
       "Call move_head() with computed angles",
       "Run: uv run pytest tests/test_simulation.py::test_sim_look_at"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F236",
@@ -2758,7 +2758,7 @@
       "Interpolate rotation over duration",
       "Run: uv run pytest tests/test_simulation.py::test_sim_rotate_body"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F237",
@@ -2770,7 +2770,7 @@
       "Wait for motion to complete",
       "Run: uv run pytest tests/test_simulation.py::test_sim_reset_position"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F238",
@@ -2782,7 +2782,7 @@
       "Verify antenna movement in simulation",
       "Run: uv run pytest tests/test_simulation.py::test_sim_set_antennas"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F239",
@@ -2794,7 +2794,7 @@
       "Use natural timing (2-3 nods)",
       "Run: uv run pytest tests/test_simulation.py::test_sim_nod"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F240",
@@ -2806,7 +2806,7 @@
       "Use natural timing (2-3 shakes)",
       "Run: uv run pytest tests/test_simulation.py::test_sim_shake"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F241",
@@ -2818,7 +2818,7 @@
       "Interpolate between keyframes using physics",
       "Run: uv run pytest tests/test_simulation.py::test_sim_play_emotion"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F242",
@@ -2830,7 +2830,7 @@
       "Construct RobotStatus dataclass",
       "Run: uv run pytest tests/test_simulation.py::test_sim_get_status"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F243",
@@ -2842,7 +2842,7 @@
       "Return dict with all joint positions",
       "Run: uv run pytest tests/test_simulation.py::test_sim_get_position"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F244",
@@ -2854,7 +2854,7 @@
       "Include velocity limits",
       "Run: uv run pytest tests/test_simulation.py::test_sim_get_limits"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F245",
@@ -2865,7 +2865,7 @@
       "Return True if actuators enabled",
       "Run: uv run pytest tests/test_simulation.py::test_sim_is_awake"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F246",
@@ -2877,7 +2877,7 @@
       "Handle pause/resume functionality",
       "Run: uv run pytest tests/test_simulation.py::test_physics_loop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F247",
@@ -2889,7 +2889,7 @@
       "Return image as bytes (JPEG/PNG)",
       "Run: uv run pytest tests/test_simulation.py::test_sim_capture_image"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F248",
@@ -2901,7 +2901,7 @@
       "Return dict with sensor readings",
       "Run: uv run pytest tests/test_simulation.py::test_sim_sensor_data"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F249",
@@ -2913,7 +2913,7 @@
       "Support window creation and event handling",
       "Run: uv run python -c 'from reachy_agent.simulation.viewer import SimulationViewer'"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F250",
@@ -2925,7 +2925,7 @@
       "Start render loop in background thread",
       "Run: uv run pytest tests/test_simulation.py::test_viewer_start"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F251",
@@ -2937,7 +2937,7 @@
       "Release viewer resources",
       "Run: uv run pytest tests/test_simulation.py::test_viewer_stop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F252",
@@ -2949,7 +2949,7 @@
       "Add preset camera positions (front, side, top)",
       "Implement smooth camera transitions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F253",
@@ -2961,7 +2961,7 @@
       "Toggle overlay with keyboard shortcut",
       "Run: uv run pytest tests/test_simulation.py::test_debug_overlay"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F254",
@@ -2973,7 +2973,7 @@
       "Color by force magnitude",
       "Toggle with keyboard shortcut"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F255",
@@ -2985,7 +2985,7 @@
       "Support configurable framerate and resolution",
       "Run: uv run pytest tests/test_simulation.py::test_video_recording"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F256",
@@ -2997,7 +2997,7 @@
       "Save to NumPy .npz format",
       "Run: uv run pytest tests/test_simulation.py::test_trajectory_recording"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F257",
@@ -3009,7 +3009,7 @@
       "Support playback speed control",
       "Run: uv run pytest tests/test_simulation.py::test_trajectory_playback"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F258",
@@ -3021,7 +3021,7 @@
       "Support custom filename and path",
       "Run: uv run pytest tests/test_simulation.py::test_screenshot"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F259",
@@ -3033,7 +3033,7 @@
       "Enable CI/CD testing of visuals",
       "Run: uv run pytest tests/test_simulation.py::test_headless_render"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F260",
@@ -3045,7 +3045,7 @@
       "Support reflection/refraction options",
       "Add config options for quality presets"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F261",
@@ -3057,7 +3057,7 @@
       "Support configurable P and D gains",
       "Run: uv run pytest tests/test_simulation.py::test_pd_controller"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F262",
@@ -3069,7 +3069,7 @@
       "Support configurable max velocity",
       "Run: uv run pytest tests/test_simulation.py::test_velocity_control"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F263",
@@ -3081,7 +3081,7 @@
       "Add gravity compensation option",
       "Run: uv run pytest tests/test_simulation.py::test_torque_control"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F264",
@@ -3093,7 +3093,7 @@
       "Implement minimum-jerk trajectory generation",
       "Run: uv run pytest tests/test_simulation.py::test_trajectory_interpolation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F265",
@@ -3105,7 +3105,7 @@
       "Tune for stable, non-oscillatory motion",
       "Verify motion matches expected dynamics"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F266",
@@ -3117,7 +3117,7 @@
       "Log warnings when limits approached",
       "Run: uv run pytest tests/test_simulation.py::test_joint_limits"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F267",
@@ -3129,7 +3129,7 @@
       "Filter by body pairs of interest",
       "Run: uv run pytest tests/test_simulation.py::test_contact_detection"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F268",
@@ -3141,7 +3141,7 @@
       "Implement stability detection",
       "Run: uv run pytest tests/test_simulation.py::test_ground_contact"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F269",
@@ -3153,7 +3153,7 @@
       "Optionally prevent self-colliding motions",
       "Run: uv run pytest tests/test_simulation.py::test_self_collision"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F270",
@@ -3165,7 +3165,7 @@
       "Add motor inertia effects",
       "Verify matches real hardware response"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F271",
@@ -3177,7 +3177,7 @@
       "Allow compliant positioning with gravity support",
       "Run: uv run pytest tests/test_simulation.py::test_gravity_compensation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F272",
@@ -3189,7 +3189,7 @@
       "Support noise addition for realism",
       "Run: uv run pytest tests/test_simulation.py::test_ft_sensor"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F273",
@@ -3201,7 +3201,7 @@
       "Support configurable noise levels",
       "Run: uv run pytest tests/test_simulation.py::test_sensor_noise"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F274",
@@ -3213,7 +3213,7 @@
       "Support damping coefficient changes",
       "Run: uv run pytest tests/test_simulation.py::test_physics_variation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F275",
@@ -3225,7 +3225,7 @@
       "Implement perturbation testing helpers",
       "Run: uv run pytest tests/test_simulation.py::test_external_forces"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F276",
@@ -3237,7 +3237,7 @@
       "Log warnings if simulation falls behind real-time",
       "Run: uv run pytest tests/test_simulation.py::test_timing_metrics"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F277",
@@ -3249,7 +3249,7 @@
       "Support fixed timestep mode",
       "Run: uv run pytest tests/test_simulation.py::test_determinism"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F278",
@@ -3261,7 +3261,7 @@
       "Support checkpoint/restore workflow",
       "Run: uv run pytest tests/test_simulation.py::test_state_serialization"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F279",
@@ -3273,7 +3273,7 @@
       "Add sim_viewer fixture with headless mode",
       "Run: uv run pytest tests/test_simulation.py --co"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F280",
@@ -3285,7 +3285,7 @@
       "Test all actuators are configured",
       "Run: uv run pytest tests/test_simulation.py::test_model_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F281",
@@ -3297,7 +3297,7 @@
       "Test error handling",
       "Run: uv run pytest tests/test_simulation.py::test_client_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F282",
@@ -3310,7 +3310,7 @@
       "Verify positions within tolerance",
       "Run: uv run pytest tests/test_simulation.py::test_movement_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F283",
@@ -3322,7 +3322,7 @@
       "Test camera image capture",
       "Run: uv run pytest tests/test_simulation.py::test_sensor_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F284",
@@ -3334,7 +3334,7 @@
       "Test contact forces are reasonable",
       "Run: uv run pytest tests/test_simulation.py::test_physics_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F285",
@@ -3346,7 +3346,7 @@
       "Test motion commands execute correctly",
       "Run: uv run pytest tests/test_simulation.py::test_integration_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F286",
@@ -3358,7 +3358,7 @@
       "Benchmark full control loop",
       "Run: uv run pytest tests/test_simulation.py::test_benchmark_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F287",
@@ -3370,7 +3370,7 @@
       "Verify sim client is more realistic",
       "Run: uv run pytest tests/test_simulation.py::test_sim_vs_mock_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F288",
@@ -3382,7 +3382,7 @@
       "Verify no drift in physics",
       "Run: uv run pytest tests/test_simulation.py::test_long_running -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F289",
@@ -3394,7 +3394,7 @@
       "Verify exact match",
       "Run: uv run pytest tests/test_simulation.py::test_determinism -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F290",
@@ -3406,7 +3406,7 @@
       "Test disconnect during motion",
       "Run: uv run pytest tests/test_simulation.py::test_edge_* -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F291",
@@ -3417,7 +3417,7 @@
       "Set minimum coverage threshold for sim",
       "Run: uv run pytest --cov=src/reachy_agent/simulation --cov-report=term"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F292",
@@ -3429,7 +3429,7 @@
       "Document performance testing approach",
       "Add to ai_docs/simulation-testing.md"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F293",
