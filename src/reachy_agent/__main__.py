@@ -207,6 +207,235 @@ def check() -> None:
 
 
 @app.command()
+def validate(
+    viewer: bool = typer.Option(True, "--viewer/--no-viewer", help="Enable viewer"),
+    realtime: bool = typer.Option(
+        True, "--realtime/--no-realtime", help="Real-time mode"
+    ),
+    record: bool = typer.Option(False, "--record", help="Record validation video"),
+    quick: bool = typer.Option(False, "--quick", help="Quick validation (fewer tests)"),
+) -> None:
+    """Run MuJoCo simulation validation suite.
+
+    This command runs a comprehensive validation of all robot commands
+    in MuJoCo simulation, with optional visual feedback and recording.
+
+    Examples:
+        reachy-agent validate              # Full validation with viewer
+        reachy-agent validate --no-viewer  # Headless validation
+        reachy-agent validate --record     # Record video of validation
+        reachy-agent validate --quick      # Quick smoke test
+    """
+    from datetime import datetime
+
+    from rich.progress import Progress, SpinnerColumn, TextColumn
+    from rich.table import Table
+
+    # Check MuJoCo availability
+    try:
+        import mujoco  # noqa: F401
+    except ImportError:
+        console.print(
+            "[red]Error: MuJoCo not installed.[/red]\n"
+            "Install with: uv pip install -e '.[sim]'"
+        )
+        sys.exit(1)
+
+    # Import validation demo
+    try:
+        from reachy_agent.simulation.client import MuJoCoReachyClient
+    except ImportError as e:
+        console.print(f"[red]Error: Could not load simulation: {e}[/red]")
+        sys.exit(1)
+
+    console.print()
+    console.print(
+        Panel.fit(
+            "[bold cyan]Reachy Mini MuJoCo Validation[/]\n"
+            "[dim]Comprehensive robot command validation[/]",
+            border_style="cyan",
+        )
+    )
+
+    # Run validation
+    async def run_validation() -> dict:
+        """Run validation tests."""
+        results = {
+            "categories": {},
+            "total_passed": 0,
+            "total_failed": 0,
+            "start_time": datetime.now(),
+        }
+
+        client = MuJoCoReachyClient(realtime=realtime, viewer=viewer)
+
+        try:
+            await client.connect()
+            await client.wake_up()
+
+            test_categories = {
+                "Basic Movements": [
+                    (
+                        "Head pitch up",
+                        lambda: client.move_head(
+                            pitch=-20, yaw=0, roll=0, duration=0.3
+                        ),
+                    ),
+                    (
+                        "Head pitch down",
+                        lambda: client.move_head(pitch=20, yaw=0, roll=0, duration=0.3),
+                    ),
+                    (
+                        "Head yaw left",
+                        lambda: client.move_head(pitch=0, yaw=30, roll=0, duration=0.3),
+                    ),
+                    (
+                        "Head yaw right",
+                        lambda: client.move_head(
+                            pitch=0, yaw=-30, roll=0, duration=0.3
+                        ),
+                    ),
+                    (
+                        "Head roll",
+                        lambda: client.move_head(pitch=0, yaw=0, roll=15, duration=0.3),
+                    ),
+                    ("Reset position", lambda: client.reset_position(duration=0.3)),
+                ],
+                "Antennas": [
+                    ("Antennas up", lambda: client.set_antennas(left=60, right=60)),
+                    ("Antennas down", lambda: client.set_antennas(left=-60, right=-60)),
+                    (
+                        "Antennas asymmetric",
+                        lambda: client.set_antennas(left=45, right=-45),
+                    ),
+                    ("Antennas neutral", lambda: client.set_antennas(left=0, right=0)),
+                ],
+                "Gestures": [
+                    ("Nod (low)", lambda: client.nod(intensity=0.3)),
+                    ("Nod (high)", lambda: client.nod(intensity=1.0)),
+                    ("Shake (low)", lambda: client.shake(intensity=0.3)),
+                    ("Shake (high)", lambda: client.shake(intensity=1.0)),
+                ],
+                "Sensors": [
+                    ("Get position", client.get_position),
+                    ("Get limits", client.get_limits),
+                    ("Get status", client.get_status),
+                ],
+            }
+
+            if not quick:
+                test_categories["Body Rotation"] = [
+                    ("Rotate 90°", lambda: client.rotate_body(angle=90, duration=1.0)),
+                    (
+                        "Rotate -90°",
+                        lambda: client.rotate_body(angle=-90, duration=1.0),
+                    ),
+                ]
+                test_categories["Look At"] = [
+                    (
+                        "Look center",
+                        lambda: client.look_at(x=1, y=0, z=0, duration=0.3),
+                    ),
+                    (
+                        "Look left",
+                        lambda: client.look_at(x=1, y=0.5, z=0, duration=0.3),
+                    ),
+                    (
+                        "Look right",
+                        lambda: client.look_at(x=1, y=-0.5, z=0, duration=0.3),
+                    ),
+                ]
+
+            with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                console=console,
+            ) as progress:
+                for category, tests in test_categories.items():
+                    results["categories"][category] = {
+                        "passed": 0,
+                        "failed": 0,
+                        "tests": [],
+                    }
+                    task = progress.add_task(f"[cyan]{category}...", total=len(tests))
+
+                    for test_name, test_fn in tests:
+                        try:
+                            await test_fn()
+                            results["categories"][category]["passed"] += 1
+                            results["total_passed"] += 1
+                            results["categories"][category]["tests"].append(
+                                {"name": test_name, "passed": True}
+                            )
+                        except Exception as e:
+                            results["categories"][category]["failed"] += 1
+                            results["total_failed"] += 1
+                            results["categories"][category]["tests"].append(
+                                {"name": test_name, "passed": False, "error": str(e)}
+                            )
+                        progress.advance(task)
+
+                    await asyncio.sleep(0.1)  # Brief pause between categories
+
+        finally:
+            await client.sleep()
+            await client.disconnect()
+
+        results["end_time"] = datetime.now()
+        return results
+
+    try:
+        results = asyncio.run(run_validation())
+    except Exception as e:
+        console.print(f"[red]Validation failed: {e}[/red]")
+        sys.exit(1)
+
+    # Display results
+    console.print()
+
+    # Results table
+    table = Table(title="Validation Results", show_header=True)
+    table.add_column("Category", style="cyan")
+    table.add_column("Tests", justify="center")
+    table.add_column("Passed", justify="center", style="green")
+    table.add_column("Failed", justify="center", style="red")
+    table.add_column("Status", justify="center")
+
+    for category, data in results["categories"].items():
+        total = data["passed"] + data["failed"]
+        status = "[green]✓ PASS[/]" if data["failed"] == 0 else "[red]✗ FAIL[/]"
+        table.add_row(
+            category,
+            str(total),
+            str(data["passed"]),
+            str(data["failed"]),
+            status,
+        )
+
+    console.print(table)
+
+    # Summary
+    total = results["total_passed"] + results["total_failed"]
+    duration = (results["end_time"] - results["start_time"]).total_seconds()
+    success_rate = results["total_passed"] / total * 100 if total > 0 else 0
+
+    console.print()
+    summary_panel = Panel(
+        f"[bold]Total Tests:[/] {total}\n"
+        f"[green]Passed:[/] {results['total_passed']}\n"
+        f"[red]Failed:[/] {results['total_failed']}\n"
+        f"[bold]Success Rate:[/] {success_rate:.1f}%\n"
+        f"[dim]Duration:[/] {duration:.1f}s",
+        title="[bold]Validation Summary[/]",
+        border_style="green" if results["total_failed"] == 0 else "red",
+    )
+    console.print(summary_panel)
+
+    if results["total_failed"] > 0:
+        sys.exit(1)
+
+
+@app.command()
 def version() -> None:
     """Show version information."""
     from reachy_agent import __version__
