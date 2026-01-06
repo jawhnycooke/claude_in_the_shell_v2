@@ -7,14 +7,13 @@ using the MuJoCo physics engine.
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import structlog
 
 from reachy_agent.robot.client import (
     AntennaState,
     HeadPose,
-    ReachyClient,
     RobotStatus,
 )
 
@@ -118,9 +117,7 @@ class MuJoCoReachyClient:
         if not self._env:
             raise RuntimeError("Not connected to simulation")
 
-        self._log.debug(
-            "move_head", pitch=pitch, yaw=yaw, roll=roll, duration=duration
-        )
+        self._log.debug("move_head", pitch=pitch, yaw=yaw, roll=roll, duration=duration)
         await self._env.move_joints(
             targets={"head_pitch": pitch, "head_yaw": yaw, "head_roll": roll},
             duration=duration,

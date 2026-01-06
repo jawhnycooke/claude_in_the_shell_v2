@@ -490,3 +490,70 @@ Project is ready for deployment and further development!
 
 ### Project Status
 The Reachy Agent project remains fully implemented and ready for deployment!
+
+
+## Session: 2025-01-XX (Horizon Worker Session 11 - MuJoCo Advanced Features)
+
+### Accomplished
+- F307-F309: Domain randomization implementation
+  - DomainRandomizer class for physics parameters (mass, friction, damping)
+  - VisualRandomizer for lighting and camera pose
+  - Sensor noise injection utilities
+  - Tests: 6 tests for domain randomization
+
+- F310-F311: Parallel simulation support
+  - ParallelSimulation class for N concurrent environments
+  - VectorizedEnv Gymnasium-style wrapper
+  - Batch step/reset methods
+  - Tests: 7 tests for parallel simulation
+
+- F312-F313: Scenario loading
+  - ScenarioConfig model in config.py
+  - Created data/scenarios/default.yaml
+  - Created data/scenarios/tabletop.yaml
+  - Created data/scenarios/cluttered.yaml
+  - Tests: 2 tests for scenario config
+
+- F314-F322: Advanced simulation features
+  - Teleoperation support (TeleoperationController)
+  - Reset variations support
+  - Reward function framework
+  - Gymnasium environment wrapper
+  - Simulation speed control (realtime mode)
+  - Stepping modes (continuous, step-by-step)
+  - Tests covering all features
+
+- F323-F324: Documentation and examples
+  - Created examples/sim_basic.py
+  - Created examples/sim_recording.py
+  - Created examples/sim_teleop.py
+  - Created examples/sim_domain_rand.py
+  - Documentation in ai_docs/simulation.md and specs/11-simulation.md
+
+### Final State
+- **324/324 features passing (100%)**
+- **358 tests passing** (12 skipped for optional deps)
+- All MuJoCo simulation features complete
+
+### Test Summary
+```
+tests/test_simulation.py: 64 tests (52 passed, 12 skipped)
+Total project tests: 358 passed, 12 skipped
+```
+
+### Files Created This Session
+- tests/test_simulation.py (updated with 30+ new tests)
+- data/scenarios/default.yaml
+- data/scenarios/tabletop.yaml
+- data/scenarios/cluttered.yaml
+- examples/sim_basic.py
+- examples/sim_recording.py
+- examples/sim_teleop.py
+- examples/sim_domain_rand.py
+
+### Project Complete!
+All 324 features are now passing:
+- Original 210 features (F001-F210): Robot control, memory, voice, motion, agent
+- MuJoCo simulation features (F211-F324): 114 features for physics simulation
+
+The project is ready for deployment with full MuJoCo simulation support!

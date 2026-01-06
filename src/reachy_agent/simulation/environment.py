@@ -29,7 +29,13 @@ from reachy_agent.simulation.physics import PDController, TrajectoryInterpolator
 logger = structlog.get_logger()
 
 # Default model path
-DEFAULT_MODEL_PATH = Path(__file__).parent.parent.parent.parent / "data" / "models" / "reachy_mini" / "reachy_mini.xml"
+DEFAULT_MODEL_PATH = (
+    Path(__file__).parent.parent.parent.parent
+    / "data"
+    / "models"
+    / "reachy_mini"
+    / "reachy_mini.xml"
+)
 
 # Joint configuration matching Reachy Mini
 JOINT_CONFIG = {
@@ -222,9 +228,7 @@ class SimulationEnvironment:
 
             # Compute and apply control
             if self._actuators_enabled:
-                torque = controller.compute(
-                    np.radians(target), current, velocity
-                )
+                torque = controller.compute(np.radians(target), current, velocity)
                 actuator_id = self._get_actuator_id(joint_name)
                 if actuator_id is not None:
                     self._data.ctrl[actuator_id] = torque
@@ -343,12 +347,36 @@ class SimulationEnvironment:
         # Read from MuJoCo sensors
         # TODO: Map to actual sensor IDs in MJCF
         return {
-            "accel_x": float(self._data.sensordata[0]) if len(self._data.sensordata) > 0 else 0.0,
-            "accel_y": float(self._data.sensordata[1]) if len(self._data.sensordata) > 1 else 0.0,
-            "accel_z": float(self._data.sensordata[2]) if len(self._data.sensordata) > 2 else 9.81,
-            "gyro_x": float(self._data.sensordata[3]) if len(self._data.sensordata) > 3 else 0.0,
-            "gyro_y": float(self._data.sensordata[4]) if len(self._data.sensordata) > 4 else 0.0,
-            "gyro_z": float(self._data.sensordata[5]) if len(self._data.sensordata) > 5 else 0.0,
+            "accel_x": (
+                float(self._data.sensordata[0])
+                if len(self._data.sensordata) > 0
+                else 0.0
+            ),
+            "accel_y": (
+                float(self._data.sensordata[1])
+                if len(self._data.sensordata) > 1
+                else 0.0
+            ),
+            "accel_z": (
+                float(self._data.sensordata[2])
+                if len(self._data.sensordata) > 2
+                else 9.81
+            ),
+            "gyro_x": (
+                float(self._data.sensordata[3])
+                if len(self._data.sensordata) > 3
+                else 0.0
+            ),
+            "gyro_y": (
+                float(self._data.sensordata[4])
+                if len(self._data.sensordata) > 4
+                else 0.0
+            ),
+            "gyro_z": (
+                float(self._data.sensordata[5])
+                if len(self._data.sensordata) > 5
+                else 0.0
+            ),
         }
 
     async def render_camera(self, camera_name: str = "head_camera") -> bytes:

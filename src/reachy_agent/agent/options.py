@@ -17,6 +17,9 @@ class AgentConfig:
         enable_voice: Enable voice pipeline
         enable_motion: Enable motion control
         mock_hardware: Use mock hardware instead of SDK
+        simulation_mode: Use MuJoCo simulation instead of SDK
+        simulation_viewer: Enable simulation viewer window
+        simulation_realtime: Run simulation in real-time
         system_prompt_path: Path to system prompt file
         persona_path: Optional path to persona prompt file
     """
@@ -31,9 +34,24 @@ class AgentConfig:
     enable_motion: bool = True
     mock_hardware: bool = False
 
+    # Simulation flags
+    simulation_mode: bool = False
+    simulation_viewer: bool = False
+    simulation_realtime: bool = True
+
     # Paths
     system_prompt_path: str = "prompts/system.md"
     persona_path: str | None = None
+
+    @property
+    def backend(self) -> str:
+        """Get the robot backend to use."""
+        if self.mock_hardware:
+            return "mock"
+        elif self.simulation_mode:
+            return "sim"
+        else:
+            return "sdk"
 
     def load_system_prompt(self) -> str:
         """

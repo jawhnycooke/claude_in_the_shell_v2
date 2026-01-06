@@ -1,0 +1,27 @@
+# Tabletop Scenario for Reachy Mini Simulation
+#
+# This scenario places the robot at a table with a flat surface
+# for interaction testing.
+
+name: tabletop
+description: Robot positioned at a table
+
+initial_pose:
+  body_rotation: 0
+  head_z: 25  # Slightly extended
+  head_yaw: 0
+  head_pitch: 15  # Looking down at table
+  head_roll: 0
+  antenna_left: 30  # Alert antenna position
+  antenna_right: -30
+
+objects:
+  - type: box
+    name: table
+    position: [0.5, 0, 0]
+    size: [1.0, 0.6, 0.75]
+    color: [0.4, 0.3, 0.2, 1.0]
+
+lighting:
+  intensity: 1.2
+  ambient: 0.4

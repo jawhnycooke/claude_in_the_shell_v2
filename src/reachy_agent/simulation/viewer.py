@@ -5,7 +5,6 @@ This module provides a visualization interface for the Reachy Mini simulation.
 
 from __future__ import annotations
 
-import asyncio
 import threading
 from typing import Any
 
@@ -171,20 +170,20 @@ class SimulationViewer:
         """Toggle contact point visualization."""
         self._show_contacts = not self._show_contacts
         if self._viewer:
-            self._viewer.opt.flags[
-                mujoco.mjtVisFlag.mjVIS_CONTACTPOINT
-            ] = self._show_contacts
-            self._viewer.opt.flags[
-                mujoco.mjtVisFlag.mjVIS_CONTACTFORCE
-            ] = self._show_contacts
+            self._viewer.opt.flags[mujoco.mjtVisFlag.mjVIS_CONTACTPOINT] = (
+                self._show_contacts
+            )
+            self._viewer.opt.flags[mujoco.mjtVisFlag.mjVIS_CONTACTFORCE] = (
+                self._show_contacts
+            )
 
     def toggle_force_overlay(self) -> None:
         """Toggle force visualization."""
         self._show_forces = not self._show_forces
         if self._viewer:
-            self._viewer.opt.flags[
-                mujoco.mjtVisFlag.mjVIS_PERTFORCE
-            ] = self._show_forces
+            self._viewer.opt.flags[mujoco.mjtVisFlag.mjVIS_PERTFORCE] = (
+                self._show_forces
+            )
 
     # Recording
 
@@ -303,7 +302,7 @@ class HeadlessRenderer:
         self._renderer: Any = None
         self._log = logger.bind(component="headless_renderer")
 
-    def __enter__(self) -> "HeadlessRenderer":
+    def __enter__(self) -> HeadlessRenderer:
         """Enter context manager."""
         if MUJOCO_AVAILABLE and self._model:
             self._renderer = mujoco.Renderer(self._model, self._height, self._width)
@@ -326,9 +325,7 @@ class HeadlessRenderer:
             return np.zeros((self._height, self._width, 3), dtype=np.uint8)
 
         if isinstance(camera, str):
-            camera = mujoco.mj_name2id(
-                self._model, mujoco.mjtObj.mjOBJ_CAMERA, camera
-            )
+            camera = mujoco.mj_name2id(self._model, mujoco.mjtObj.mjOBJ_CAMERA, camera)
 
         self._renderer.update_scene(self._data, camera=camera)
         return self._renderer.render()
@@ -346,9 +343,7 @@ class HeadlessRenderer:
             return np.zeros((self._height, self._width), dtype=np.float32)
 
         if isinstance(camera, str):
-            camera = mujoco.mj_name2id(
-                self._model, mujoco.mjtObj.mjOBJ_CAMERA, camera
-            )
+            camera = mujoco.mj_name2id(self._model, mujoco.mjtObj.mjOBJ_CAMERA, camera)
 
         self._renderer.update_scene(self._data, camera=camera)
         self._renderer.enable_depth_rendering(True)

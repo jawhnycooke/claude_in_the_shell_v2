@@ -1,0 +1,22 @@
+# Default Scenario for Reachy Mini Simulation
+#
+# This scenario provides a clean, minimal environment for testing
+# and development with the robot starting in a neutral pose.
+
+name: default
+description: Default neutral pose scenario
+
+initial_pose:
+  body_rotation: 0
+  head_z: 0
+  head_yaw: 0
+  head_pitch: 0
+  head_roll: 0
+  antenna_left: 0
+  antenna_right: 0
+
+objects: []
+
+lighting:
+  intensity: 1.0
+  ambient: 0.3

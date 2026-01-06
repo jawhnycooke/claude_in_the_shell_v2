@@ -351,7 +351,6 @@ async def test_agent_robot_mcp_tool_execution(mock_robot) -> None:
     - Tool results are returned correctly
     """
     from reachy_agent.mcp import robot as robot_mcp_module
-    from reachy_agent.mcp.robot import _robot
     from reachy_agent.mcp.robot import app as mcp_app
 
     # Set the mock robot as the global robot

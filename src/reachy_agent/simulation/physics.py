@@ -9,9 +9,7 @@ This module provides physics-related utilities including:
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
-from typing import Callable
 
 import numpy as np
 

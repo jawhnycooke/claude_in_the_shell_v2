@@ -3441,7 +3441,7 @@
       "Select MuJoCoReachyClient when --sim is set",
       "Run: uv run python -m reachy_agent run --sim --help"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F294",
@@ -3453,7 +3453,7 @@
       "Support headless sim without viewer",
       "Run: uv run python -m reachy_agent run --sim --sim-viewer"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F295",
@@ -3465,7 +3465,7 @@
       "Adjust physics stepping accordingly",
       "Run: uv run python -m reachy_agent run --sim --no-sim-realtime"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F296",
@@ -3477,7 +3477,7 @@
       "Handle missing optional dependencies gracefully",
       "Run: uv run pytest tests/test_robot.py::test_client_factory"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F297",
@@ -3489,7 +3489,7 @@
       "Verify agent behavior is consistent",
       "Run: uv run pytest tests/test_integration.py::test_backend_switching"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F298",
@@ -3501,7 +3501,7 @@
       "Add physics parameters",
       "Verify config loads correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F299",
@@ -3513,7 +3513,7 @@
       "Enable sim-real state comparison",
       "Run: uv run pytest tests/test_simulation.py::test_state_sync"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F300",
@@ -3525,7 +3525,7 @@
       "Report simulation capability in check output",
       "Run: uv run python -m reachy_agent check"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F301",
@@ -3537,7 +3537,7 @@
       "Wobble overlay works in simulation",
       "Run: uv run pytest tests/test_integration.py::test_motion_sim"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F302",
@@ -3549,7 +3549,7 @@
       "Tool results are realistic",
       "Run: uv run pytest tests/test_mcp.py::test_mcp_sim_integration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F303",
@@ -3561,7 +3561,7 @@
       "Log rendering metrics",
       "Add structlog integration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F304",
@@ -3573,7 +3573,7 @@
       "Document viewer controls",
       "Add troubleshooting for common issues"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F305",
@@ -3585,7 +3585,7 @@
       "Document API for sim client",
       "Include example code snippets"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F306",
@@ -3597,7 +3597,7 @@
       "Use headless rendering in CI",
       "Update .github/workflows/ci.yml"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F307",
@@ -3609,7 +3609,7 @@
       "Support randomizing joint limits within range",
       "Run: uv run pytest tests/test_simulation.py::test_domain_randomization"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F308",
@@ -3621,7 +3621,7 @@
       "Support randomizing camera position",
       "Run: uv run pytest tests/test_simulation.py::test_visual_randomization"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F309",
@@ -3633,7 +3633,7 @@
       "Support randomizing sensor delays",
       "Run: uv run pytest tests/test_simulation.py::test_sensor_randomization"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F310",
@@ -3645,7 +3645,7 @@
       "Use multiprocessing for parallelism",
       "Run: uv run pytest tests/test_simulation.py::test_parallel_sim"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F311",
@@ -3657,7 +3657,7 @@
       "Return batched observations",
       "Run: uv run pytest tests/test_simulation.py::test_batch_processing"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F312",
@@ -3669,7 +3669,7 @@
       "Define environment objects",
       "Run: uv run pytest tests/test_simulation.py::test_scenario_loading"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F313",
@@ -3681,7 +3681,7 @@
       "Create data/scenarios/cluttered.yaml with obstacles",
       "Verify scenarios load correctly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F314",
@@ -3693,7 +3693,7 @@
       "Support mesh objects from file",
       "Run: uv run pytest tests/test_simulation.py::test_object_spawning"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F315",
@@ -3705,7 +3705,7 @@
       "Support gamepad input for motion",
       "Run: uv run python -m reachy_agent.simulation.teleop --sim"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F316",
@@ -3717,7 +3717,7 @@
       "Map arrow keys to body rotation",
       "Map number keys to emotions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F317",
@@ -3729,7 +3729,7 @@
       "Support reset to specific saved state",
       "Run: uv run pytest tests/test_simulation.py::test_reset_variations"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F318",
@@ -3741,7 +3741,7 @@
       "Implement energy efficiency reward",
       "Run: uv run pytest tests/test_simulation.py::test_reward_functions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F319",
@@ -3753,7 +3753,7 @@
       "Define observation and action spaces",
       "Run: uv run pytest tests/test_simulation.py::test_gym_env"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F320",
@@ -3765,7 +3765,7 @@
       "Export video with annotations",
       "Run: uv run pytest tests/test_simulation.py::test_data_export"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F321",
@@ -3777,7 +3777,7 @@
       "Support fast forward (1x - 10x)",
       "Add keyboard shortcuts for speed control"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F322",
@@ -3789,7 +3789,7 @@
       "Support step-until-condition mode",
       "Run: uv run pytest tests/test_simulation.py::test_stepping_modes"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F323",
@@ -3801,7 +3801,7 @@
       "Document extension points",
       "Add to docs/simulation-api.md"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F324",
@@ -3813,6 +3813,6 @@
       "Create examples/sim_teleop.py for teleoperation",
       "Create examples/sim_domain_rand.py for domain randomization"
     ],
-    "passes": false
+    "passes": true
   }
 ]

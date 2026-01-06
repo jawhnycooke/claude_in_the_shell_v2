@@ -20,17 +20,42 @@ log = structlog.get_logger()
 def run(
     voice: bool = typer.Option(False, "--voice", help="Enable voice mode"),
     mock: bool = typer.Option(False, "--mock", help="Use mock hardware"),
+    sim: bool = typer.Option(False, "--sim", help="Use MuJoCo simulation"),
+    sim_viewer: bool = typer.Option(
+        False, "--sim-viewer", help="Enable simulation viewer"
+    ),
+    sim_realtime: bool = typer.Option(
+        True, "--sim-realtime/--no-sim-realtime", help="Run simulation in real-time"
+    ),
     debug_voice: bool = typer.Option(False, "--debug-voice", help="Debug voice events"),
     persona: str | None = typer.Option(
         None, "--persona", help="Persona to use (jarvis, motoko, batou)"
     ),
 ) -> None:
-    """Run the Reachy agent."""
+    """Run the Reachy agent.
+
+    Backend selection (mutually exclusive):
+    - Default: Use real Reachy hardware via SDK
+    - --mock: Use in-memory mock (no physics, fastest)
+    - --sim: Use MuJoCo physics simulation
+
+    Simulation options (only with --sim):
+    - --sim-viewer: Open 3D visualization window
+    - --no-sim-realtime: Run as fast as possible (for testing)
+    """
+    # Validate mutually exclusive options
+    if mock and sim:
+        console.print("[red]Error: Cannot use both --mock and --sim[/red]")
+        sys.exit(1)
+
     try:
         config = AgentConfig(
             enable_voice=voice,
-            enable_motion=not mock,
+            enable_motion=not mock and not sim,
             mock_hardware=mock,
+            simulation_mode=sim,
+            simulation_viewer=sim_viewer,
+            simulation_realtime=sim_realtime,
             persona_path=f"prompts/personas/{persona}.md" if persona else None,
         )
         asyncio.run(_run_agent(config, debug_voice))
@@ -104,16 +129,81 @@ async def _run_voice_mode(agent: ReachyAgentLoop) -> None:
 
 @app.command()
 def check() -> None:
-    """Check system health."""
-    console.print("[cyan]Checking system health...[/cyan]")
+    """Check system health and component availability."""
+    from pathlib import Path
 
-    # TODO: Implement health checks
-    # - Robot connectivity
-    # - Memory system
-    # - API keys present
-    # - Config files valid
+    console.print("[cyan]Checking system health...[/cyan]\n")
 
-    console.print("[green]✓ System OK[/green]")
+    checks_passed = 0
+    checks_total = 0
+
+    # Check config files
+    checks_total += 1
+    config_path = Path("config/default.yaml")
+    if config_path.exists():
+        console.print("[green]✓[/green] Configuration file found")
+        checks_passed += 1
+    else:
+        console.print("[red]✗[/red] Configuration file missing")
+
+    # Check prompts directory
+    checks_total += 1
+    prompts_path = Path("prompts")
+    if prompts_path.exists():
+        console.print("[green]✓[/green] Prompts directory found")
+        checks_passed += 1
+    else:
+        console.print("[red]✗[/red] Prompts directory missing")
+
+    # Check MuJoCo availability
+    checks_total += 1
+    try:
+        import mujoco  # noqa: F401
+
+        console.print("[green]✓[/green] MuJoCo available (simulation supported)")
+        checks_passed += 1
+
+        # Check MJCF model
+        checks_total += 1
+        model_path = Path("data/models/reachy_mini/reachy_mini.xml")
+        if model_path.exists():
+            console.print("[green]✓[/green] Reachy Mini MJCF model found")
+            checks_passed += 1
+        else:
+            console.print("[yellow]![/yellow] Reachy Mini MJCF model missing")
+    except ImportError:
+        console.print(
+            "[yellow]![/yellow] MuJoCo not installed (install with: pip install mujoco)"
+        )
+
+    # Check ChromaDB availability
+    checks_total += 1
+    try:
+        import chromadb  # noqa: F401
+
+        console.print("[green]✓[/green] ChromaDB available (memory supported)")
+        checks_passed += 1
+    except ImportError:
+        console.print("[red]✗[/red] ChromaDB not installed")
+
+    # Check Anthropic API key
+    checks_total += 1
+    import os
+
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        console.print("[green]✓[/green] ANTHROPIC_API_KEY set")
+        checks_passed += 1
+    else:
+        console.print("[yellow]![/yellow] ANTHROPIC_API_KEY not set")
+
+    # Summary
+    console.print(f"\n[cyan]Health check: {checks_passed}/{checks_total} passed[/cyan]")
+    if checks_passed == checks_total:
+        console.print("[green]✓ System OK[/green]")
+    elif checks_passed >= checks_total - 2:
+        console.print("[yellow]! System partially ready[/yellow]")
+    else:
+        console.print("[red]✗ System not ready[/red]")
 
 
 @app.command()

@@ -108,7 +108,9 @@ class MJCFModelLoader:
             ValueError: If model fails to load
         """
         if not MUJOCO_AVAILABLE:
-            raise RuntimeError("MuJoCo is not installed. Install with: pip install mujoco")
+            raise RuntimeError(
+                "MuJoCo is not installed. Install with: pip install mujoco"
+            )
 
         path = Path(path)
         if not path.exists():

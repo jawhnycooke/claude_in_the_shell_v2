@@ -114,7 +114,7 @@ class SimulationConfig(BaseModel):
         return Path(self.model_path)
 
     @classmethod
-    def from_yaml(cls, config: dict) -> "SimulationConfig":
+    def from_yaml(cls, config: dict) -> SimulationConfig:
         """Create config from YAML dict.
 
         Args:
@@ -165,7 +165,7 @@ class ScenarioConfig(BaseModel):
     lighting: dict = Field(default_factory=dict)
 
     @classmethod
-    def load(cls, path: str | Path) -> "ScenarioConfig":
+    def load(cls, path: str | Path) -> ScenarioConfig:
         """Load scenario from YAML file.
 
         Args:

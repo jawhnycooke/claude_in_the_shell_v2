@@ -1,0 +1,52 @@
+# Cluttered Scenario for Reachy Mini Simulation
+#
+# This scenario provides a more complex environment with multiple
+# objects for occlusion and distraction testing.
+
+name: cluttered
+description: Complex environment with obstacles
+
+initial_pose:
+  body_rotation: -20
+  head_z: 10
+  head_yaw: 15
+  head_pitch: 5
+  head_roll: 0
+  antenna_left: 45
+  antenna_right: -30
+
+objects:
+  - type: box
+    name: table
+    position: [0.5, 0, 0]
+    size: [1.0, 0.6, 0.75]
+    color: [0.4, 0.3, 0.2, 1.0]
+
+  - type: box
+    name: box1
+    position: [0.4, 0.2, 0.80]
+    size: [0.1, 0.1, 0.1]
+    color: [1.0, 0.0, 0.0, 1.0]
+
+  - type: sphere
+    name: ball
+    position: [0.5, -0.1, 0.78]
+    radius: 0.05
+    color: [0.0, 0.0, 1.0, 1.0]
+
+  - type: cylinder
+    name: cup
+    position: [0.6, 0.1, 0.80]
+    radius: 0.03
+    height: 0.12
+    color: [0.8, 0.8, 0.8, 1.0]
+
+  - type: box
+    name: book
+    position: [0.3, -0.2, 0.77]
+    size: [0.15, 0.22, 0.03]
+    color: [0.2, 0.5, 0.3, 1.0]
+
+lighting:
+  intensity: 1.0
+  ambient: 0.35
