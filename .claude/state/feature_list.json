@@ -755,7 +755,7 @@
       "Verify AUTONOMOUS, CONFIRM, FORBIDDEN tiers",
       "Run: uv run mypy src/reachy_agent/permissions/evaluator.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F065",
@@ -767,7 +767,7 @@
       "Verify reason field for FORBIDDEN tools",
       "Run: uv run pytest tests/test_permissions.py::test_permission_rule"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F066",
@@ -779,7 +779,7 @@
       "Verify first-match-wins rule resolution",
       "Run: uv run pytest tests/test_permissions.py::test_evaluator_init"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F067",
@@ -791,7 +791,7 @@
       "Verify matches against glob patterns",
       "Run: uv run pytest tests/test_permissions.py::test_evaluate"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F068",
@@ -803,7 +803,7 @@
       "Verify one JSON object per line",
       "Run: uv run pytest tests/test_permissions.py::test_audit_logging"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F069",
@@ -815,7 +815,7 @@
       "Verify returns error message to agent",
       "Run: uv run pytest tests/test_permissions.py::test_forbidden_hook"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F070",
@@ -827,7 +827,7 @@
       "Verify allows if user approves",
       "Run: uv run pytest tests/test_permissions.py::test_confirm_hook"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F071",
@@ -838,7 +838,7 @@
       "Verify includes tool name, result, timestamp",
       "Run: uv run pytest tests/test_permissions.py::test_post_tool_audit"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F072",
@@ -849,7 +849,7 @@
       "Verify includes available tools reference",
       "Verify includes memory usage instructions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F073",
@@ -860,7 +860,7 @@
       "Verify YAML frontmatter with voice: 'echo'",
       "Verify personality description in markdown"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F074",
@@ -871,7 +871,7 @@
       "Verify YAML frontmatter with voice: 'nova'",
       "Verify personality matches Ghost in the Shell character"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F075",
@@ -882,7 +882,7 @@
       "Verify YAML frontmatter with voice: 'onyx'",
       "Verify personality matches Ghost in the Shell character"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F076",
@@ -895,7 +895,7 @@
       "Verify loads markdown content",
       "Run: uv run pytest tests/test_voice.py::test_persona_manager"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F077",
@@ -906,7 +906,7 @@
       "Verify includes wake_words, voice, prompt",
       "Run: uv run pytest tests/test_voice.py::test_get_persona"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F078",
@@ -917,7 +917,7 @@
       "Verify case-insensitive matching",
       "Run: uv run pytest tests/test_voice.py::test_get_persona_by_wake_word"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F079",
@@ -930,7 +930,7 @@
       "Verify opens output stream to speaker",
       "Run: uv run pytest tests/test_voice.py::test_audio_manager"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F080",
@@ -941,7 +941,7 @@
       "Verify handles buffer overflow gracefully",
       "Run: uv run pytest tests/test_voice.py::test_read_input_stream"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F081",
@@ -952,7 +952,7 @@
       "Verify handles buffer underflow gracefully",
       "Run: uv run pytest tests/test_voice.py::test_write_output_stream"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F082",

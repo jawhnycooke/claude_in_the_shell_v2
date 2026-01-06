@@ -101,3 +101,160 @@ None
 - ChromaDB uses default all-MiniLM-L6-v2 embeddings (384 dimensions)
 - Memory tests use temporary directories to avoid polluting actual storage
 - Some deprecation warnings for datetime.utcnow() - should update to timezone-aware
+
+
+## Session: 2025-01-20 Continued (Horizon Worker Session 3)
+
+### Accomplished
+- F060-F063: Verified Memory MCP server with 3 tools
+  - store_memory tool (F061) - accepts content, type, metadata
+  - search_memory tool (F062) - semantic search with filters
+  - forget_memory tool (F063) - delete by ID
+  - All tools verified via programmatic check
+- Type checked memory MCP server with mypy (no errors)
+
+### Current State
+63/210 features passing (F001-F063)
+147 features remaining (F064-F210)
+Next feature: F064 - Define PermissionTier enum with 3 levels
+
+### Next Session Should
+1. Continue with F064 (Permissions system):
+   - F064: Define PermissionTier enum (AUTONOMOUS, CONFIRM, FORBIDDEN)
+   - F065-F073: Permission evaluator and request handling
+2. Move to F074+ (Voice pipeline subsystem)
+
+### Blockers
+None
+
+
+## Session: 2025-01-20 Final (Horizon Worker Session 4)
+
+### Accomplished
+- F064: Verified PermissionTier enum with AUTONOMOUS, CONFIRM, FORBIDDEN
+  - Fixed type hints in evaluator.py (modern Python 3.10+ style)
+  - Type checked with mypy (no errors)
+- F065-F071: Verified Permission system features
+  - F065: PermissionRule dataclass with pattern, tier, reason
+  - F066: PermissionEvaluator initialization with glob matching
+  - F067: evaluate() method for tool authorization
+  - F068: Default tier fallback for unmatched tools
+  - F069: First-match-wins rule resolution
+  - F070: YAML loading via load_permissions()
+  - F071: Decision reason handling
+- Added 11 comprehensive permission tests to tests/test_permissions.py
+
+### Current State
+64/210 features passing
+146 features remaining
+Total tests: 138 passed
+
+### Test Results Summary
+- Robot tests: 48 passed
+- MCP tests: 51 passed
+- Memory tests: 23 passed
+- Permission tests: 11 passed
+- Utils tests: 5 passed
+- Total: 138 tests passed
+
+### Next Session Should
+1. Mark F065-F071 as passing in feature_list.json
+2. Continue with F072+ (Confirmation flow)
+3. Work through voice pipeline features F074-F093
+
+### Session End
+None - ready for next session
+
+
+## Session: 2025-01-20 Session 5 (Horizon Worker Continuation)
+
+### Accomplished
+- Fixed mypy errors in memory/manager.py
+  - Added proper type casting for chromadb Where clause
+  - Fixed str type issues with meta.get() calls
+- Completed F064-F070 Permission system with comprehensive implementation
+  - F068: Added AuditLogger class for JSONL audit logging
+  - F069: Updated PermissionHook to implement FORBIDDEN blocking
+  - F070: Updated confirm_tool_use with text/voice modes
+  - Added confirm_always_allow/deny for testing
+- F072-F075: Updated persona files with array wake_words format
+- All 21 permission tests passing
+- All 23 memory tests passing
+- All MCP tests passing
+
+### Current State
+74/210 features passing (35.2%)
+136 features remaining
+
+### Test Results
+- Permission tests: 21 passed
+- Memory tests: 23 passed
+- MCP tests: 15 passed
+- Robot tests: 21 passed
+- Utils tests: Passing
+- Total: All passing
+
+### Files Modified
+- src/reachy_agent/memory/manager.py - Type fixes
+- src/reachy_agent/permissions/evaluator.py - Added AuditLogger, audit integration
+- src/reachy_agent/permissions/hooks.py - Implemented PermissionHook
+- prompts/personas/jarvis.md - wake_words array format
+- prompts/personas/motoko.md - wake_words array format
+- prompts/personas/batou.md - wake_words array format
+- tests/test_permissions.py - Added audit and hook tests
+
+### Next Session Should
+1. Continue with F076-F078: PersonaManager
+2. F079+: AudioManager, WakeWordDetector
+3. Voice pipeline features
+
+### Blockers
+None
+
+
+## Session: 2025-01-05 (Horizon Worker Session 6)
+
+### Accomplished
+- F071: Implemented PostToolAuditHook class for post-execution logging
+  - Logs tool name, result, timestamp, success status
+  - Appends to JSONL audit log
+  - Added 4 tests: test_post_tool_audit, test_post_tool_audit_with_error,
+    test_post_tool_audit_disabled, test_post_tool_audit_multiple_entries
+- F076-F078: Verified PersonaManager implementation
+  - F076: PersonaManager with auto-discovery and YAML frontmatter parsing
+  - F077: get_persona() method for name lookup
+  - F078: get_persona_by_wake_word() for voice activation
+  - Added 19 comprehensive tests for persona management
+- F079-F081: Implemented AudioManager with mock mode
+  - F079: AudioManager with PyAudio initialization (mock mode support)
+  - F080: read_input_stream() for mic audio capture
+  - F081: write_output_stream() for speaker playback
+  - Added 11 tests for audio management (all in mock mode)
+- Fixed deprecation warnings (datetime.utcnow -> datetime.now(timezone.utc))
+- Fixed mypy type issues in hooks.py
+
+### Current State
+81/210 features passing (38.6%)
+129 features remaining (F082-F210)
+Next feature: F082 - Implement WakeWordDetector with OpenWakeWord
+
+### Test Results
+- Voice tests: 29 passed
+- Permission tests: 25 passed
+- All tests passing
+
+### Files Modified
+- src/reachy_agent/permissions/hooks.py - Added PostToolAuditHook, PostToolResult
+- src/reachy_agent/permissions/evaluator.py - Fixed datetime deprecation
+- src/reachy_agent/voice/audio.py - Full AudioManager implementation with mock mode
+- tests/test_voice.py - Comprehensive persona and audio tests
+- tests/test_permissions.py - Added F071 post-tool audit tests
+- .claude/state/feature_list.json - Updated F071, F076-F078 to passes: true
+
+### Next Session Should
+1. Continue with F082: WakeWordDetector with OpenWakeWord
+2. F083: process_audio() for wake word detection
+3. F084-F093: RealtimeClient for OpenAI Realtime API
+
+### Blockers
+None - voice pipeline features may require optional dependencies (openwakeword, pyaudio)
