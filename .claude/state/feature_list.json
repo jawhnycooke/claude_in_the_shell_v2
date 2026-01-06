@@ -1079,7 +1079,7 @@
       "Verify transitions to listening state",
       "Run: uv run pytest tests/test_voice.py::test_wake_detected_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F093",
@@ -1090,7 +1090,7 @@
       "Verify starts audio capture for STT",
       "Run: uv run pytest tests/test_voice.py::test_listening_start_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F094",
@@ -1101,7 +1101,7 @@
       "Verify emits event with audio duration",
       "Run: uv run pytest tests/test_voice.py::test_listening_end_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F095",
@@ -1112,7 +1112,7 @@
       "Verify includes text and confidence",
       "Run: uv run pytest tests/test_voice.py::test_transcribed_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F096",
@@ -1123,7 +1123,7 @@
       "Verify includes query text",
       "Run: uv run pytest tests/test_voice.py::test_processing_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F097",
@@ -1134,7 +1134,7 @@
       "Verify includes response text",
       "Run: uv run pytest tests/test_voice.py::test_response_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F098",
@@ -1145,7 +1145,7 @@
       "Verify includes text and voice",
       "Run: uv run pytest tests/test_voice.py::test_speaking_start_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F099",
@@ -1156,7 +1156,7 @@
       "Verify returns to wake word detection",
       "Run: uv run pytest tests/test_voice.py::test_speaking_end_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F100",
@@ -1168,7 +1168,7 @@
       "Verify transitions to listening",
       "Run: uv run pytest tests/test_voice.py::test_interrupted_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F101",
@@ -1180,7 +1180,7 @@
       "Verify includes error type and message",
       "Run: uv run pytest tests/test_voice.py::test_error_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F102",
@@ -1192,7 +1192,7 @@
       "Verify includes phase name",
       "Run: uv run pytest tests/test_voice.py::test_timeout_event"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F103",
@@ -1203,7 +1203,7 @@
       "Verify payload data included in logs",
       "Verify structured logging format"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F104",

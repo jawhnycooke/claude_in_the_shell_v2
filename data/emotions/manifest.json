@@ -1,0 +1,6 @@
+{
+  "version": "1.0",
+  "count": 81,
+  "emotions": [],
+  "note": "Use scripts/download_emotions.py to populate this library"
+}

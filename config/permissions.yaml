@@ -1,0 +1,85 @@
+# Permission rules for tool execution
+
+rules:
+  # Robot observation - always allowed
+  - pattern: "get_*"
+    tier: autonomous
+
+  - pattern: "is_*"
+    tier: autonomous
+
+  - pattern: "capture_image"
+    tier: autonomous
+
+  - pattern: "detect_*"
+    tier: autonomous
+
+  # Robot control - allowed (reversible)
+  - pattern: "move_*"
+    tier: autonomous
+
+  - pattern: "look_at"
+    tier: autonomous
+
+  - pattern: "rotate_*"
+    tier: autonomous
+
+  - pattern: "play_*"
+    tier: autonomous
+
+  - pattern: "set_antennas"
+    tier: autonomous
+
+  - pattern: "nod"
+    tier: autonomous
+
+  - pattern: "shake"
+    tier: autonomous
+
+  # Audio - allowed
+  - pattern: "speak"
+    tier: autonomous
+
+  - pattern: "listen"
+    tier: autonomous
+
+  # Lifecycle - allowed
+  - pattern: "wake_up"
+    tier: autonomous
+
+  - pattern: "sleep"
+    tier: autonomous
+
+  # Memory - context window allowed, permanent facts need confirmation
+  - pattern: "search_memories"
+    tier: autonomous
+
+  - pattern: "store_memory"
+    tier: confirm
+    reason: "Storing permanent memories requires approval"
+
+  - pattern: "forget_memory"
+    tier: confirm
+    reason: "Deleting memories requires approval"
+
+  # External APIs - need confirmation
+  - pattern: "github_*"
+    tier: confirm
+    reason: "External API actions require approval"
+
+  # System-level - forbidden
+  - pattern: "exec_*"
+    tier: forbidden
+    reason: "System command execution is not allowed"
+
+  - pattern: "shell_*"
+    tier: forbidden
+
+# Default for unmatched tools
+default_tier: confirm
+
+# Audit logging
+audit:
+  enabled: true
+  path: ~/.reachy/audit.jsonl
+  retention_days: 30

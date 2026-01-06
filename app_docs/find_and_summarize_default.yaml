@@ -1,0 +1,138 @@
+run_name: default
+timestamp: '2025-01-15'
+files:
+  - path: ./src/reachy_agent/__init__.py
+    summary: Package initialization file that exports the main ReachyAgentLoop and AgentConfig classes for external use. Defines package metadata including version 0.1.0 and author information.
+
+  - path: ./src/reachy_agent/__main__.py
+    summary: CLI entry point providing Typer-based commands for running, checking, and versioning the Reachy agent. Implements text REPL mode and voice mode with options for mock hardware, debug settings, and persona selection.
+
+  - path: ./src/reachy_agent/agent/__init__.py
+    summary: Agent core module that exports ReachyAgentLoop and AgentConfig classes. Serves as the public interface for the agent subsystem.
+
+  - path: ./src/reachy_agent/agent/loop.py
+    summary: Main agent coordinator that orchestrates Claude, MCP tools, voice, motion, memory, and permissions. Currently a skeleton with TODO items for tool execution, permission checks, context window integration, and error recovery.
+
+  - path: ./src/reachy_agent/agent/options.py
+    summary: Configuration dataclass for agent settings including model selection, component flags, and prompt paths. Provides load_system_prompt method that merges base prompts with optional persona overlays from YAML frontmatter.
+
+  - path: ./src/reachy_agent/memory/__init__.py
+    summary: Memory system module that exports MemoryManager and MemoryType classes. Provides interface to the ChromaDB-based memory subsystem.
+
+  - path: ./src/reachy_agent/memory/manager.py
+    summary: ChromaDB-based memory manager implementing semantic search with three memory types (CONVERSATION, FACT, CONTEXT) each having different expiry policies. Maintains a context window for recent turns and provides store/search/forget operations (currently unimplemented with TODOs).
+
+  - path: ./src/reachy_agent/mcp/__init__.py
+    summary: MCP server modules package initialization file. Contains no exports as MCP servers are standalone executables.
+
+  - path: ./src/reachy_agent/mcp/memory.py
+    summary: FastMCP-based memory server exposing three tools (search_memories, store_memory, forget_memory) for agent memory operations. Currently returns placeholder data with TODOs to integrate with MemoryManager.
+
+  - path: ./src/reachy_agent/mcp/robot.py
+    summary: FastMCP-based robot control server with stubs for 20 tools including move_head, get_status, and play_emotion. Contains TODOs for implementing all robot control operations and integrating with ReachyClient.
+
+  - path: ./src/reachy_agent/motion/__init__.py
+    summary: Motion control module that exports BlendController and IdleBehavior classes. Provides interface to the 30Hz motion blending subsystem.
+
+  - path: ./src/reachy_agent/motion/controller.py
+    summary: 30Hz motion blend controller that orchestrates PRIMARY (mutually exclusive) and OVERLAY (additive) motion sources. Implements pose blending, hardware limit clamping, and maintains the main control loop (currently skeleton with TODOs).
+
+  - path: ./src/reachy_agent/motion/idle.py
+    summary: Idle look-around behavior using Perlin noise for organic head movements and antenna drift. Currently returns neutral pose with TODOs to implement actual noise-based motion generation.
+
+  - path: ./src/reachy_agent/motion/wobble.py
+    summary: Audio-reactive speech wobble overlay that adds pitch/roll oscillation modulated by audio level. Implements sinusoidal wobble at configurable intensity and frequency for natural-looking speech animation.
+
+  - path: ./src/reachy_agent/motion/emotion.py
+    summary: Emotion playback system that plays pre-recorded animations frame-by-frame from emotion library data. Handles frame sequencing, completion detection, and converts frame data to MotionOutput.
+
+  - path: ./src/reachy_agent/permissions/__init__.py
+    summary: Permission system module exporting PermissionEvaluator, PermissionTier, PermissionRule, and PermissionDecision classes. Provides interface for tool execution permission checks.
+
+  - path: ./src/reachy_agent/permissions/evaluator.py
+    summary: Permission rule evaluator using glob pattern matching to classify tools as AUTONOMOUS, CONFIRM, or FORBIDDEN. Includes load_permissions function to parse YAML config files and create evaluator instances.
+
+  - path: ./src/reachy_agent/permissions/hooks.py
+    summary: Agent SDK hooks for permission enforcement with pre-tool-use integration. Provides confirmation callbacks for both text and voice modes (voice mode not yet implemented).
+
+  - path: ./src/reachy_agent/robot/__init__.py
+    summary: Robot hardware abstraction layer exporting ReachyClient protocol, Backend enum, and concrete implementations (SDKClient, MockClient). Centralizes all robot control interfaces.
+
+  - path: ./src/reachy_agent/robot/client.py
+    summary: Unified robot client protocol defining the interface for all robot operations including lifecycle, movement, expression, audio, perception, and status methods. Uses dataclasses for HeadPose, AntennaState, and RobotStatus with hardware limits documented.
+
+  - path: ./src/reachy_agent/robot/sdk.py
+    summary: Production robot client using Reachy Mini SDK over Zenoh for hardware communication. Skeleton implementation with TODOs for SDK integration, 200ms result caching, and all robot operations.
+
+  - path: ./src/reachy_agent/robot/mock.py
+    summary: Mock robot client simulating all robot operations in-memory with realistic timing and state tracking. Fully implemented for testing without hardware, including wake/sleep, movement, emotions, audio, and sensors.
+
+  - path: ./src/reachy_agent/utils/__init__.py
+    summary: Utility modules package exporting load_config, EventEmitter, and setup_logging functions. Provides common infrastructure for configuration, events, and logging.
+
+  - path: ./src/reachy_agent/utils/config.py
+    summary: Configuration loading utilities using PyYAML to load and parse YAML config files for agent settings and permissions. Includes validation and error handling with FileNotFoundError and YAMLError.
+
+  - path: ./src/reachy_agent/utils/events.py
+    summary: Event-driven base class providing async event registration and emission with error handling. Includes Event dataclass with timestamp and EventEmitter class supporting decorator-based handler registration.
+
+  - path: ./src/reachy_agent/utils/logging.py
+    summary: Structured logging setup using structlog with console rendering and ISO timestamps. Configures both stdlib logging and structlog with processors for filtering, formatting, and development-friendly output.
+
+  - path: ./src/reachy_agent/voice/__init__.py
+    summary: Voice interaction module exporting VoicePipeline and PersonaManager classes. Provides interface to the event-driven voice subsystem.
+
+  - path: ./src/reachy_agent/voice/audio.py
+    summary: Audio capture and playback manager using PyAudio for mic input and speaker output. Skeleton implementation with TODOs for PyAudio initialization, streaming callbacks, and cleanup.
+
+  - path: ./src/reachy_agent/voice/persona.py
+    summary: Persona management system with auto-discovery from markdown files with YAML frontmatter. Handles wake word matching, voice lookups, and persona switching (currently skeleton with TODOs).
+
+  - path: ./src/reachy_agent/voice/pipeline.py
+    summary: Event-driven voice interaction pipeline coordinating wake detection, listening, transcription, processing, and speaking with barge-in support. Implements event handlers for all pipeline stages using EventEmitter pattern (mostly unimplemented with TODOs).
+
+  - path: ./src/reachy_agent/voice/realtime.py
+    summary: OpenAI Realtime API WebSocket client for streaming STT and TTS over a single connection. Skeleton implementation with TODOs for connection management, session handling, transcription, and audio streaming.
+
+  - path: ./src/reachy_agent/voice/wake_word.py
+    summary: Continuous wake word detection using OpenWakeWord with multi-model support and barge-in capability. Processes audio chunks and triggers callbacks when wake words are detected above sensitivity threshold (skeleton with TODOs).
+
+  - path: ./scripts/download_emotions.py
+    summary: CLI script to download the 81-emotion library from Pollen Robotics repository. Creates manifest.json tracking available emotions (skeleton with TODOs for actual download logic).
+
+  - path: ./scripts/test_hardware.py
+    summary: Hardware test suite script that validates robot connectivity, motor control, and sensor reading. Displays results in Rich table format and exits with appropriate status code (uses unimplemented SDKClient).
+
+  - path: ./.claude/hooks/session_start.py
+    summary: SessionStart hook script implementing the autonomous-coding horizon pattern for agent context loading. Displays feature progress, recent notes, and git status in a Rich panel using Pydantic models to validate feature_list.json structure.
+
+  - path: ./tests/__init__.py
+    summary: Test suite package initialization file. Empty module serving as package marker.
+
+  - path: ./tests/conftest.py
+    summary: Shared pytest fixtures providing config_path, mock_robot, and agent_config fixtures for testing. Includes TODOs for additional fixtures like mock memory manager and sample data.
+
+  - path: ./tests/test_agent.py
+    summary: Test suite for ReachyAgentLoop with basic initialization test. Contains TODOs for tests covering start/stop, input processing, tool execution, and error recovery.
+
+  - path: ./tests/test_memory.py
+    summary: Test suite for MemoryManager with placeholder for initialization test. Contains TODOs for testing store/retrieve, semantic search, context window, and expiry cleanup.
+
+  - path: ./tests/test_motion.py
+    summary: Async test suite for BlendController with basic initialization test using mock_robot fixture. Contains TODOs for testing primary sources, overlay blending, pose clamping, and 30Hz timing.
+
+  - path: ./tests/test_permissions.py
+    summary: Test suite for PermissionEvaluator with working glob pattern matching test validating AUTONOMOUS and FORBIDDEN tiers. Contains TODOs for testing default tier, confirmation flow, and audit logging.
+
+  - path: ./tests/test_robot.py
+    summary: Async test suite for MockClient with working connection and head movement tests. Contains TODOs for testing all movements, expressions, sensor reading, and status queries.
+
+  - path: ./tests/test_voice.py
+    summary: Test suite for PersonaManager with placeholder for persona discovery test. Contains TODOs for testing wake word matching, voice lookup, and persona switching.
+
+summary_stats:
+  total_files: 43
+  total_lines: ~5000
+  primary_language: Python
+  project_type: Embodied AI agent for Reachy Mini robot
+  implementation_status: Early skeleton phase with many TODOs

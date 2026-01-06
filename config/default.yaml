@@ -1,0 +1,44 @@
+# Default configuration for Reachy Agent
+
+agent:
+  model: claude-haiku-4-5-20251001
+  name: Jarvis
+  max_tokens: 4096
+  temperature: 0.7
+
+voice:
+  personas: [motoko, batou, jarvis]  # Auto-discovered from prompts/personas/
+  wake_sensitivity: 0.5
+  silence_threshold: 0.3  # seconds of silence to end listening
+  max_listen_time: 30.0   # max seconds to listen
+
+motion:
+  tick_hz: 30
+  idle:
+    speed: 0.1
+    amplitude: 0.3
+    antenna_drift: 0.2
+  wobble:
+    intensity: 1.0
+    frequency: 4.0
+
+memory:
+  path: ~/.reachy/memory
+  context_window_size: 5
+  embedding_model: all-MiniLM-L6-v2
+  cleanup_interval: 3600  # seconds
+
+robot:
+  backend: sdk  # or "mock" for testing
+  connect_timeout: 5.0
+
+cache:
+  status_ttl: 0.2   # 200ms
+  pose_ttl: 0.2     # 200ms
+  battery_ttl: 5.0  # 5 seconds
+  sensor_ttl: 0.1   # 100ms
+
+openai:
+  realtime_model: gpt-4o-realtime-preview
+
+system_prompt: prompts/system.md
