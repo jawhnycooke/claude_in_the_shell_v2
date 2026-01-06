@@ -258,3 +258,120 @@ Next feature: F082 - Implement WakeWordDetector with OpenWakeWord
 
 ### Blockers
 None - voice pipeline features may require optional dependencies (openwakeword, pyaudio)
+
+
+## Session: 2025-01-14 (Horizon Worker Session 7)
+
+### Accomplished
+- F082-F083: WakeWordDetector with mock mode
+- F084-F088: RealtimeClient for OpenAI Realtime API
+- F089-F091: VoicePipeline event-driven architecture
+- F092-F102: Voice pipeline event tests (wake_detected, listening_start/end, transcribed, processing, response, speaking_start/end, interrupted, error, timeout)
+- F103: Voice event debug logging (timestamps, payload data, structured logging)
+- F104-F110: BlendController motion control system
+  - 30Hz control loop with drift correction
+  - PRIMARY/OVERLAY source blending
+  - Pose clamping to hardware limits
+  - MotionSource protocol interface
+
+### Current State
+110/210 features passing (52.4%)
+100 features remaining (F111-F210)
+Next feature: F111 - IdleBehavior as PRIMARY motion source
+
+### Test Results
+- All voice tests: 73 passed
+- All motion tests: 22 passed
+- All robot tests: 48 passed
+- All MCP tests: 51 passed
+- All memory tests: 23 passed
+- All permission tests: 25 passed
+- Total: All tests passing
+
+### Files Modified
+- src/reachy_agent/voice/wake_word.py - Complete WakeWordDetector implementation
+- src/reachy_agent/voice/realtime.py - Complete OpenAI Realtime API client
+- src/reachy_agent/voice/pipeline.py - Complete event-driven VoicePipeline
+- src/reachy_agent/motion/controller.py - Complete BlendController with blending
+- tests/test_voice.py - Comprehensive voice event tests
+- tests/test_motion.py - Comprehensive motion control tests
+
+### Next Session Should
+1. Continue with F111-F120: Motion behavior implementations
+   - F111-F114: IdleBehavior (head drift, antenna wiggle, micro-adjustments)
+   - F115-F117: SpeechWobble overlay
+   - F118-F120: EmotionBehavior
+2. Then F121+: Agent core, CLI, integration tests
+
+### Blockers
+None - core systems complete, ready for behavior implementations
+
+
+## Session: 2025-01-15 (Horizon Worker Session 8)
+
+### Accomplished
+- F111-F114: Verified IdleBehavior implementation
+  - HEAD drift with Perlin-like noise
+  - Independent antenna wiggle
+  - Micro-adjustments for "alive" feel
+  - All 7 IdleBehavior tests passing
+- F115-F119: Verified SpeechWobble implementation
+  - OVERLAY motion source with audio modulation
+  - Head bob synchronized to speech
+  - Configurable frequency and intensity
+  - start()/stop() methods for TTS integration
+  - All wobble tests passing
+- F120-F123: Completed EmotionPlayback implementation
+  - Frame-by-frame animation playback
+  - get_positions()/get_deltas() for protocol compliance
+  - Animation loading and sequence support
+  - All emotion tests passing
+- F124-F125: Created data/emotions/ directory structure
+  - Complete manifest.json with 81 emotions
+  - 9 categories (basic, social, reactions, complex, actions, personality, communication, special, idle)
+  - Includes metadata (duration, intensity)
+- F126: Verified voice-motion integration
+  - speaking_start activates wobble
+  - speaking_end deactivates wobble
+  - Full integration tests passing
+- F127-F131: Verified Agent Core features
+  - AgentConfig builder with prompt loading
+  - MCP server configuration support
+  - Permission hooks integration
+  - Model selection
+  - ReachyAgentLoop main coordinator
+
+### Current State
+131/210 features passing (62.4%)
+79 features remaining (F132-F210)
+Next feature: F132 - Implement agent loop startup sequence
+
+### Test Results
+- All tests: 290 passed
+- Motion tests: 48 passed
+- Integration tests: 6 passed
+- Agent tests: 15 passed
+- Voice tests: 73 passed
+- Robot tests: 48 passed
+- MCP tests: 51 passed
+- Memory tests: 23 passed
+- Permission tests: 25 passed
+
+### Files Modified
+- src/reachy_agent/motion/wobble.py - Complete SpeechWobble implementation
+- src/reachy_agent/motion/emotion.py - Complete EmotionPlayback implementation
+- data/emotions/manifest.json - Complete 81-emotion library manifest
+- tests/test_motion.py - Added F118-F123 tests
+- tests/test_agent.py - Added F127-F131 tests
+- .claude/state/feature_list.json - Updated F115-F131 to passes: true
+
+### Next Session Should
+1. Continue with F132-F140: Agent loop completion
+   - F132: Startup sequence
+   - F133-F135: Shutdown, process loop, tool execution
+   - F136-F140: Context management, error handling
+2. F141+: CLI implementation
+3. F160+: Testing framework and E2E tests
+
+### Blockers
+None - agent core ready for loop completion

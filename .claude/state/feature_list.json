@@ -1215,7 +1215,7 @@
       "Verify blends PRIMARY and OVERLAY sources",
       "Run: uv run pytest tests/test_motion.py::test_blend_controller"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F105",
@@ -1226,7 +1226,7 @@
       "Verify handles timing drift correction",
       "Run: uv run pytest tests/test_motion.py::test_controller_start"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F106",
@@ -1237,7 +1237,7 @@
       "Verify completes current tick before stopping",
       "Run: uv run pytest tests/test_motion.py::test_controller_stop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F107",
@@ -1248,7 +1248,7 @@
       "Verify switches PRIMARY source atomically",
       "Run: uv run pytest tests/test_motion.py::test_set_primary_source"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F108",
@@ -1259,7 +1259,7 @@
       "Verify overlays on top of PRIMARY",
       "Run: uv run pytest tests/test_motion.py::test_set_overlay_source"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F109",
@@ -1272,7 +1272,7 @@
       "Verify clamps to joint limits",
       "Run: uv run pytest tests/test_motion.py::test_motion_blending"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F110",
@@ -1283,7 +1283,7 @@
       "Verify get_deltas() method returns offset dict",
       "Run: uv run mypy src/reachy_agent/motion/controller.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F111",
@@ -1295,7 +1295,7 @@
       "Verify generates subtle random movements",
       "Run: uv run pytest tests/test_motion.py::test_idle_behavior"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F112",
@@ -1307,7 +1307,7 @@
       "Verify respects joint limits",
       "Run: uv run pytest tests/test_motion.py::test_idle_head_drift"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F113",
@@ -1318,7 +1318,7 @@
       "Verify natural timing (not synchronized)",
       "Run: uv run pytest tests/test_motion.py::test_idle_antenna_wiggle"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F114",
@@ -1329,7 +1329,7 @@
       "Verify unpredictable timing",
       "Run: uv run pytest tests/test_motion.py::test_idle_micro_adjustments"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F115",
@@ -1341,7 +1341,7 @@
       "Verify get_deltas() returns head motion offsets",
       "Run: uv run pytest tests/test_motion.py::test_speech_wobble"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F116",
@@ -1352,7 +1352,7 @@
       "Verify timing matches speech cadence",
       "Run: uv run pytest tests/test_motion.py::test_wobble_head_bob"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F117",
@@ -1363,7 +1363,7 @@
       "Verify stops when speech ends",
       "Run: uv run pytest tests/test_motion.py::test_wobble_antenna_flutter"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F118",
@@ -1374,7 +1374,7 @@
       "Verify resets phase for natural start",
       "Run: uv run pytest tests/test_motion.py::test_wobble_start"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F119",
@@ -1385,7 +1385,7 @@
       "Verify smooth return to PRIMARY motion",
       "Run: uv run pytest tests/test_motion.py::test_wobble_stop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F120",
@@ -1397,7 +1397,7 @@
       "Verify loads animation from .npz files",
       "Run: uv run pytest tests/test_motion.py::test_emotion_playback"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F121",
@@ -1409,7 +1409,7 @@
       "Verify handles missing files gracefully",
       "Run: uv run pytest tests/test_motion.py::test_load_emotion"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F122",
@@ -1421,7 +1421,7 @@
       "Verify loops back to idle when complete",
       "Run: uv run pytest tests/test_motion.py::test_emotion_playback_interpolation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F123",
@@ -1432,7 +1432,7 @@
       "Verify transitions smoothly between emotions",
       "Run: uv run pytest tests/test_motion.py::test_emotion_sequence"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F124",
@@ -1443,7 +1443,7 @@
       "Verify manifest.json with emotion metadata",
       "Verify placeholder for emotion .npz files"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F125",
@@ -1454,7 +1454,7 @@
       "Verify includes metadata (duration, intensity)",
       "Verify includes emotion categories"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F126",
@@ -1465,7 +1465,7 @@
       "Verify speaking_end event deactivates wobble",
       "Run: uv run pytest tests/test_integration.py::test_voice_motion_integration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F127",
@@ -1477,7 +1477,7 @@
       "Verify loads system prompt from prompts/system.md",
       "Run: uv run pytest tests/test_agent.py::test_agent_options"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F128",
@@ -1489,7 +1489,7 @@
       "Verify uses stdio transport",
       "Run: uv run pytest tests/test_agent.py::test_mcp_configuration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F129",
@@ -1500,7 +1500,7 @@
       "Verify registers post-tool hook for audit logging",
       "Run: uv run pytest tests/test_agent.py::test_permission_hooks_integration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F130",
@@ -1512,7 +1512,7 @@
       "Verify respects environment variable override",
       "Run: uv run pytest tests/test_agent.py::test_model_selection"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F131",
@@ -1524,7 +1524,7 @@
       "Verify creates Agent instance from claude-agent-sdk",
       "Run: uv run pytest tests/test_agent.py::test_agent_loop_init"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F132",

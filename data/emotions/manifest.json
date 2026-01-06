@@ -1,6 +1,135 @@
 {
   "version": "1.0",
   "count": 81,
-  "emotions": [],
-  "note": "Use scripts/download_emotions.py to populate this library"
+  "categories": [
+    {
+      "name": "basic",
+      "description": "Core emotional expressions",
+      "emotions": ["happy", "sad", "curious", "surprised", "confused", "tired", "angry", "fearful", "disgusted", "neutral"]
+    },
+    {
+      "name": "social",
+      "description": "Social interaction animations",
+      "emotions": ["greeting", "farewell", "acknowledgment", "thinking", "listening", "explaining", "agreeing", "disagreeing", "encouraging", "comforting"]
+    },
+    {
+      "name": "reactions",
+      "description": "Response animations",
+      "emotions": ["yes", "no", "maybe", "excitement", "disappointment", "relief", "concern", "interest", "boredom", "wonder"]
+    },
+    {
+      "name": "complex",
+      "description": "Complex emotional states",
+      "emotions": ["interested", "skeptical", "amused", "concerned", "confident", "uncertain", "playful", "serious", "proud", "humble"]
+    },
+    {
+      "name": "actions",
+      "description": "Action-based animations",
+      "emotions": ["look_left", "look_right", "look_up", "look_down", "nod", "shake_head", "tilt_head", "blink", "focus", "scan"]
+    },
+    {
+      "name": "personality",
+      "description": "Personality expressions",
+      "emotions": ["mischievous", "dreamy", "alert", "relaxed", "energetic", "calm", "eager", "patient", "impatient", "attentive"]
+    },
+    {
+      "name": "communication",
+      "description": "Communication aids",
+      "emotions": ["processing", "loading", "ready", "waiting", "completed", "error", "success", "warning", "info", "question"]
+    },
+    {
+      "name": "special",
+      "description": "Special occasion animations",
+      "emotions": ["celebration", "gratitude", "apology", "sympathy", "admiration", "determination", "resignation", "anticipation", "satisfaction", "confusion_intense"]
+    },
+    {
+      "name": "idle",
+      "description": "Idle state animations",
+      "emotions": ["idle_default"]
+    }
+  ],
+  "emotions": [
+    {"name": "happy", "category": "basic", "duration": 2.0, "intensity": 0.8, "file": "happy.npz"},
+    {"name": "sad", "category": "basic", "duration": 2.5, "intensity": 0.6, "file": "sad.npz"},
+    {"name": "curious", "category": "basic", "duration": 1.5, "intensity": 0.7, "file": "curious.npz"},
+    {"name": "surprised", "category": "basic", "duration": 1.0, "intensity": 0.9, "file": "surprised.npz"},
+    {"name": "confused", "category": "basic", "duration": 2.0, "intensity": 0.5, "file": "confused.npz"},
+    {"name": "tired", "category": "basic", "duration": 3.0, "intensity": 0.4, "file": "tired.npz"},
+    {"name": "angry", "category": "basic", "duration": 2.0, "intensity": 0.8, "file": "angry.npz"},
+    {"name": "fearful", "category": "basic", "duration": 1.5, "intensity": 0.7, "file": "fearful.npz"},
+    {"name": "disgusted", "category": "basic", "duration": 1.5, "intensity": 0.6, "file": "disgusted.npz"},
+    {"name": "neutral", "category": "basic", "duration": 1.0, "intensity": 0.0, "file": "neutral.npz"},
+    {"name": "greeting", "category": "social", "duration": 2.0, "intensity": 0.7, "file": "greeting.npz"},
+    {"name": "farewell", "category": "social", "duration": 2.0, "intensity": 0.6, "file": "farewell.npz"},
+    {"name": "acknowledgment", "category": "social", "duration": 1.0, "intensity": 0.5, "file": "acknowledgment.npz"},
+    {"name": "thinking", "category": "social", "duration": 3.0, "intensity": 0.4, "file": "thinking.npz"},
+    {"name": "listening", "category": "social", "duration": 2.0, "intensity": 0.3, "file": "listening.npz"},
+    {"name": "explaining", "category": "social", "duration": 2.5, "intensity": 0.6, "file": "explaining.npz"},
+    {"name": "agreeing", "category": "social", "duration": 1.5, "intensity": 0.6, "file": "agreeing.npz"},
+    {"name": "disagreeing", "category": "social", "duration": 1.5, "intensity": 0.5, "file": "disagreeing.npz"},
+    {"name": "encouraging", "category": "social", "duration": 2.0, "intensity": 0.7, "file": "encouraging.npz"},
+    {"name": "comforting", "category": "social", "duration": 3.0, "intensity": 0.5, "file": "comforting.npz"},
+    {"name": "yes", "category": "reactions", "duration": 1.0, "intensity": 0.7, "file": "yes.npz"},
+    {"name": "no", "category": "reactions", "duration": 1.0, "intensity": 0.6, "file": "no.npz"},
+    {"name": "maybe", "category": "reactions", "duration": 1.5, "intensity": 0.4, "file": "maybe.npz"},
+    {"name": "excitement", "category": "reactions", "duration": 2.0, "intensity": 0.9, "file": "excitement.npz"},
+    {"name": "disappointment", "category": "reactions", "duration": 2.0, "intensity": 0.6, "file": "disappointment.npz"},
+    {"name": "relief", "category": "reactions", "duration": 2.0, "intensity": 0.5, "file": "relief.npz"},
+    {"name": "concern", "category": "reactions", "duration": 2.0, "intensity": 0.6, "file": "concern.npz"},
+    {"name": "interest", "category": "reactions", "duration": 1.5, "intensity": 0.7, "file": "interest.npz"},
+    {"name": "boredom", "category": "reactions", "duration": 2.5, "intensity": 0.3, "file": "boredom.npz"},
+    {"name": "wonder", "category": "reactions", "duration": 2.0, "intensity": 0.8, "file": "wonder.npz"},
+    {"name": "interested", "category": "complex", "duration": 2.0, "intensity": 0.7, "file": "interested.npz"},
+    {"name": "skeptical", "category": "complex", "duration": 2.0, "intensity": 0.5, "file": "skeptical.npz"},
+    {"name": "amused", "category": "complex", "duration": 2.0, "intensity": 0.7, "file": "amused.npz"},
+    {"name": "concerned", "category": "complex", "duration": 2.5, "intensity": 0.6, "file": "concerned.npz"},
+    {"name": "confident", "category": "complex", "duration": 2.0, "intensity": 0.7, "file": "confident.npz"},
+    {"name": "uncertain", "category": "complex", "duration": 2.0, "intensity": 0.4, "file": "uncertain.npz"},
+    {"name": "playful", "category": "complex", "duration": 2.5, "intensity": 0.8, "file": "playful.npz"},
+    {"name": "serious", "category": "complex", "duration": 2.0, "intensity": 0.5, "file": "serious.npz"},
+    {"name": "proud", "category": "complex", "duration": 2.0, "intensity": 0.7, "file": "proud.npz"},
+    {"name": "humble", "category": "complex", "duration": 2.0, "intensity": 0.4, "file": "humble.npz"},
+    {"name": "look_left", "category": "actions", "duration": 1.0, "intensity": 0.5, "file": "look_left.npz"},
+    {"name": "look_right", "category": "actions", "duration": 1.0, "intensity": 0.5, "file": "look_right.npz"},
+    {"name": "look_up", "category": "actions", "duration": 1.0, "intensity": 0.5, "file": "look_up.npz"},
+    {"name": "look_down", "category": "actions", "duration": 1.0, "intensity": 0.5, "file": "look_down.npz"},
+    {"name": "nod", "category": "actions", "duration": 1.0, "intensity": 0.6, "file": "nod.npz"},
+    {"name": "shake_head", "category": "actions", "duration": 1.5, "intensity": 0.6, "file": "shake_head.npz"},
+    {"name": "tilt_head", "category": "actions", "duration": 1.0, "intensity": 0.4, "file": "tilt_head.npz"},
+    {"name": "blink", "category": "actions", "duration": 0.5, "intensity": 0.3, "file": "blink.npz"},
+    {"name": "focus", "category": "actions", "duration": 1.5, "intensity": 0.6, "file": "focus.npz"},
+    {"name": "scan", "category": "actions", "duration": 3.0, "intensity": 0.5, "file": "scan.npz"},
+    {"name": "mischievous", "category": "personality", "duration": 2.0, "intensity": 0.7, "file": "mischievous.npz"},
+    {"name": "dreamy", "category": "personality", "duration": 3.0, "intensity": 0.4, "file": "dreamy.npz"},
+    {"name": "alert", "category": "personality", "duration": 1.5, "intensity": 0.8, "file": "alert.npz"},
+    {"name": "relaxed", "category": "personality", "duration": 2.5, "intensity": 0.3, "file": "relaxed.npz"},
+    {"name": "energetic", "category": "personality", "duration": 2.0, "intensity": 0.9, "file": "energetic.npz"},
+    {"name": "calm", "category": "personality", "duration": 2.5, "intensity": 0.2, "file": "calm.npz"},
+    {"name": "eager", "category": "personality", "duration": 1.5, "intensity": 0.8, "file": "eager.npz"},
+    {"name": "patient", "category": "personality", "duration": 3.0, "intensity": 0.3, "file": "patient.npz"},
+    {"name": "impatient", "category": "personality", "duration": 2.0, "intensity": 0.7, "file": "impatient.npz"},
+    {"name": "attentive", "category": "personality", "duration": 2.0, "intensity": 0.6, "file": "attentive.npz"},
+    {"name": "processing", "category": "communication", "duration": 2.0, "intensity": 0.4, "file": "processing.npz"},
+    {"name": "loading", "category": "communication", "duration": 3.0, "intensity": 0.3, "file": "loading.npz"},
+    {"name": "ready", "category": "communication", "duration": 1.0, "intensity": 0.6, "file": "ready.npz"},
+    {"name": "waiting", "category": "communication", "duration": 2.5, "intensity": 0.3, "file": "waiting.npz"},
+    {"name": "completed", "category": "communication", "duration": 1.5, "intensity": 0.7, "file": "completed.npz"},
+    {"name": "error", "category": "communication", "duration": 1.5, "intensity": 0.6, "file": "error.npz"},
+    {"name": "success", "category": "communication", "duration": 1.5, "intensity": 0.8, "file": "success.npz"},
+    {"name": "warning", "category": "communication", "duration": 1.5, "intensity": 0.5, "file": "warning.npz"},
+    {"name": "info", "category": "communication", "duration": 1.0, "intensity": 0.4, "file": "info.npz"},
+    {"name": "question", "category": "communication", "duration": 1.5, "intensity": 0.5, "file": "question.npz"},
+    {"name": "celebration", "category": "special", "duration": 3.0, "intensity": 0.9, "file": "celebration.npz"},
+    {"name": "gratitude", "category": "special", "duration": 2.0, "intensity": 0.7, "file": "gratitude.npz"},
+    {"name": "apology", "category": "special", "duration": 2.5, "intensity": 0.5, "file": "apology.npz"},
+    {"name": "sympathy", "category": "special", "duration": 2.5, "intensity": 0.6, "file": "sympathy.npz"},
+    {"name": "admiration", "category": "special", "duration": 2.0, "intensity": 0.7, "file": "admiration.npz"},
+    {"name": "determination", "category": "special", "duration": 2.0, "intensity": 0.8, "file": "determination.npz"},
+    {"name": "resignation", "category": "special", "duration": 2.5, "intensity": 0.4, "file": "resignation.npz"},
+    {"name": "anticipation", "category": "special", "duration": 2.0, "intensity": 0.7, "file": "anticipation.npz"},
+    {"name": "satisfaction", "category": "special", "duration": 2.0, "intensity": 0.6, "file": "satisfaction.npz"},
+    {"name": "confusion_intense", "category": "special", "duration": 2.0, "intensity": 0.7, "file": "confusion_intense.npz"},
+    {"name": "idle_default", "category": "idle", "duration": 5.0, "intensity": 0.1, "file": "idle_default.npz"}
+  ],
+  "note": "Emotion .npz files can be downloaded using scripts/download_emotions.py"
 }
