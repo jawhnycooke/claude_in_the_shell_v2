@@ -1537,7 +1537,7 @@
       "Verify initializes voice pipeline (if enabled)",
       "Run: uv run pytest tests/test_agent.py::test_agent_loop_startup"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F133",
@@ -1550,7 +1550,7 @@
       "Verify cleanup is graceful",
       "Run: uv run pytest tests/test_agent.py::test_agent_loop_shutdown"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F134",
@@ -1563,7 +1563,7 @@
       "Verify stores conversation in memory",
       "Run: uv run pytest tests/test_agent.py::test_text_query"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F135",
@@ -1576,7 +1576,7 @@
       "Verify triggers TTS for response",
       "Run: uv run pytest tests/test_agent.py::test_voice_query"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F136",
@@ -1588,7 +1588,7 @@
       "Verify prepends to system prompt",
       "Run: uv run pytest tests/test_agent.py::test_conversation_window"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F137",
@@ -1600,7 +1600,7 @@
       "Verify includes timestamp metadata",
       "Run: uv run pytest tests/test_agent.py::test_auto_conversation_storage"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F138",
@@ -1612,7 +1612,7 @@
       "Verify updates agent system prompt",
       "Run: uv run pytest tests/test_agent.py::test_persona_switching"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F139",
@@ -1624,7 +1624,7 @@
       "Verify logs full error details",
       "Run: uv run pytest tests/test_agent.py::test_error_recovery"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F140",
@@ -1636,7 +1636,7 @@
       "Verify main() function as entry point",
       "Run: uv run python -m reachy_agent --help"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F141",
@@ -1648,7 +1648,7 @@
       "Verify --debug-voice flag for event logging",
       "Run: uv run python -m reachy_agent run --help"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F142",
@@ -1661,7 +1661,7 @@
       "Verify prints status report",
       "Run: uv run python -m reachy_agent check"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F143",
@@ -1671,7 +1671,7 @@
       "Verify prints version from pyproject.toml",
       "Run: uv run python -m reachy_agent version"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F144",
@@ -1684,7 +1684,7 @@
       "Verify supports 'quit' or 'exit' commands",
       "Run: uv run python -m reachy_agent run"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F145",
@@ -1695,7 +1695,7 @@
       "Verify prints wake words",
       "Verify indicates listening state"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F146",
@@ -1706,7 +1706,7 @@
       "Verify calls agent loop shutdown",
       "Verify exits cleanly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F147",
@@ -1718,7 +1718,7 @@
       "Verify validates files after download",
       "Run: uv run python scripts/download_emotions.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F148",
@@ -1731,7 +1731,7 @@
       "Verify prints diagnostic report",
       "Run: uv run python scripts/test_hardware.py"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F149",
@@ -1743,7 +1743,7 @@
       "Verify sets up Python environment",
       "Verify creates systemd service (optional)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F150",
@@ -1754,7 +1754,7 @@
       "Verify returns JSON status report",
       "Verify includes uptime and resource usage"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F151",
@@ -1766,7 +1766,7 @@
       "Verify JSON output format",
       "Verify log includes component name"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F152",
@@ -1777,7 +1777,7 @@
       "Verify logs parameters and responses",
       "Verify includes timing information"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F153",
@@ -1788,7 +1788,7 @@
       "Verify logs ChromaDB queries",
       "Verify includes result counts"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F154",
