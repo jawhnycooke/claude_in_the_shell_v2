@@ -11,33 +11,21 @@
 
 ## Quick Navigation
 
-<div class="grid cards" markdown>
+| :rocket: **Getting Started** | :zap: **Quick Start** |
+|---|---|
+| [Getting Started Guide](getting-started.md) - Install and run your first conversation with Reachy | [Quick Start Tutorial](quick-start.md) - 5-minute tutorial to get up and running |
 
--   :material-rocket-launch: **[Getting Started](getting-started.md)**
+| :book: **User Guide** | :wrench: **API Reference** |
+|---|---|
+| [User Guide](user-guide/index.md) - Complete guide to using the agent | [API Reference](api-reference/index.md) - Detailed documentation for all MCP tools |
 
-    Install and run your first conversation with Reachy
+| :mortar_board: **Tutorials** | :gear: **Developer Guide** |
+|---|---|
+| [Tutorials](tutorials/index.md) - Step-by-step guides for common tasks | [Developer Guide](developer-guide/index.md) - Architecture, internals, and contributing |
 
--   :material-lightning-bolt: **[Quick Start](quick-start.md)**
-
-    5-minute tutorial to get up and running
-
--   :material-book-open-variant: **[User Guide](user-guide/index.md)**
-
-    Complete guide to using the agent
-
--   :material-api: **[API Reference](api-reference/index.md)**
-
-    Detailed documentation for all MCP tools
-
--   :material-school: **[Tutorials](tutorials/index.md)**
-
-    Step-by-step guides for common tasks
-
--   :material-cog: **[Developer Guide](developer-guide/index.md)**
-
-    Architecture, internals, and contributing
-
-</div>
+| :computer: **Examples** | |
+|---|---|
+| [Code Examples](examples/index.md) - Working code samples | |
 
 ---
 

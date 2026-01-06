@@ -1,0 +1,111 @@
+site_name: Claude in the Shell v2
+site_url: https://jawhnycooke.github.io/claude_in_the_shell_v2/
+site_description: An embodied AI agent for the Reachy Mini desktop robot
+site_author: jawhnycooke
+repo_url: https://github.com/jawhnycooke/claude_in_the_shell_v2
+repo_name: jawhnycooke/claude_in_the_shell_v2
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mermaid2
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Quick Start: quick-start.md
+  - User Guide:
+      - Overview: user-guide/index.md
+      - Installation: user-guide/installation.md
+      - Voice Control: user-guide/voice-control.md
+      - Robot Movements: user-guide/robot-movements.md
+      - Memory System: user-guide/memory-system.md
+      - Simulation: user-guide/simulation.md
+      - Troubleshooting: user-guide/troubleshooting.md
+  - Tutorials:
+      - Overview: tutorials/index.md
+      - First Robot Movement: tutorials/first-robot-movement.md
+      - Voice Interaction: tutorials/voice-interaction.md
+      - Emotion Expressions: tutorials/emotion-expressions.md
+      - MuJoCo Setup: tutorials/mujoco-setup.md
+      - Custom Behaviors: tutorials/custom-behaviors.md
+  - API Reference:
+      - Overview: api-reference/index.md
+      - Robot Tools: api-reference/robot-tools.md
+      - Memory Tools: api-reference/memory-tools.md
+      - Voice Pipeline: api-reference/voice-pipeline.md
+      - Motion Control: api-reference/motion-control.md
+      - Python API: api-reference/python-api.md
+  - Developer Guide:
+      - Overview: developer-guide/index.md
+      - Architecture: developer-guide/architecture.md
+      - Voice Pipeline: developer-guide/voice-pipeline.md
+      - Motion System: developer-guide/motion-system.md
+      - MuJoCo Integration: developer-guide/mujoco-integration.md
+      - Permissions: developer-guide/permissions.md
+      - Contributing: developer-guide/contributing.md
+  - Examples:
+      - Overview: examples/index.md
+      - Basic Movements: examples/basic-movements.md
+      - Voice Commands: examples/voice-commands.md
+      - Simulation Scenarios: examples/simulation-scenarios.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jawhnycooke/claude_in_the_shell_v2

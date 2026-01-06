@@ -291,30 +291,11 @@ python -m reachy_agent run --mock --voice --debug-voice
 
 ## Navigation
 
-<div class="grid cards" markdown>
-
--   :material-sitemap: **[Architecture](architecture.md)**
-
-    System design and components
-
--   :material-microphone: **[Voice Pipeline](voice-pipeline.md)**
-
-    Event-driven voice system
-
--   :material-robot-industrial: **[Motion System](motion-system.md)**
-
-    30Hz blend controller
-
--   :material-cube-outline: **[MuJoCo Integration](mujoco-integration.md)**
-
-    Physics simulation
-
--   :material-shield-lock: **[Permissions](permissions.md)**
-
-    Tool authorization
-
--   :material-git: **[Contributing](contributing.md)**
-
-    How to contribute
-
-</div>
+| Document | Description |
+|----------|-------------|
+| :building_construction: [Architecture](architecture.md) | System design and components |
+| :microphone: [Voice Pipeline](voice-pipeline.md) | Event-driven voice system |
+| :robot: [Motion System](motion-system.md) | 30Hz blend controller |
+| :cube: [MuJoCo Integration](mujoco-integration.md) | Physics simulation |
+| :shield: [Permissions](permissions.md) | Tool authorization |
+| :handshake: [Contributing](contributing.md) | How to contribute |
