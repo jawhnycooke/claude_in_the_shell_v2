@@ -1,0 +1,49 @@
+## Session: 2025-01-13 (Horizon Worker Agent - Claude Opus 4.5)
+
+### Accomplished
+- Implemented complete SDKClient class for real Reachy Mini hardware communication
+- Implemented ToolCache class with 200ms TTL for read-only operations
+- Added comprehensive error handling classes (RobotConnectionError, NotAwakeError, MotorError)
+- Added 26 new tests for SDKClient (ToolCache, SDKClient methods, exceptions)
+- Fixed mypy type errors and ruff linting issues
+- All 48 robot tests passing
+
+### Implementation Details
+- `src/reachy_agent/robot/sdk.py`: Full SDKClient implementation with:
+  - Zenoh/SDK connection management with timeout
+  - ToolCache for caching read-only operations (200ms TTL)
+  - All ReachyClient protocol methods implemented
+  - Graceful error handling when SDK is not available
+  - Joint limit validation and clamping
+  - Structured logging throughout
+- `tests/test_robot.py`: Added tests for:
+  - TestToolCache: cache init, set/get, invalidation patterns
+  - TestSDKClient: init, limits, connection errors, method behaviors
+  - TestSDKClientExceptions: all custom exception classes
+  - TestCachedResult: dataclass TTL behavior
+
+### Current State
+- Features F001-F050 are marked as passing (50/210)
+- Features F051-F210 are pending (160 remaining)
+- Next feature: F051 "Implement tool result caching with 200ms TTL"
+- Note: F051 may already be partially complete since ToolCache is implemented in sdk.py
+  - Need to verify MCP server uses caching and add specific tests
+
+### Next Session Should
+- Verify F051 requirements against existing ToolCache implementation
+- Add tests for MCP tool caching (`tests/test_mcp.py::test_tool_caching`)
+- Continue with F052-F063 (Memory subsystem):
+  - F052: Define MemoryType enum with 3 types
+  - F053: Define Memory dataclass with metadata support
+  - F054: Implement MemoryManager with ChromaDB backend
+  - F055-F059: Memory store/search/forget/expiry methods
+  - F060-F063: Memory MCP server tools
+
+### Blockers
+- None
+
+### Technical Notes
+- mypy configured with `ignore_missing_imports = true` in pyproject.toml
+- Tests run without actual hardware using mock mode
+- SDKClient gracefully handles missing reachy_mini package
+- Linters (black, ruff) configured for 88-character line length
