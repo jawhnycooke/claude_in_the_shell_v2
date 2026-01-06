@@ -1,7 +1,6 @@
 """Main agent coordinator loop."""
 
-import asyncio
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import anthropic
 import structlog
@@ -37,14 +36,14 @@ class ReachyAgentLoop:
         self._client = anthropic.AsyncAnthropic()
 
         # Components (initialized in start())
-        self._robot: Optional[Any] = None
-        self._memory: Optional[Any] = None
-        self._voice: Optional[Any] = None
-        self._motion: Optional[Any] = None
-        self._permissions: Optional[Any] = None
+        self._robot: Any | None = None
+        self._memory: Any | None = None
+        self._voice: Any | None = None
+        self._motion: Any | None = None
+        self._permissions: Any | None = None
 
         # MCP tools
-        self._tools: List[Dict] = []
+        self._tools: list[dict] = []
 
         # State
         self._system_prompt: str = ""

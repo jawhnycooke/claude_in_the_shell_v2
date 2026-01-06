@@ -1,24 +1,23 @@
 """Tests for utility modules."""
 
-import asyncio
-import json
 import logging
 import os
-from pathlib import Path
-from io import StringIO
 
 import pytest
-import structlog
 
-from reachy_agent.utils.events import Event, EventEmitter
-from reachy_agent.utils.logging import setup_logging, get_logger, _get_log_level_from_env
 from reachy_agent.utils.config import (
+    AgentConfig,
+    ReachyConfig,
+    _apply_env_overrides,
     load_config,
     load_config_dict,
     load_yaml,
-    ReachyConfig,
-    AgentConfig,
-    _apply_env_overrides,
+)
+from reachy_agent.utils.events import Event, EventEmitter
+from reachy_agent.utils.logging import (
+    _get_log_level_from_env,
+    get_logger,
+    setup_logging,
 )
 
 

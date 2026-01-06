@@ -6,12 +6,8 @@ import time
 import pytest
 
 from reachy_agent.mcp.robot import (
-    app,
-    get_robot,
-    _robot,
-    _cache,
     MCPToolCache,
-    CachedToolResult,
+    app,
 )
 
 
@@ -136,7 +132,11 @@ class TestRobotMCPServer:
     def test_perception_tools_exist(self) -> None:
         """Verify perception tools are registered."""
         tools = list(app._tool_manager._tools.keys())
-        perception_tools = ["capture_image", "get_sensor_data", "detect_sound_direction"]
+        perception_tools = [
+            "capture_image",
+            "get_sensor_data",
+            "detect_sound_direction",
+        ]
         for tool in perception_tools:
             assert tool in tools, f"Missing tool: {tool}"
 
@@ -171,7 +171,6 @@ class TestRobotMCPToolExecution:
     async def test_move_head_tool(self) -> None:
         """Test move_head tool execution."""
         # Import the underlying function, not the wrapped tool
-        import reachy_agent.mcp.robot as robot_module
 
         # Access the tool function directly
         tool = app._tool_manager._tools["move_head"]

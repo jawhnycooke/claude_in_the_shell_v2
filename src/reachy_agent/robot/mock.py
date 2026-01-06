@@ -2,7 +2,6 @@
 
 import asyncio
 import random
-from typing import Any
 
 import structlog
 

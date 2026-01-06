@@ -263,9 +263,7 @@ class PermissionEvaluator:
                 return rule.tier
         return self._default
 
-    def _get_reason(
-        self, tier: PermissionTier, matched_rule: str | None
-    ) -> str | None:
+    def _get_reason(self, tier: PermissionTier, matched_rule: str | None) -> str | None:
         """Get human-readable reason for decision."""
         if matched_rule:
             for rule in self._rules:
@@ -281,7 +279,9 @@ class PermissionEvaluator:
         return None
 
 
-def load_permissions(config_path: str = "config/permissions.yaml") -> PermissionEvaluator:
+def load_permissions(
+    config_path: str = "config/permissions.yaml",
+) -> PermissionEvaluator:
     """
     Load permission rules from YAML config file.
 

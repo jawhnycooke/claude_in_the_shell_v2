@@ -17,7 +17,6 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 from rich.console import Console
 from rich.panel import Panel
@@ -54,7 +53,7 @@ def get_git_status() -> tuple[bool, int]:
         return (False, 0)
 
 
-def load_feature_summary(path: Path) -> tuple[int, int, Optional[str]]:
+def load_feature_summary(path: Path) -> tuple[int, int, str | None]:
     """Load feature list summary.
 
     Returns:
@@ -91,21 +90,25 @@ def main() -> None:
     state_dir = project_dir / ".claude" / "state"
     feature_list_path = state_dir / "feature_list.json"
 
-    output_sections: List[str] = []
+    output_sections: list[str] = []
 
     # 1. Feature progress summary
     passing, total, next_feature = load_feature_summary(feature_list_path)
     if total > 0:
         remaining = total - passing
         progress_pct = (passing / total) * 100
-        output_sections.append(f"📊 Progress: {passing}/{total} features ({progress_pct:.0f}%)")
+        output_sections.append(
+            f"📊 Progress: {passing}/{total} features ({progress_pct:.0f}%)"
+        )
         if next_feature:
             output_sections.append(f"⏭️  Next: {next_feature}")
 
     # 2. Git status reminder
     has_changes, change_count = get_git_status()
     if has_changes:
-        output_sections.append(f"⚠️  {change_count} uncommitted changes - remember to commit!")
+        output_sections.append(
+            f"⚠️  {change_count} uncommitted changes - remember to commit!"
+        )
     else:
         output_sections.append("✅ Working directory clean")
 

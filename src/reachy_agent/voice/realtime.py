@@ -19,8 +19,9 @@ import asyncio
 import base64
 import json
 import os
+from collections.abc import AsyncIterator, Callable
 from dataclasses import dataclass
-from typing import Any, AsyncIterator, Callable
+from typing import Any
 
 import structlog
 
@@ -73,7 +74,9 @@ class OpenAIRealtimeClient:
         >>> await client.disconnect()
     """
 
-    REALTIME_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
+    REALTIME_URL = (
+        "wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01"
+    )
 
     def __init__(
         self,

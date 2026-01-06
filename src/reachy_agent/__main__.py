@@ -2,8 +2,6 @@
 
 import asyncio
 import sys
-from pathlib import Path
-from typing import Optional
 
 import structlog
 import typer
@@ -22,10 +20,8 @@ log = structlog.get_logger()
 def run(
     voice: bool = typer.Option(False, "--voice", help="Enable voice mode"),
     mock: bool = typer.Option(False, "--mock", help="Use mock hardware"),
-    debug_voice: bool = typer.Option(
-        False, "--debug-voice", help="Debug voice events"
-    ),
-    persona: Optional[str] = typer.Option(
+    debug_voice: bool = typer.Option(False, "--debug-voice", help="Debug voice events"),
+    persona: str | None = typer.Option(
         None, "--persona", help="Persona to use (jarvis, motoko, batou)"
     ),
 ) -> None:

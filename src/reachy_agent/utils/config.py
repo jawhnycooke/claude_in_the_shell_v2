@@ -7,7 +7,6 @@ from typing import Any
 import yaml  # type: ignore[import-untyped]
 from pydantic import BaseModel, Field
 
-
 # --- Pydantic Configuration Models ---
 
 

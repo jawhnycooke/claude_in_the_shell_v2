@@ -3,8 +3,9 @@
 import asyncio
 import time
 from collections import defaultdict
+from collections.abc import Awaitable
 from dataclasses import dataclass, field
-from typing import Any, Awaitable, Union
+from typing import Any, Union
 
 import structlog
 
@@ -15,7 +16,7 @@ EventHandler = Union[
 ]
 
 # Forward reference for Callable to avoid circular import issues
-from typing import Callable
+from collections.abc import Callable
 
 
 @dataclass

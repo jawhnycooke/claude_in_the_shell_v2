@@ -16,7 +16,6 @@ from reachy_agent.permissions.evaluator import (
     load_permissions,
 )
 
-
 # ==============================================================================
 # F064: PermissionTier enum tests
 # ==============================================================================
@@ -220,7 +219,8 @@ def test_load_permissions() -> None:
     - Creates working evaluator
     """
     with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
-        f.write("""
+        f.write(
+            """
 default_tier: confirm
 rules:
   - pattern: "get_*"
@@ -231,7 +231,8 @@ rules:
   - pattern: "exec_*"
     tier: forbidden
     reason: "Shell commands are dangerous"
-""")
+"""
+        )
         f.flush()
         config_path = f.name
 
@@ -501,9 +502,7 @@ class TestPermissionHook:
         assert result.decision.tier == PermissionTier.AUTONOMOUS
 
     @pytest.mark.asyncio
-    async def test_confirm_hook_approved(
-        self, evaluator: PermissionEvaluator
-    ) -> None:
+    async def test_confirm_hook_approved(self, evaluator: PermissionEvaluator) -> None:
         """
         Test CONFIRM tool with approval (F070).
 
@@ -525,9 +524,7 @@ class TestPermissionHook:
         assert result.decision.tier == PermissionTier.CONFIRM
 
     @pytest.mark.asyncio
-    async def test_confirm_hook_denied(
-        self, evaluator: PermissionEvaluator
-    ) -> None:
+    async def test_confirm_hook_denied(self, evaluator: PermissionEvaluator) -> None:
         """Test CONFIRM tool with denial."""
         from reachy_agent.permissions.hooks import PermissionHook, confirm_always_deny
 
@@ -590,9 +587,7 @@ async def test_post_tool_audit_with_error(tmp_path: Path) -> None:
     hook = PostToolAuditHook(audit_path=str(log_path), enabled=True)
 
     # Log a failed tool execution
-    result = await hook(
-        "move_head", {"pitch": 100}, None, error="Pitch out of range"
-    )
+    result = await hook("move_head", {"pitch": 100}, None, error="Pitch out of range")
 
     assert result.logged is True
 

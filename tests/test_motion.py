@@ -1,7 +1,6 @@
 """Tests for motion control."""
 
 import asyncio
-import time
 
 import pytest
 
@@ -9,12 +8,10 @@ from reachy_agent.motion.controller import (
     AntennaState,
     BlendController,
     MotionOutput,
-    MotionSource,
     MotionSourceType,
     PoseOffset,
 )
 from reachy_agent.robot.client import HeadPose
-
 
 # ==============================================================================
 # Mock Motion Sources for Testing
@@ -1237,9 +1234,30 @@ async def test_emotion_playback() -> None:
     emotion_data = {
         "fps": 30,
         "frames": [
-            {"pitch": 10, "yaw": 5, "roll": 0, "z": 0, "antenna_left": 20, "antenna_right": -20},
-            {"pitch": 15, "yaw": 10, "roll": 5, "z": 0, "antenna_left": 30, "antenna_right": -30},
-            {"pitch": 5, "yaw": 0, "roll": -5, "z": 0, "antenna_left": 10, "antenna_right": -10},
+            {
+                "pitch": 10,
+                "yaw": 5,
+                "roll": 0,
+                "z": 0,
+                "antenna_left": 20,
+                "antenna_right": -20,
+            },
+            {
+                "pitch": 15,
+                "yaw": 10,
+                "roll": 5,
+                "z": 0,
+                "antenna_left": 30,
+                "antenna_right": -30,
+            },
+            {
+                "pitch": 5,
+                "yaw": 0,
+                "roll": -5,
+                "z": 0,
+                "antenna_left": 10,
+                "antenna_right": -10,
+            },
         ],
     }
 

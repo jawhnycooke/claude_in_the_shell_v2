@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 
 @dataclass
@@ -34,7 +33,7 @@ class AgentConfig:
 
     # Paths
     system_prompt_path: str = "prompts/system.md"
-    persona_path: Optional[str] = None
+    persona_path: str | None = None
 
     def load_system_prompt(self) -> str:
         """

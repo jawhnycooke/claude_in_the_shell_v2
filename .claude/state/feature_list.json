@@ -1800,7 +1800,7 @@
       "Verify test configuration fixture",
       "Run: uv run pytest --co tests/"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F155",
@@ -1813,7 +1813,7 @@
       "Verify tests event unregistration",
       "Run: uv run pytest tests/test_utils.py -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F156",
@@ -1825,7 +1825,7 @@
       "Verify tests environment overrides",
       "Run: uv run pytest tests/test_utils.py::test_config -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F157",
@@ -1837,7 +1837,7 @@
       "Verify tests sensor methods",
       "Run: uv run pytest tests/test_robot.py -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F158",
@@ -1850,7 +1850,7 @@
       "Verify tests expiry logic",
       "Run: uv run pytest tests/test_memory.py -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F159",
@@ -1862,7 +1862,7 @@
       "Verify tests all three tiers",
       "Run: uv run pytest tests/test_permissions.py -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F160",
@@ -1874,7 +1874,7 @@
       "Verify tests wake word matching",
       "Run: uv run pytest tests/test_voice.py::test_persona -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F161",
@@ -1885,7 +1885,7 @@
       "Verify tests detection threshold",
       "Run: uv run pytest tests/test_voice.py::test_wake_word -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F162",
@@ -1897,7 +1897,7 @@
       "Verify tests barge-in scenario",
       "Run: uv run pytest tests/test_voice.py::test_pipeline -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F163",
@@ -1909,7 +1909,7 @@
       "Verify tests motion blending",
       "Run: uv run pytest tests/test_motion.py::test_controller -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F164",
@@ -1920,7 +1920,7 @@
       "Verify tests movement smoothness",
       "Run: uv run pytest tests/test_motion.py::test_idle -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F165",
@@ -1931,7 +1931,7 @@
       "Verify tests start/stop behavior",
       "Run: uv run pytest tests/test_motion.py::test_wobble -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F166",
@@ -1943,7 +1943,7 @@
       "Verify tests sequence playback",
       "Run: uv run pytest tests/test_motion.py::test_emotion -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F167",
@@ -1955,7 +1955,7 @@
       "Verify tests MCP setup",
       "Run: uv run pytest tests/test_agent.py::test_options -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F168",
@@ -1967,7 +1967,7 @@
       "Verify tests shutdown sequence",
       "Run: uv run pytest tests/test_agent.py::test_loop -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F169",
@@ -1979,7 +1979,7 @@
       "Verify tests persona switching",
       "Run: uv run pytest tests/test_integration.py::test_voice_flow -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F170",
@@ -1990,7 +1990,7 @@
       "Verify tests permission checks",
       "Run: uv run pytest tests/test_integration.py::test_agent_robot -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F171",
@@ -2001,7 +2001,7 @@
       "Verify tests fact storage and retrieval",
       "Run: uv run pytest tests/test_integration.py::test_memory_persistence -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F172",
@@ -2012,7 +2012,7 @@
       "Verify asyncio_mode = auto in pyproject.toml",
       "Run: uv run pytest --asyncio-mode=auto"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F173",
@@ -2023,7 +2023,7 @@
       "Verify coverage config in pyproject.toml",
       "Run: uv run pytest --cov=src --cov-report=html"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F174",
@@ -2034,7 +2034,7 @@
       "Verify no formatting errors",
       "Verify 88-character line length"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F175",
@@ -2045,7 +2045,7 @@
       "Verify imports are sorted correctly",
       "Verify no conflicts with Black"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F176",

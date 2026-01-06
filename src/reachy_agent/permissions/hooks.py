@@ -11,8 +11,9 @@ Features:
 """
 
 import json
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
-from typing import Any, Awaitable, Callable
+from typing import Any
 
 import structlog
 
@@ -21,7 +22,6 @@ from reachy_agent.permissions.evaluator import (
     PermissionEvaluator,
     PermissionTier,
 )
-
 
 # Type alias for confirmation callback
 ConfirmCallback = Callable[[str, dict[str, Any], str | None], Awaitable[bool]]

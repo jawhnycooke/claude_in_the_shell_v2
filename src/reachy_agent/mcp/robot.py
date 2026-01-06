@@ -9,18 +9,15 @@ Features:
     - Automatic connection management
 """
 
-import hashlib
 import json
 import time
-from dataclasses import dataclass, field
-from typing import Any, Optional
+from dataclasses import dataclass
+from typing import Any
 
 import structlog
 from fastmcp import FastMCP
 
-from reachy_agent.robot.client import HeadPose, RobotStatus
 from reachy_agent.robot.mock import MockClient
-
 
 # ============================================================================
 # Tool Result Caching
@@ -89,9 +86,7 @@ class MCPToolCache:
             self._log.debug("cache_expired", tool=tool_name, key=key)
         return None
 
-    def set(
-        self, tool_name: str, value: Any, ttl: float = 0.2, **params: Any
-    ) -> None:
+    def set(self, tool_name: str, value: Any, ttl: float = 0.2, **params: Any) -> None:
         """
         Store tool result in cache.
 
@@ -120,7 +115,9 @@ class MCPToolCache:
             keys = [k for k in self._cache if k.startswith(prefix)]
             for k in keys:
                 del self._cache[k]
-            self._log.debug("cache_invalidated_pattern", pattern=pattern, count=len(keys))
+            self._log.debug(
+                "cache_invalidated_pattern", pattern=pattern, count=len(keys)
+            )
 
 
 # Create FastMCP server
@@ -128,7 +125,7 @@ app = FastMCP("robot")
 log = structlog.get_logger("mcp.robot")
 
 # Robot client instance (default to mock for development)
-_robot: Optional[MockClient] = None
+_robot: MockClient | None = None
 
 # Tool result cache for read-only operations
 _cache = MCPToolCache()

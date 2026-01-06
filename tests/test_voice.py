@@ -6,13 +6,11 @@ Tests for:
 - F078: get_persona_by_wake_word() for voice activation
 """
 
-import tempfile
 from pathlib import Path
 
 import pytest
 
 from reachy_agent.voice.persona import Persona, PersonaManager
-
 
 # ==============================================================================
 # F076: PersonaManager tests
@@ -361,7 +359,7 @@ async def test_audio_manager() -> None:
     - Opens input stream from mic
     - Opens output stream to speaker
     """
-    from reachy_agent.voice.audio import AudioConfig, AudioManager
+    from reachy_agent.voice.audio import AudioManager
 
     # Use mock mode for testing without hardware
     manager = AudioManager(mock_mode=True)
@@ -1047,7 +1045,9 @@ async def test_speak_with_callbacks() -> None:
     client.simulate_audio_chunks(mock_chunks)
 
     # Speak
-    await client.speak("Hello!", voice="nova", on_complete=on_complete, on_audio=on_audio)
+    await client.speak(
+        "Hello!", voice="nova", on_complete=on_complete, on_audio=on_audio
+    )
 
     # Callbacks should have been called
     assert len(audio_received) == 2
@@ -1835,7 +1835,7 @@ async def test_voice_debug_logging() -> None:
     - Payload data included in logs
     - Structured logging format
     """
-    import structlog
+
     from reachy_agent.voice.pipeline import VoicePipeline
 
     # Create pipeline with debug=True

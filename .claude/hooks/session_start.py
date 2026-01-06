@@ -16,11 +16,11 @@ The output helps the agent understand current project state and priorities.
 import json
 import logging
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
-import re
-from typing import List, Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field, ValidationError, field_validator
 from rich.console import Console
@@ -51,24 +51,26 @@ class Feature(BaseModel):
         description="Feature category: infrastructure, functional, style, documentation"
     )
     description: str = Field(description="Clear description of what this feature does")
-    steps: List[str] = Field(
+    steps: list[str] = Field(
         default_factory=list, description="Verification steps for this feature"
     )
-    passes: bool = Field(default=False, description="Whether the feature passes verification")
+    passes: bool = Field(
+        default=False, description="Whether the feature passes verification"
+    )
 
-    @field_validator('id')
+    @field_validator("id")
     @classmethod
     def validate_feature_id(cls, v: str) -> str:
         """Validate feature ID matches pattern F001, F002, etc."""
-        if not re.match(r'^F\d{3,}$', v):
+        if not re.match(r"^F\d{3,}$", v):
             raise ValueError(
                 f"Feature ID '{v}' must match pattern 'F001', 'F002', etc. (F followed by 3+ digits)"
             )
         return v
 
-    @field_validator('steps')
+    @field_validator("steps")
     @classmethod
-    def validate_steps_non_empty(cls, v: List[str]) -> List[str]:
+    def validate_steps_non_empty(cls, v: list[str]) -> list[str]:
         """Ensure steps list is non-empty for verifiable features."""
         if not v:
             raise ValueError("Feature must have at least one verification step")
@@ -82,7 +84,7 @@ class Feature(BaseModel):
 class FeatureList(BaseModel):
     """Container for parsing feature_list.json as an array."""
 
-    features: List[Feature]
+    features: list[Feature]
 
     @classmethod
     def from_json_array(cls, data: list) -> "FeatureList":
@@ -108,7 +110,7 @@ class FeatureList(BaseModel):
 # ═══════════════════════════════════════════════════════════
 
 
-def get_git_status() -> Optional[str]:
+def get_git_status() -> str | None:
     """Get short git status, returns None on error."""
     try:
         result = subprocess.run(
@@ -126,7 +128,7 @@ def get_git_status() -> Optional[str]:
         return None
 
 
-def load_feature_list(path: Path) -> Optional[FeatureList]:
+def load_feature_list(path: Path) -> FeatureList | None:
     """Load and validate feature_list.json."""
     if not path.exists():
         return None
@@ -134,7 +136,9 @@ def load_feature_list(path: Path) -> Optional[FeatureList]:
     try:
         raw_data = json.loads(path.read_text())
         if not isinstance(raw_data, list):
-            logger.error(f"feature_list.json must be an array, got {type(raw_data).__name__}")
+            logger.error(
+                f"feature_list.json must be an array, got {type(raw_data).__name__}"
+            )
             raise ValueError("feature_list.json must be a JSON array")
         return FeatureList.from_json_array(raw_data)
     except json.JSONDecodeError as e:
@@ -145,7 +149,7 @@ def load_feature_list(path: Path) -> Optional[FeatureList]:
         raise
 
 
-def load_progress_notes(path: Path, max_lines: int = 5) -> Optional[List[str]]:
+def load_progress_notes(path: Path, max_lines: int = 5) -> list[str] | None:
     """Load the last N lines of progress notes."""
     if not path.exists():
         return None
@@ -156,7 +160,7 @@ def load_progress_notes(path: Path, max_lines: int = 5) -> Optional[List[str]]:
             return None
         lines = [line for line in content.split("\n")[-max_lines:] if line.strip()]
         return lines if lines else None
-    except IOError as e:
+    except OSError as e:
         logger.error(f"Failed to read progress notes: {e}")
         raise
 
@@ -174,7 +178,7 @@ def main() -> None:
     feature_list_path = state_dir / "feature_list.json"
     progress_txt_path = project_dir / "claude-progress.txt"
 
-    output_sections: List[str] = []
+    output_sections: list[str] = []
 
     # 1. Feature list summary
     try:
@@ -184,7 +188,9 @@ def main() -> None:
             passing = sum(1 for f in feature_list.features if f.passes)
             failing = total - passing
 
-            output_sections.append(f"📋 Features: {passing}/{total} passing ({failing} remaining)")
+            output_sections.append(
+                f"📋 Features: {passing}/{total} passing ({failing} remaining)"
+            )
 
             # Find highest-priority incomplete feature
             for f in feature_list.features:
@@ -203,7 +209,7 @@ def main() -> None:
             output_sections.append("📝 Recent progress notes:")
             for line in progress_lines:
                 output_sections.append(f"   {line}")
-    except IOError as e:
+    except OSError as e:
         output_sections.append(f"⚠️  Progress notes error: {e}")
 
     # 3. Git status

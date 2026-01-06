@@ -14,8 +14,9 @@ Note:
     uv pip install reachy-agent[voice]
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 
 import structlog
 
@@ -157,9 +158,7 @@ class WakeWordDetector:
         self._enabled = False
         self._log.info("wake_detector_disabled")
 
-    async def process_audio(
-        self, audio_chunk: bytes
-    ) -> WakeWordDetection | None:
+    async def process_audio(self, audio_chunk: bytes) -> WakeWordDetection | None:
         """
         Process audio chunk for wake words.
 
@@ -199,9 +198,7 @@ class WakeWordDetector:
 
         return None
 
-    async def _process_real(
-        self, audio_chunk: bytes
-    ) -> WakeWordDetection | None:
+    async def _process_real(self, audio_chunk: bytes) -> WakeWordDetection | None:
         """Process audio with real OpenWakeWord detection."""
         if self._oww is None:
             return None
@@ -239,9 +236,7 @@ class WakeWordDetector:
             self._log.warning("wake_word_process_error", error=str(e))
             return None
 
-    def simulate_detection(
-        self, wake_word: str, confidence: float = 0.9
-    ) -> None:
+    def simulate_detection(self, wake_word: str, confidence: float = 0.9) -> None:
         """
         Simulate a wake word detection (for testing).
 

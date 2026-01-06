@@ -8,8 +8,9 @@ This module provides audio stream management for:
 The module supports mocking for testing without hardware.
 """
 
+from collections.abc import Generator
 from dataclasses import dataclass
-from typing import Any, Generator
+from typing import Any
 
 import structlog
 

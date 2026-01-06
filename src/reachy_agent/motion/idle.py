@@ -13,7 +13,6 @@ Features:
 
 import math
 import random
-import time
 from dataclasses import dataclass
 
 from reachy_agent.motion.controller import (
@@ -179,7 +178,9 @@ class IdleBehavior:
         # Get noise values
         pitch_noise = _simple_noise(self._time, self._pitch_seed)
         yaw_noise = _simple_noise(self._time * 0.7, self._yaw_seed)  # Slower yaw
-        roll_noise = _simple_noise(self._time * 0.5, self._roll_seed)  # Even slower roll
+        roll_noise = _simple_noise(
+            self._time * 0.5, self._roll_seed
+        )  # Even slower roll
 
         # Scale by amplitude and range, centered around neutral
         base_pitch = pitch_noise * self._config.amplitude * (pitch_range / 2)

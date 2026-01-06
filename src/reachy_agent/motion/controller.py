@@ -13,9 +13,9 @@ Features:
 
 import asyncio
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Protocol
+from typing import Protocol
 
 import structlog
 

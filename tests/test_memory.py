@@ -1,6 +1,5 @@
 """Tests for memory system."""
 
-import tempfile
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -12,7 +11,6 @@ from reachy_agent.memory.manager import (
     MemoryType,
     SearchResult,
 )
-
 
 # ==============================================================================
 # F052: MemoryType enum tests
@@ -250,7 +248,9 @@ class TestMemoryManager:
         # Store some memories
         await memory_manager.store("The user prefers dark mode", MemoryType.FACT)
         await memory_manager.store("The user likes Python", MemoryType.FACT)
-        await memory_manager.store("Yesterday we talked about robots", MemoryType.CONVERSATION)
+        await memory_manager.store(
+            "Yesterday we talked about robots", MemoryType.CONVERSATION
+        )
 
         # Search without filter
         results = await memory_manager.search("user preferences", limit=5)
@@ -266,9 +266,7 @@ class TestMemoryManager:
             assert 0.0 <= results[0].score <= 1.0
 
     @pytest.mark.asyncio
-    async def test_search_with_type_filter(
-        self, memory_manager: MemoryManager
-    ) -> None:
+    async def test_search_with_type_filter(self, memory_manager: MemoryManager) -> None:
         """Test search with memory_type filter."""
         await memory_manager.store("User fact 1", MemoryType.FACT)
         await memory_manager.store("Conversation 1", MemoryType.CONVERSATION)
@@ -400,18 +398,24 @@ class TestMemoryManager:
         now = datetime.utcnow()
 
         # FACT never expires
-        fact = Memory(id="f1", content="fact", memory_type=MemoryType.FACT, created_at=now)
+        fact = Memory(
+            id="f1", content="fact", memory_type=MemoryType.FACT, created_at=now
+        )
         assert fact.expires_at is None
 
         # CONVERSATION expires after 30 days
-        conv = Memory(id="c1", content="conv", memory_type=MemoryType.CONVERSATION, created_at=now)
+        conv = Memory(
+            id="c1", content="conv", memory_type=MemoryType.CONVERSATION, created_at=now
+        )
         expected_conv_expiry = now + timedelta(days=30)
         assert conv.expires_at is not None
         # Allow small tolerance
         assert abs((conv.expires_at - expected_conv_expiry).total_seconds()) < 1
 
         # CONTEXT expires at end of day
-        ctx = Memory(id="x1", content="ctx", memory_type=MemoryType.CONTEXT, created_at=now)
+        ctx = Memory(
+            id="x1", content="ctx", memory_type=MemoryType.CONTEXT, created_at=now
+        )
         assert ctx.expires_at is not None
         assert ctx.expires_at.date() == now.date()
         assert ctx.expires_at.hour == 23

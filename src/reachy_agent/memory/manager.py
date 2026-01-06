@@ -5,11 +5,11 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Any, Optional, cast
+from typing import Any, cast
 
 import chromadb
-from chromadb.types import Where
 import structlog
+from chromadb.types import Where
 
 
 class MemoryType(Enum):

@@ -4,7 +4,6 @@ from pathlib import Path
 
 import pytest
 
-
 # ==============================================================================
 # F127: AgentOptions tests
 # ==============================================================================
@@ -75,9 +74,10 @@ def test_load_system_prompt():
 
 def test_load_system_prompt_with_persona():
     """Test loading system prompt with persona overlay."""
-    from reachy_agent.agent.options import AgentConfig
-    import tempfile
     import os
+    import tempfile
+
+    from reachy_agent.agent.options import AgentConfig
 
     # Create temporary persona file
     persona_content = """---
@@ -241,8 +241,8 @@ def test_model_selection():
 
 def test_model_selection_env_override(monkeypatch):
     """Test model selection respects environment variable."""
+
     from reachy_agent.agent.options import AgentConfig
-    import os
 
     # Note: Current implementation doesn't read from env automatically
     # This test documents the expected behavior for future implementation
