@@ -332,14 +332,13 @@ class BlendController:
         next_tick = time.time()
 
         while self._running:
-            tick_start = time.time()
-
             # Get and apply blended pose
             try:
                 blended = self._blend_sources()
                 if blended and not self._mock_mode:
                     await self._apply_output(blended)
-                self._last_pose = blended.head if blended else self._last_pose
+                if blended and isinstance(blended.head, HeadPose):
+                    self._last_pose = blended.head
             except Exception as e:
                 self._log.error("blend_error", error=str(e))
 
@@ -465,10 +464,9 @@ class BlendController:
 
         if output.antennas:
             try:
-                await self._client.move_antennas(
+                await self._client.set_antennas(
                     left=output.antennas.left,
                     right=output.antennas.right,
-                    duration=self.TICK_INTERVAL,
                 )
             except (AttributeError, Exception):
                 # move_antennas may not be implemented

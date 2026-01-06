@@ -3,20 +3,17 @@
 import asyncio
 import time
 from collections import defaultdict
-from collections.abc import Awaitable
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import Any, Union
+from typing import Any, TypeVar, overload
 
 import structlog
 
 # Type alias for event handlers - can be sync or async
-EventHandler = Union[
-    "Callable[[Event], None]",
-    "Callable[[Event], Awaitable[None]]",
-]
+EventHandler = Callable[["Event"], None] | Callable[["Event"], Awaitable[None]]
 
-# Forward reference for Callable to avoid circular import issues
-from collections.abc import Callable
+# Type variable for preserving handler type through decorator
+F = TypeVar("F", bound=Callable[..., Any])
 
 
 @dataclass
@@ -55,9 +52,15 @@ class EventEmitter:
         self._debug = debug
         self._log = structlog.get_logger()
 
+    @overload
+    def on(self, event_name: str) -> Callable[[F], F]: ...
+
+    @overload
+    def on(self, event_name: str, handler: F) -> F: ...
+
     def on(
         self, event_name: str, handler: Callable[[Event], Any] | None = None
-    ) -> Callable[[Event], Any]:
+    ) -> Callable[[F], F] | Callable[[Event], Any]:
         """
         Register an event handler.
 
@@ -83,11 +86,11 @@ class EventEmitter:
             self._handlers[event_name].append(handler)
             return handler
 
-        def decorator(fn: Callable[[Event], Any]) -> Callable[[Event], Any]:
+        def decorator(fn: F) -> F:
             self._handlers[event_name].append(fn)
             return fn
 
-        return decorator  # type: ignore[return-value]
+        return decorator
 
     def off(
         self, event_name: str, handler: Callable[[Event], Any] | None = None

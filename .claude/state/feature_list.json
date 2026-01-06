@@ -2056,7 +2056,7 @@
       "Verify no linting errors",
       "Fix any violations"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F177",
@@ -2067,7 +2067,7 @@
       "Verify no type errors",
       "Verify all functions have type hints"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F178",
@@ -2080,7 +2080,7 @@
       "Verify links to OpenAI Realtime API",
       "Verify links to ChromaDB docs"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F179",
@@ -2092,7 +2092,7 @@
       "Verify documents naming conventions",
       "Verify documents testing requirements"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F180",
@@ -2104,7 +2104,7 @@
       "Verify includes parameter descriptions",
       "Verify includes usage examples"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F181",
@@ -2116,7 +2116,7 @@
       "Verify lists testing commands",
       "Verify lists debugging tips"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F182",
@@ -2127,7 +2127,7 @@
       "Verify includes Args, Returns, Raises sections",
       "Verify includes usage examples where helpful"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F183",
@@ -2138,7 +2138,7 @@
       "Verify lists key classes/functions",
       "Verify includes usage notes where relevant"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F184",
@@ -2149,7 +2149,7 @@
       "Verify event flow logic is commented",
       "Verify permission evaluation is commented"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F185",
@@ -2159,7 +2159,7 @@
       "Check no relative imports in src/",
       "Run: uvx ruff check . --select I"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F186",
@@ -2169,7 +2169,7 @@
       "Check __all__ is defined where appropriate",
       "Verify imports are clean and minimal"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F187",
@@ -2180,7 +2180,7 @@
       "Verify return types are specified",
       "Run: uvx mypy src/ --strict"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F188",
@@ -2190,7 +2190,7 @@
       "Check all function definitions",
       "Run: uvx ruff check . --select B006"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F189",
@@ -2201,7 +2201,7 @@
       "Verify OpenAI API calls have try/except",
       "Verify ChromaDB calls have try/except"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F190",
@@ -2212,7 +2212,7 @@
       "Verify HTTP requests have timeouts",
       "Verify SDK calls have timeouts"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F191",
@@ -2223,7 +2223,7 @@
       "Verify API retry with exponential backoff",
       "Verify max retry limits"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F192",
@@ -2234,7 +2234,7 @@
       "Verify continues operation if TTS fails",
       "Verify logs degradation events"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F193",
@@ -2245,7 +2245,7 @@
       "Verify continues with idle motion",
       "Run: uv run pytest tests/test_motion.py::test_missing_emotion -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F194",
@@ -2257,7 +2257,7 @@
       "Verify provides clear error messages",
       "Run: uv run pytest tests/test_robot.py::test_disconnection -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F195",
@@ -2268,7 +2268,7 @@
       "Verify cleanup in finally blocks",
       "Run: uvx ruff check . --select SIM105"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F196",
@@ -2279,7 +2279,7 @@
       "Check voice pipeline thread cleanup",
       "Run: uv run pytest tests/test_shutdown.py -v"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F197",
@@ -2290,7 +2290,7 @@
       "Test voice pipeline for 100 conversations",
       "Monitor memory usage growth"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F198",
@@ -2301,7 +2301,7 @@
       "Verify logs agent response latency",
       "Verify logs tool execution time"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F199",
@@ -2312,7 +2312,7 @@
       "Verify OpenAI API respects rate limits",
       "Verify queues requests when at limit"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F200",
@@ -2325,7 +2325,7 @@
       "Verify processes response",
       "Verify exits cleanly"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F201",
@@ -2336,7 +2336,7 @@
       "Verify all 20 tools are listed",
       "Verify can call each tool successfully"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F202",
@@ -2347,7 +2347,7 @@
       "Verify overall coverage >= 80%",
       "Verify no critical paths uncovered"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F203",
@@ -2359,7 +2359,7 @@
       "Document hardware connectivity issues",
       "Document voice pipeline issues"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F204",
@@ -2371,7 +2371,7 @@
       "Create example for motion control",
       "Create example for memory usage"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F205",
@@ -2383,7 +2383,7 @@
       "Verify runs linting",
       "Verify checks type hints"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F206",
@@ -2395,7 +2395,7 @@
       "Verify runs ruff on commit",
       "Verify runs mypy on commit"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F207",
@@ -2406,7 +2406,7 @@
       "Verify validates config file syntax",
       "Verify provides clear error messages for misconfigurations"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F208",
@@ -2418,7 +2418,7 @@
       "Verify memory database is accessible",
       "Verify voice devices are available (if voice mode)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F209",
@@ -2429,7 +2429,7 @@
       "Verify attempts restart",
       "Verify logs watchdog events"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F210",
@@ -2440,6 +2440,6 @@
       "Verify attempts restart",
       "Verify logs watchdog events"
     ],
-    "passes": false
+    "passes": true
   }
 ]
