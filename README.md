@@ -22,6 +22,9 @@ uv venv && source .venv/bin/activate
 # Install dependencies
 uv pip install -e ".[dev,voice]"
 
+# Install with simulation support (MuJoCo)
+uv pip install -e ".[sim]"
+
 # Copy environment template
 cp .env.example .env
 
@@ -39,6 +42,12 @@ python -m reachy_agent run --voice
 
 # Mock mode (no hardware)
 python -m reachy_agent run --mock
+
+# Simulation mode (MuJoCo physics)
+python -m reachy_agent run --sim
+
+# Simulation with viewer
+python -m reachy_agent run --sim --sim-viewer
 
 # Voice mode with debug logging
 python -m reachy_agent run --voice --debug-voice
@@ -62,9 +71,11 @@ python -m reachy_agent check
 │       ├── motion/      # Motion control
 │       ├── memory/      # Memory system
 │       ├── permissions/ # Permission system
+│       ├── simulation/  # MuJoCo simulation support
 │       └── utils/       # Utilities
 ├── tests/               # Test suite
-├── data/                # Static data (emotions, wake words)
+├── data/                # Static data (emotions, wake words, scenarios)
+├── examples/            # Example scripts (simulation demos)
 ├── ai_docs/             # AI agent reference docs
 ├── scripts/             # Utility scripts
 └── specs/               # Technical specifications
