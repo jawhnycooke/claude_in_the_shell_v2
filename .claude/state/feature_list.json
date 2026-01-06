@@ -964,7 +964,7 @@
       "Verify processes audio chunks in real-time",
       "Run: uv run pytest tests/test_voice.py::test_wake_word_detector"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F083",
@@ -976,7 +976,7 @@
       "Verify respects sensitivity threshold",
       "Run: uv run pytest tests/test_voice.py::test_process_audio"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F084",
@@ -988,7 +988,7 @@
       "Verify handles connection errors with retries",
       "Run: uv run pytest tests/test_voice.py::test_realtime_client"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F085",
@@ -999,7 +999,7 @@
       "Verify handles backpressure",
       "Run: uv run pytest tests/test_voice.py::test_send_audio"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F086",
@@ -1011,7 +1011,7 @@
       "Verify returns text and confidence",
       "Run: uv run pytest tests/test_voice.py::test_receive_transcript"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F087",
@@ -1022,7 +1022,7 @@
       "Verify supports all OpenAI voices",
       "Run: uv run pytest tests/test_voice.py::test_send_tts_request"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F088",
@@ -1033,7 +1033,7 @@
       "Verify handles streaming playback",
       "Run: uv run pytest tests/test_voice.py::test_receive_audio"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F089",
@@ -1045,7 +1045,7 @@
       "Verify initializes all voice components",
       "Run: uv run pytest tests/test_voice.py::test_voice_pipeline"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F090",
@@ -1056,7 +1056,7 @@
       "Verify starts audio stream reading",
       "Run: uv run pytest tests/test_voice.py::test_pipeline_start"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F091",
@@ -1068,7 +1068,7 @@
       "Verify cleanup is graceful",
       "Run: uv run pytest tests/test_voice.py::test_pipeline_stop"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "F092",

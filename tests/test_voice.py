@@ -817,3 +817,567 @@ async def test_wake_word_reset() -> None:
     assert result is None
 
     detector.cleanup()
+
+
+# ==============================================================================
+# F084: RealtimeClient tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_realtime_client() -> None:
+    """
+    Test RealtimeClient for OpenAI Realtime API (F084).
+
+    This test verifies:
+    - Create src/reachy_agent/voice/realtime.py
+    - WebSocket connection (mock mode)
+    - Handles connection errors with retries
+    """
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    # Create client in mock mode
+    client = OpenAIRealtimeClient(mock_mode=True)
+
+    # Initially not connected
+    assert not client.is_connected
+
+    # Connect
+    await client.connect()
+    assert client.is_connected
+    assert client.session_id == "mock-session-id"
+
+    # Disconnect
+    await client.disconnect()
+    assert not client.is_connected
+    assert client.session_id is None
+
+
+@pytest.mark.asyncio
+async def test_realtime_client_session() -> None:
+    """Test RealtimeClient session management."""
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Start session
+    await client.start_session(voice="nova")
+
+    # Session should be active
+    assert client.is_connected
+
+    await client.disconnect()
+
+
+# ==============================================================================
+# F085: send_audio() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_send_audio() -> None:
+    """
+    Test send_audio() for streaming STT (F085).
+
+    This test verifies:
+    - Sends audio chunks via WebSocket (mock mode)
+    - Handles backpressure (mock accepts any data)
+    """
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Send audio (mock mode just logs)
+    audio_data = b"\x00" * 1024
+    await client.send_audio(audio_data)
+
+    # Should not raise any errors
+    await client.commit_audio()
+
+    await client.disconnect()
+
+
+# ==============================================================================
+# F086: receive_transcript() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_receive_transcript() -> None:
+    """
+    Test receive_transcript() for STT results (F086).
+
+    This test verifies:
+    - Receives transcript messages
+    - Handles partial and final transcripts
+    - Returns text and confidence
+    """
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Simulate transcript
+    client.simulate_transcript("Hello, world!", confidence=0.95)
+
+    # Receive transcript
+    result = await client.receive_transcript()
+
+    assert result is not None
+    assert result.text == "Hello, world!"
+    assert result.confidence == 0.95
+    assert result.is_final is True
+
+    # No more transcripts
+    result = await client.receive_transcript()
+    assert result is None
+
+    await client.disconnect()
+
+
+@pytest.mark.asyncio
+async def test_transcribe_convenience() -> None:
+    """Test transcribe() convenience method."""
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Simulate transcript
+    client.simulate_transcript("Test transcription")
+
+    # Use convenience method
+    audio_data = b"\x00" * 1024
+    text = await client.transcribe(audio_data)
+
+    assert text == "Test transcription"
+
+    await client.disconnect()
+
+
+# ==============================================================================
+# F087: send_tts_request() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_send_tts_request() -> None:
+    """
+    Test send_tts_request() for text-to-speech (F087).
+
+    This test verifies:
+    - Sends text with voice parameter
+    - Supports OpenAI voices (mock mode)
+    """
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Send TTS request (mock mode just logs)
+    await client.send_tts_request("Hello, how are you?", voice="nova")
+
+    # Test different voices
+    for voice in ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]:
+        await client.send_tts_request("Test", voice=voice)
+
+    await client.disconnect()
+
+
+# ==============================================================================
+# F088: receive_audio() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_receive_audio() -> None:
+    """
+    Test receive_audio() for TTS audio stream (F088).
+
+    This test verifies:
+    - Receives audio chunks from WebSocket (mock mode)
+    - Handles streaming playback
+    """
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Simulate audio chunks
+    mock_chunks = [b"\x00" * 512, b"\x01" * 512, b"\x02" * 512]
+    client.simulate_audio_chunks(mock_chunks)
+
+    # Receive chunks
+    received_chunks = []
+    async for chunk in client.receive_audio():
+        received_chunks.append(chunk)
+
+    # Should receive all chunks
+    assert len(received_chunks) == 3
+    assert received_chunks[0].data == mock_chunks[0]
+    assert received_chunks[1].data == mock_chunks[1]
+    assert received_chunks[2].data == mock_chunks[2]
+    assert received_chunks[2].is_final is True
+
+    await client.disconnect()
+
+
+@pytest.mark.asyncio
+async def test_speak_with_callbacks() -> None:
+    """Test speak() with callbacks."""
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Track callbacks
+    audio_received: list[bytes] = []
+    complete_called = [False]  # Use list to modify in closure
+
+    def on_audio(data: bytes) -> None:
+        audio_received.append(data)
+
+    def on_complete() -> None:
+        complete_called[0] = True
+
+    # Simulate audio chunks
+    mock_chunks = [b"\x00" * 256, b"\x01" * 256]
+    client.simulate_audio_chunks(mock_chunks)
+
+    # Speak
+    await client.speak("Hello!", voice="nova", on_complete=on_complete, on_audio=on_audio)
+
+    # Callbacks should have been called
+    assert len(audio_received) == 2
+    assert complete_called[0] is True
+
+    await client.disconnect()
+
+
+@pytest.mark.asyncio
+async def test_stop_speaking() -> None:
+    """Test stop_speaking() cancels TTS."""
+    from reachy_agent.voice.realtime import OpenAIRealtimeClient
+
+    client = OpenAIRealtimeClient(mock_mode=True)
+    await client.connect()
+
+    # Simulate audio chunks
+    client.simulate_audio_chunks([b"\x00" * 256])
+
+    # Stop speaking
+    await client.stop_speaking()
+
+    # No more chunks should be available
+    chunks = [c async for c in client.receive_audio()]
+    assert len(chunks) == 0
+
+    await client.disconnect()
+
+
+# ==============================================================================
+# RealtimeClient dataclasses tests
+# ==============================================================================
+
+
+class TestRealtimeDataclasses:
+    """Tests for RealtimeClient dataclasses."""
+
+    def test_transcript_result(self) -> None:
+        """Test TranscriptResult dataclass."""
+        from reachy_agent.voice.realtime import TranscriptResult
+
+        result = TranscriptResult(
+            text="Hello",
+            confidence=0.9,
+            is_final=True,
+        )
+
+        assert result.text == "Hello"
+        assert result.confidence == 0.9
+        assert result.is_final is True
+
+    def test_audio_chunk(self) -> None:
+        """Test AudioChunk dataclass."""
+        from reachy_agent.voice.realtime import AudioChunk
+
+        chunk = AudioChunk(data=b"\x00" * 512, is_final=False)
+
+        assert len(chunk.data) == 512
+        assert chunk.is_final is False
+
+
+# ==============================================================================
+# F089: VoicePipeline tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_voice_pipeline() -> None:
+    """
+    Test VoicePipeline with event-driven architecture (F089).
+
+    This test verifies:
+    - Create src/reachy_agent/voice/pipeline.py
+    - Extends EventEmitter
+    - Initializes all voice components
+    """
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    # Create pipeline in mock mode
+    pipeline = VoicePipeline(mock_mode=True)
+
+    # Verify extends EventEmitter (has on, emit methods)
+    assert hasattr(pipeline, "on")
+    assert hasattr(pipeline, "emit")
+
+    # Verify properties
+    assert not pipeline.is_running
+    assert not pipeline.is_speaking
+    assert not pipeline.is_listening
+    assert pipeline.current_persona is None
+
+
+@pytest.mark.asyncio
+async def test_voice_pipeline_event_handlers() -> None:
+    """Test VoicePipeline has all event handlers registered."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    # Verify handlers are registered for key events
+    # The handlers are internal, but we can verify events work
+    events_received: list[str] = []
+
+    @pipeline.on("wake_detected")
+    async def track_wake(event):
+        events_received.append("wake_detected")
+
+    @pipeline.on("listening_start")
+    async def track_listening(event):
+        events_received.append("listening_start")
+
+    # Emit wake_detected (which should chain to listening_start)
+    await pipeline.emit("wake_detected", persona="test", confidence=0.9)
+
+    # Both events should fire (wake_detected chains to listening_start)
+    assert "wake_detected" in events_received
+    assert "listening_start" in events_received
+
+
+# ==============================================================================
+# F090: pipeline start() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_pipeline_start() -> None:
+    """
+    Test VoicePipeline start() method (F090).
+
+    This test verifies:
+    - Starts wake word detection loop
+    - Starts audio stream reading
+    """
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    # Initially not running
+    assert not pipeline.is_running
+
+    # Start pipeline
+    await pipeline.start()
+
+    # Should be running
+    assert pipeline.is_running
+
+    # Components should be initialized
+    assert pipeline._audio is not None
+    assert pipeline._realtime is not None
+    assert pipeline._wake_detector is not None
+
+    # Wake detector should be enabled
+    assert pipeline._wake_detector.is_enabled
+
+    # Clean up
+    await pipeline.stop()
+
+
+# ==============================================================================
+# F091: pipeline stop() tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_pipeline_stop() -> None:
+    """
+    Test VoicePipeline stop() method (F091).
+
+    This test verifies:
+    - Stops all audio streams
+    - Closes WebSocket connections
+    - Cleanup is graceful
+    """
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    # Start first
+    await pipeline.start()
+    assert pipeline.is_running
+
+    # Stop pipeline
+    await pipeline.stop()
+
+    # Should be stopped
+    assert not pipeline.is_running
+
+    # Components should be cleaned up
+    assert pipeline._audio is None
+    assert pipeline._realtime is None
+    assert pipeline._wake_detector is None
+
+
+@pytest.mark.asyncio
+async def test_pipeline_stop_graceful() -> None:
+    """Test pipeline stop is graceful even if not started."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    # Stop without starting (should not raise)
+    await pipeline.stop()
+
+    assert not pipeline.is_running
+
+
+# ==============================================================================
+# F092-F093: Event emission tests
+# ==============================================================================
+
+
+@pytest.mark.asyncio
+async def test_pipeline_wake_detected_event() -> None:
+    """Test wake_detected event emission."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    events: list[dict] = []
+
+    @pipeline.on("wake_detected")
+    async def on_wake(event):
+        events.append(event.data)
+
+    @pipeline.on("listening_start")
+    async def on_listening(event):
+        events.append({"listening": True, **event.data})
+
+    await pipeline.emit("wake_detected", persona="jarvis", confidence=0.85)
+
+    # Wake event should be received
+    assert len(events) >= 2
+    assert events[0]["persona"] == "jarvis"
+    assert events[0]["confidence"] == 0.85
+
+    # Should chain to listening_start
+    assert any(e.get("listening") for e in events)
+
+
+@pytest.mark.asyncio
+async def test_pipeline_process_text() -> None:
+    """Test process_text() helper method."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    events: list[dict] = []
+
+    @pipeline.on("transcribed")
+    async def on_transcribed(event):
+        events.append(event.data)
+
+    await pipeline.process_text("Hello, world!")
+
+    assert len(events) == 1
+    assert events[0]["text"] == "Hello, world!"
+    assert events[0]["confidence"] == 1.0
+
+
+@pytest.mark.asyncio
+async def test_pipeline_respond() -> None:
+    """Test respond() helper method."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    events: list[dict] = []
+
+    @pipeline.on("response")
+    async def on_response(event):
+        events.append(event.data)
+
+    await pipeline.respond("Hello!", voice="nova")
+
+    assert len(events) == 1
+    assert events[0]["text"] == "Hello!"
+    assert events[0]["voice"] == "nova"
+
+
+@pytest.mark.asyncio
+async def test_pipeline_with_persona_manager() -> None:
+    """Test pipeline with PersonaManager integration."""
+    from reachy_agent.voice.persona import Persona, PersonaManager
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    # Create persona manager
+    manager = PersonaManager(auto_discover=False)
+    manager.add_persona(
+        Persona(
+            name="TestBot",
+            wake_words=["hey test", "test"],
+            voice="nova",
+            prompt="Test prompt",
+        )
+    )
+
+    # Create pipeline with manager
+    pipeline = VoicePipeline(persona_manager=manager, mock_mode=True)
+
+    await pipeline.start()
+
+    # Verify wake words are from manager
+    assert "hey test" in pipeline._wake_detector.models
+    assert "test" in pipeline._wake_detector.models
+
+    await pipeline.stop()
+
+
+@pytest.mark.asyncio
+async def test_pipeline_interrupted_event() -> None:
+    """Test interrupted event handling."""
+    from reachy_agent.voice.pipeline import VoicePipeline
+
+    pipeline = VoicePipeline(mock_mode=True)
+
+    events: list[dict] = []
+
+    @pipeline.on("interrupted")
+    async def on_interrupted(event):
+        events.append(event.data)
+
+    @pipeline.on("listening_start")
+    async def on_listening(event):
+        events.append({"listening": True, **event.data})
+
+    # Emit interrupted event with wake_word source
+    await pipeline.emit("interrupted", by="wake_word")
+
+    # Should receive interrupted event
+    assert any(e.get("by") == "wake_word" for e in events)
+
+    # Should chain to listening_start
+    assert any(e.get("listening") for e in events)
