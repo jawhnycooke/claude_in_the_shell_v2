@@ -2441,5 +2441,1378 @@
       "Verify logs watchdog events"
     ],
     "passes": true
+  },
+  {
+    "id": "F211",
+    "category": "infrastructure",
+    "description": "Add MuJoCo dependency to pyproject.toml optional dependencies",
+    "steps": [
+      "Add mujoco>=3.0.0 to [project.optional-dependencies.sim]",
+      "Add dm_control for high-level control utilities",
+      "Run: uv pip install -e '.[sim]'",
+      "Verify mujoco imports correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F212",
+    "category": "infrastructure",
+    "description": "Create src/reachy_agent/simulation/ package directory",
+    "steps": [
+      "Create src/reachy_agent/simulation/__init__.py",
+      "Create src/reachy_agent/simulation/client.py placeholder",
+      "Create src/reachy_agent/simulation/physics.py placeholder",
+      "Verify package imports correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F213",
+    "category": "infrastructure",
+    "description": "Create data/models/reachy_mini/ directory for MJCF assets",
+    "steps": [
+      "Create data/models/reachy_mini/ directory",
+      "Create placeholder for reachy_mini.xml MJCF file",
+      "Create meshes/ subdirectory for STL/OBJ files",
+      "Create textures/ subdirectory for visual assets"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F214",
+    "category": "functional",
+    "description": "Create MJCF model file for Reachy Mini head assembly",
+    "steps": [
+      "Define head body with correct mass and inertia",
+      "Define pitch, yaw, roll joints with correct limits",
+      "Define z-axis (height) joint for head lift",
+      "Verify joint limits match spec: pitch -45/+35, yaw -60/+60, roll -35/+35"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F215",
+    "category": "functional",
+    "description": "Create MJCF model file for Reachy Mini antenna assembly",
+    "steps": [
+      "Define left antenna body with joint",
+      "Define right antenna body with joint",
+      "Set joint limits: -150 to +150 degrees",
+      "Add antenna mesh geometry"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F216",
+    "category": "functional",
+    "description": "Create MJCF model file for Reachy Mini body/base",
+    "steps": [
+      "Define base body with continuous rotation",
+      "Add 360-degree continuous joint for body rotation",
+      "Define correct mass and inertia properties",
+      "Add visual mesh for body shell"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F217",
+    "category": "functional",
+    "description": "Assemble complete Reachy Mini MJCF model",
+    "steps": [
+      "Include head, antenna, and body assemblies",
+      "Define correct kinematic chain",
+      "Add collision geometry for all bodies",
+      "Verify model loads without errors: Run mujoco.MjModel.from_xml_path()"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F218",
+    "category": "functional",
+    "description": "Add actuator definitions to MJCF model",
+    "steps": [
+      "Define position actuators for all joints",
+      "Set appropriate control ranges and gains",
+      "Add velocity limits matching real hardware",
+      "Verify actuators respond to control inputs"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F219",
+    "category": "functional",
+    "description": "Add sensor definitions to MJCF model",
+    "steps": [
+      "Add joint position sensors for all joints",
+      "Add joint velocity sensors for all joints",
+      "Add IMU sensor (accelerometer + gyroscope)",
+      "Verify sensor data can be read from simulation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F220",
+    "category": "functional",
+    "description": "Add camera sensor to MJCF model",
+    "steps": [
+      "Define camera body attached to head",
+      "Set camera FOV to match real hardware (90 degrees)",
+      "Set camera resolution (640x480 default)",
+      "Verify camera renders images correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F221",
+    "category": "functional",
+    "description": "Create MJCFModelLoader utility class",
+    "steps": [
+      "Create src/reachy_agent/simulation/model_loader.py",
+      "Implement load_model() to load MJCF from path",
+      "Implement validate_model() to check joint/actuator count",
+      "Add error handling for missing files",
+      "Run: uv run pytest tests/test_simulation.py::test_model_loader"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F222",
+    "category": "infrastructure",
+    "description": "Add simulation configuration to config/default.yaml",
+    "steps": [
+      "Add simulation section with timestep, substeps settings",
+      "Add physics parameters (gravity, friction)",
+      "Add render settings (resolution, quality)",
+      "Verify config loads with SimulationConfig Pydantic model"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F223",
+    "category": "functional",
+    "description": "Create SimulationConfig Pydantic model",
+    "steps": [
+      "Define timestep (default 0.002s for 500Hz)",
+      "Define n_substeps (default 4)",
+      "Define render_width, render_height",
+      "Define physics parameters (gravity, friction coefficients)",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_config"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F224",
+    "category": "functional",
+    "description": "Implement SimulationEnvironment wrapper class",
+    "steps": [
+      "Create src/reachy_agent/simulation/environment.py",
+      "Wrap MjModel and MjData initialization",
+      "Implement step() method for physics stepping",
+      "Implement reset() method to restore initial state",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_environment"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F225",
+    "category": "functional",
+    "description": "Add environment scene setup with floor and lighting",
+    "steps": [
+      "Add ground plane to MJCF model",
+      "Configure lighting for realistic rendering",
+      "Add skybox or background color option",
+      "Verify scene renders correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F226",
+    "category": "infrastructure",
+    "description": "Create tests/test_simulation.py test file",
+    "steps": [
+      "Create test file with simulation fixtures",
+      "Add test_model_loads fixture",
+      "Add test_sim_environment fixture",
+      "Run: uv run pytest tests/test_simulation.py --co"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F227",
+    "category": "documentation",
+    "description": "Document MJCF model structure in specs/11-simulation.md",
+    "steps": [
+      "Document kinematic chain structure",
+      "Document joint naming conventions",
+      "Document actuator configuration",
+      "Include model diagram or description"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F228",
+    "category": "functional",
+    "description": "Add Backend.SIM enum value for simulation mode",
+    "steps": [
+      "Update src/reachy_agent/robot/client.py Backend enum",
+      "Add SIM = 'sim' value",
+      "Update docstring to document simulation backend",
+      "Run: uv run mypy src/reachy_agent/robot/client.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F229",
+    "category": "functional",
+    "description": "Create MuJoCoReachyClient implementing ReachyClient protocol",
+    "steps": [
+      "Create src/reachy_agent/simulation/client.py",
+      "Implement ReachyClient protocol interface",
+      "Initialize with SimulationEnvironment",
+      "Run: uv run mypy src/reachy_agent/simulation/client.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F230",
+    "category": "functional",
+    "description": "Implement connect() method for simulation client",
+    "steps": [
+      "Load MJCF model on connect",
+      "Initialize MjData for simulation state",
+      "Start physics thread if async mode",
+      "Emit connected event",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_connect"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F231",
+    "category": "functional",
+    "description": "Implement disconnect() method for simulation client",
+    "steps": [
+      "Stop physics thread if running",
+      "Release MuJoCo resources",
+      "Close any open viewers",
+      "Emit disconnected event",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_disconnect"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F232",
+    "category": "functional",
+    "description": "Implement wake_up() method for simulation",
+    "steps": [
+      "Enable all actuators in simulation",
+      "Set compliant mode to False (stiff joints)",
+      "Reset to initial standing pose",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_wake_up"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F233",
+    "category": "functional",
+    "description": "Implement sleep() method for simulation",
+    "steps": [
+      "Disable actuators (set gains to zero)",
+      "Enable gravity compensation only",
+      "Allow joints to be compliant",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_sleep"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F234",
+    "category": "functional",
+    "description": "Implement move_head() method with physics simulation",
+    "steps": [
+      "Set target joint positions for pitch, yaw, roll",
+      "Interpolate motion over specified duration",
+      "Run physics simulation during movement",
+      "Block until motion complete or timeout",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_move_head"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F235",
+    "category": "functional",
+    "description": "Implement look_at() method with inverse kinematics",
+    "steps": [
+      "Calculate required joint angles for 3D target",
+      "Use simple geometric IK for head pointing",
+      "Call move_head() with computed angles",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_look_at"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F236",
+    "category": "functional",
+    "description": "Implement rotate_body() method for base rotation",
+    "steps": [
+      "Set target angle for body rotation joint",
+      "Handle 360-degree continuous rotation",
+      "Interpolate rotation over duration",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_rotate_body"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F237",
+    "category": "functional",
+    "description": "Implement reset_position() for simulation",
+    "steps": [
+      "Return all joints to neutral (zero) position",
+      "Use smooth interpolation over duration",
+      "Wait for motion to complete",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_reset_position"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F238",
+    "category": "functional",
+    "description": "Implement set_antennas() method for simulation",
+    "steps": [
+      "Set target positions for antenna joints",
+      "Apply position control",
+      "Verify antenna movement in simulation",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_set_antennas"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F239",
+    "category": "functional",
+    "description": "Implement nod() gesture in simulation",
+    "steps": [
+      "Execute pitch oscillation sequence",
+      "Scale amplitude by intensity parameter",
+      "Use natural timing (2-3 nods)",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_nod"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F240",
+    "category": "functional",
+    "description": "Implement shake() gesture in simulation",
+    "steps": [
+      "Execute yaw oscillation sequence",
+      "Scale amplitude by intensity parameter",
+      "Use natural timing (2-3 shakes)",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_shake"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F241",
+    "category": "functional",
+    "description": "Implement play_emotion() with animation playback",
+    "steps": [
+      "Load emotion animation from data/emotions/",
+      "Apply keyframes to simulation joints",
+      "Interpolate between keyframes using physics",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_play_emotion"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F242",
+    "category": "functional",
+    "description": "Implement get_status() returning simulation state",
+    "steps": [
+      "Read all joint positions from MjData",
+      "Read actuator states",
+      "Construct RobotStatus dataclass",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_get_status"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F243",
+    "category": "functional",
+    "description": "Implement get_position() from simulation sensors",
+    "steps": [
+      "Read joint position sensors from MjData.sensordata",
+      "Map sensor indices to joint names",
+      "Return dict with all joint positions",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_get_position"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F244",
+    "category": "functional",
+    "description": "Implement get_limits() from MJCF model",
+    "steps": [
+      "Read joint limits from MjModel",
+      "Return dict mapping joint names to (min, max) tuples",
+      "Include velocity limits",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_get_limits"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F245",
+    "category": "functional",
+    "description": "Implement is_awake() status check for simulation",
+    "steps": [
+      "Track awake state internally",
+      "Return True if actuators enabled",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_is_awake"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F246",
+    "category": "functional",
+    "description": "Implement simulation physics loop with configurable timestep",
+    "steps": [
+      "Create PhysicsLoop class for async stepping",
+      "Support real-time and fast-forward modes",
+      "Handle pause/resume functionality",
+      "Run: uv run pytest tests/test_simulation.py::test_physics_loop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F247",
+    "category": "functional",
+    "description": "Implement capture_image() from simulation camera",
+    "steps": [
+      "Render scene from camera viewpoint",
+      "Use MuJoCo offscreen rendering",
+      "Return image as bytes (JPEG/PNG)",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_capture_image"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F248",
+    "category": "functional",
+    "description": "Implement get_sensor_data() from simulated IMU",
+    "steps": [
+      "Read accelerometer sensor from MjData",
+      "Read gyroscope sensor from MjData",
+      "Return dict with sensor readings",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_sensor_data"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F249",
+    "category": "functional",
+    "description": "Create SimulationViewer for real-time 3D visualization",
+    "steps": [
+      "Create src/reachy_agent/simulation/viewer.py",
+      "Wrap MuJoCo passive viewer",
+      "Support window creation and event handling",
+      "Run: uv run python -c 'from reachy_agent.simulation.viewer import SimulationViewer'"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F250",
+    "category": "functional",
+    "description": "Implement viewer start() method",
+    "steps": [
+      "Create OpenGL window for rendering",
+      "Initialize MuJoCo viewer context",
+      "Start render loop in background thread",
+      "Run: uv run pytest tests/test_simulation.py::test_viewer_start"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F251",
+    "category": "functional",
+    "description": "Implement viewer stop() method",
+    "steps": [
+      "Stop render loop gracefully",
+      "Close OpenGL window",
+      "Release viewer resources",
+      "Run: uv run pytest tests/test_simulation.py::test_viewer_stop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F252",
+    "category": "functional",
+    "description": "Implement viewer camera controls",
+    "steps": [
+      "Support mouse orbit, pan, zoom",
+      "Support keyboard shortcuts for views",
+      "Add preset camera positions (front, side, top)",
+      "Implement smooth camera transitions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F253",
+    "category": "functional",
+    "description": "Implement debug overlay for joint visualization",
+    "steps": [
+      "Draw joint axes as colored lines",
+      "Show joint angle values as text labels",
+      "Toggle overlay with keyboard shortcut",
+      "Run: uv run pytest tests/test_simulation.py::test_debug_overlay"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F254",
+    "category": "functional",
+    "description": "Implement contact force visualization",
+    "steps": [
+      "Draw contact points as spheres",
+      "Show contact force vectors as arrows",
+      "Color by force magnitude",
+      "Toggle with keyboard shortcut"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F255",
+    "category": "functional",
+    "description": "Implement simulation recording to video",
+    "steps": [
+      "Capture frames during simulation",
+      "Encode to MP4 using ffmpeg or similar",
+      "Support configurable framerate and resolution",
+      "Run: uv run pytest tests/test_simulation.py::test_video_recording"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F256",
+    "category": "functional",
+    "description": "Implement state trajectory recording",
+    "steps": [
+      "Record joint positions at each timestep",
+      "Record sensor data at each timestep",
+      "Save to NumPy .npz format",
+      "Run: uv run pytest tests/test_simulation.py::test_trajectory_recording"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F257",
+    "category": "functional",
+    "description": "Implement trajectory playback in simulation",
+    "steps": [
+      "Load recorded trajectory from .npz",
+      "Apply positions to simulation at each step",
+      "Support playback speed control",
+      "Run: uv run pytest tests/test_simulation.py::test_trajectory_playback"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F258",
+    "category": "functional",
+    "description": "Implement screenshot capture functionality",
+    "steps": [
+      "Render current frame to image",
+      "Save as PNG with timestamp",
+      "Support custom filename and path",
+      "Run: uv run pytest tests/test_simulation.py::test_screenshot"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F259",
+    "category": "functional",
+    "description": "Add headless rendering mode",
+    "steps": [
+      "Support offscreen rendering without display",
+      "Use EGL or OSMesa backend",
+      "Enable CI/CD testing of visuals",
+      "Run: uv run pytest tests/test_simulation.py::test_headless_render"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F260",
+    "category": "functional",
+    "description": "Implement render quality settings",
+    "steps": [
+      "Support shadow rendering toggle",
+      "Support antialiasing settings",
+      "Support reflection/refraction options",
+      "Add config options for quality presets"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F261",
+    "category": "functional",
+    "description": "Implement PD position controller for joints",
+    "steps": [
+      "Create src/reachy_agent/simulation/control.py",
+      "Implement proportional-derivative control",
+      "Support configurable P and D gains",
+      "Run: uv run pytest tests/test_simulation.py::test_pd_controller"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F262",
+    "category": "functional",
+    "description": "Implement velocity controller for smooth motion",
+    "steps": [
+      "Support velocity-mode control",
+      "Implement acceleration limiting",
+      "Support configurable max velocity",
+      "Run: uv run pytest tests/test_simulation.py::test_velocity_control"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F263",
+    "category": "functional",
+    "description": "Implement torque/force controller",
+    "steps": [
+      "Support direct torque control mode",
+      "Implement torque limiting",
+      "Add gravity compensation option",
+      "Run: uv run pytest tests/test_simulation.py::test_torque_control"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F264",
+    "category": "functional",
+    "description": "Implement trajectory interpolation",
+    "steps": [
+      "Support linear interpolation between waypoints",
+      "Support cubic spline interpolation",
+      "Implement minimum-jerk trajectory generation",
+      "Run: uv run pytest tests/test_simulation.py::test_trajectory_interpolation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F265",
+    "category": "functional",
+    "description": "Tune actuator gains for realistic behavior",
+    "steps": [
+      "Set proportional gains for position control",
+      "Set derivative gains for damping",
+      "Tune for stable, non-oscillatory motion",
+      "Verify motion matches expected dynamics"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F266",
+    "category": "functional",
+    "description": "Implement joint limit enforcement in simulation",
+    "steps": [
+      "Respect MJCF joint limits during control",
+      "Add soft limit zones with increased stiffness",
+      "Log warnings when limits approached",
+      "Run: uv run pytest tests/test_simulation.py::test_joint_limits"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F267",
+    "category": "functional",
+    "description": "Implement contact detection and reporting",
+    "steps": [
+      "Detect collisions using MuJoCo contact system",
+      "Report contact points and forces",
+      "Filter by body pairs of interest",
+      "Run: uv run pytest tests/test_simulation.py::test_contact_detection"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F268",
+    "category": "functional",
+    "description": "Implement ground contact sensing",
+    "steps": [
+      "Detect when robot base contacts ground",
+      "Report ground reaction forces",
+      "Implement stability detection",
+      "Run: uv run pytest tests/test_simulation.py::test_ground_contact"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F269",
+    "category": "functional",
+    "description": "Implement collision avoidance for self-collision",
+    "steps": [
+      "Define self-collision groups in MJCF",
+      "Detect potential self-collisions",
+      "Optionally prevent self-colliding motions",
+      "Run: uv run pytest tests/test_simulation.py::test_self_collision"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F270",
+    "category": "functional",
+    "description": "Implement simulated motor dynamics",
+    "steps": [
+      "Model motor velocity limits realistically",
+      "Model motor torque limits",
+      "Add motor inertia effects",
+      "Verify matches real hardware response"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F271",
+    "category": "functional",
+    "description": "Implement gravity compensation mode",
+    "steps": [
+      "Calculate gravity torques for all joints",
+      "Apply feedforward compensation",
+      "Allow compliant positioning with gravity support",
+      "Run: uv run pytest tests/test_simulation.py::test_gravity_compensation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F272",
+    "category": "functional",
+    "description": "Implement force/torque sensor simulation",
+    "steps": [
+      "Add 6-axis F/T sensor to MJCF if needed",
+      "Read forces/torques from simulation",
+      "Support noise addition for realism",
+      "Run: uv run pytest tests/test_simulation.py::test_ft_sensor"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F273",
+    "category": "functional",
+    "description": "Implement simulated sensor noise",
+    "steps": [
+      "Add Gaussian noise to joint position sensors",
+      "Add noise to IMU readings",
+      "Support configurable noise levels",
+      "Run: uv run pytest tests/test_simulation.py::test_sensor_noise"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F274",
+    "category": "functional",
+    "description": "Implement physics parameter variation",
+    "steps": [
+      "Support runtime friction coefficient changes",
+      "Support mass/inertia perturbations",
+      "Support damping coefficient changes",
+      "Run: uv run pytest tests/test_simulation.py::test_physics_variation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F275",
+    "category": "functional",
+    "description": "Implement external force application",
+    "steps": [
+      "Support applying external forces to bodies",
+      "Support applying external torques",
+      "Implement perturbation testing helpers",
+      "Run: uv run pytest tests/test_simulation.py::test_external_forces"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F276",
+    "category": "functional",
+    "description": "Implement physics timing metrics",
+    "steps": [
+      "Track simulation step time",
+      "Track real-time factor (sim time / wall time)",
+      "Log warnings if simulation falls behind real-time",
+      "Run: uv run pytest tests/test_simulation.py::test_timing_metrics"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F277",
+    "category": "functional",
+    "description": "Implement deterministic simulation mode",
+    "steps": [
+      "Ensure reproducible results with same seed",
+      "Reset random number generators on reset()",
+      "Support fixed timestep mode",
+      "Run: uv run pytest tests/test_simulation.py::test_determinism"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F278",
+    "category": "functional",
+    "description": "Implement simulation state serialization",
+    "steps": [
+      "Save full MjData state to file",
+      "Load state from file to restore simulation",
+      "Support checkpoint/restore workflow",
+      "Run: uv run pytest tests/test_simulation.py::test_state_serialization"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F279",
+    "category": "functional",
+    "description": "Create simulation test fixtures in conftest.py",
+    "steps": [
+      "Add sim_client fixture for MuJoCoReachyClient",
+      "Add sim_environment fixture for SimulationEnvironment",
+      "Add sim_viewer fixture with headless mode",
+      "Run: uv run pytest tests/test_simulation.py --co"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F280",
+    "category": "functional",
+    "description": "Write unit tests for MJCF model loading",
+    "steps": [
+      "Test model loads without errors",
+      "Test all joints are present",
+      "Test all actuators are configured",
+      "Run: uv run pytest tests/test_simulation.py::test_model_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F281",
+    "category": "functional",
+    "description": "Write unit tests for MuJoCoReachyClient protocol compliance",
+    "steps": [
+      "Test all ReachyClient methods are implemented",
+      "Test return types match protocol",
+      "Test error handling",
+      "Run: uv run pytest tests/test_simulation.py::test_client_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F282",
+    "category": "functional",
+    "description": "Write unit tests for joint movement commands",
+    "steps": [
+      "Test move_head() reaches target position",
+      "Test set_antennas() reaches target",
+      "Test rotate_body() reaches target",
+      "Verify positions within tolerance",
+      "Run: uv run pytest tests/test_simulation.py::test_movement_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F283",
+    "category": "functional",
+    "description": "Write unit tests for sensor simulation",
+    "steps": [
+      "Test joint position sensors accuracy",
+      "Test IMU sensor outputs",
+      "Test camera image capture",
+      "Run: uv run pytest tests/test_simulation.py::test_sensor_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F284",
+    "category": "functional",
+    "description": "Write unit tests for physics behavior",
+    "steps": [
+      "Test gravity affects free-falling bodies",
+      "Test joint damping reduces oscillation",
+      "Test contact forces are reasonable",
+      "Run: uv run pytest tests/test_simulation.py::test_physics_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F285",
+    "category": "functional",
+    "description": "Write integration tests for simulation client with agent",
+    "steps": [
+      "Test agent can call robot tools via sim client",
+      "Test tool results are realistic",
+      "Test motion commands execute correctly",
+      "Run: uv run pytest tests/test_simulation.py::test_integration_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F286",
+    "category": "functional",
+    "description": "Create benchmark tests for simulation performance",
+    "steps": [
+      "Benchmark physics step time",
+      "Benchmark rendering frame time",
+      "Benchmark full control loop",
+      "Run: uv run pytest tests/test_simulation.py::test_benchmark_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F287",
+    "category": "functional",
+    "description": "Write tests comparing sim to mock client outputs",
+    "steps": [
+      "Compare get_status() outputs",
+      "Compare get_position() outputs",
+      "Verify sim client is more realistic",
+      "Run: uv run pytest tests/test_simulation.py::test_sim_vs_mock_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F288",
+    "category": "functional",
+    "description": "Write stress tests for long-running simulation",
+    "steps": [
+      "Run simulation for 10000+ steps",
+      "Check for memory leaks",
+      "Verify no drift in physics",
+      "Run: uv run pytest tests/test_simulation.py::test_long_running -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F289",
+    "category": "functional",
+    "description": "Write tests for simulation determinism",
+    "steps": [
+      "Run same trajectory twice with same seed",
+      "Compare resulting states",
+      "Verify exact match",
+      "Run: uv run pytest tests/test_simulation.py::test_determinism -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F290",
+    "category": "functional",
+    "description": "Write tests for edge cases and error handling",
+    "steps": [
+      "Test commands with invalid parameters",
+      "Test behavior at joint limits",
+      "Test disconnect during motion",
+      "Run: uv run pytest tests/test_simulation.py::test_edge_* -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F291",
+    "category": "functional",
+    "description": "Add simulation coverage to pytest configuration",
+    "steps": [
+      "Include simulation module in coverage",
+      "Set minimum coverage threshold for sim",
+      "Run: uv run pytest --cov=src/reachy_agent/simulation --cov-report=term"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F292",
+    "category": "documentation",
+    "description": "Document simulation testing best practices",
+    "steps": [
+      "Document fixture usage",
+      "Document headless testing",
+      "Document performance testing approach",
+      "Add to ai_docs/simulation-testing.md"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F293",
+    "category": "functional",
+    "description": "Add --sim CLI flag for simulation mode",
+    "steps": [
+      "Update __main__.py run command",
+      "Add --sim flag option",
+      "Select MuJoCoReachyClient when --sim is set",
+      "Run: uv run python -m reachy_agent run --sim --help"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F294",
+    "category": "functional",
+    "description": "Add --sim-viewer flag to enable visualization",
+    "steps": [
+      "Add --sim-viewer flag to run command",
+      "Launch viewer window when flag set",
+      "Support headless sim without viewer",
+      "Run: uv run python -m reachy_agent run --sim --sim-viewer"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F295",
+    "category": "functional",
+    "description": "Add --sim-realtime flag for real-time simulation",
+    "steps": [
+      "Add --sim-realtime flag (default True)",
+      "Support fast-forward mode with --no-sim-realtime",
+      "Adjust physics stepping accordingly",
+      "Run: uv run python -m reachy_agent run --sim --no-sim-realtime"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F296",
+    "category": "functional",
+    "description": "Implement client factory for backend selection",
+    "steps": [
+      "Create create_client() factory function",
+      "Select MockClient, SDKClient, or MuJoCoClient based on Backend",
+      "Handle missing optional dependencies gracefully",
+      "Run: uv run pytest tests/test_robot.py::test_client_factory"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F297",
+    "category": "functional",
+    "description": "Ensure seamless switching between sim and mock modes",
+    "steps": [
+      "Verify same code works with --mock and --sim",
+      "Verify tool calls work identically",
+      "Verify agent behavior is consistent",
+      "Run: uv run pytest tests/test_integration.py::test_backend_switching"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F298",
+    "category": "functional",
+    "description": "Add simulation config section to default.yaml",
+    "steps": [
+      "Add sim: section with timestep, viewer settings",
+      "Add model_path configuration",
+      "Add physics parameters",
+      "Verify config loads correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F299",
+    "category": "functional",
+    "description": "Implement state synchronization for sim-to-real transfer",
+    "steps": [
+      "Export simulation state to standard format",
+      "Support importing state from real robot",
+      "Enable sim-real state comparison",
+      "Run: uv run pytest tests/test_simulation.py::test_state_sync"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F300",
+    "category": "functional",
+    "description": "Add simulation status to health check command",
+    "steps": [
+      "Check if MuJoCo is available",
+      "Check if model file exists",
+      "Report simulation capability in check output",
+      "Run: uv run python -m reachy_agent check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F301",
+    "category": "functional",
+    "description": "Integrate simulation with motion controller",
+    "steps": [
+      "BlendController works with sim client",
+      "Idle behavior runs in simulation",
+      "Wobble overlay works in simulation",
+      "Run: uv run pytest tests/test_integration.py::test_motion_sim"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F302",
+    "category": "functional",
+    "description": "Integrate simulation with MCP tools",
+    "steps": [
+      "Robot MCP server works with sim client",
+      "All 20 tools execute in simulation",
+      "Tool results are realistic",
+      "Run: uv run pytest tests/test_mcp.py::test_mcp_sim_integration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F303",
+    "category": "functional",
+    "description": "Add simulation logging and metrics",
+    "steps": [
+      "Log physics step timing",
+      "Log control loop performance",
+      "Log rendering metrics",
+      "Add structlog integration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F304",
+    "category": "documentation",
+    "description": "Create simulation quick-start guide in README",
+    "steps": [
+      "Document installation with sim extras",
+      "Document basic simulation usage",
+      "Document viewer controls",
+      "Add troubleshooting for common issues"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F305",
+    "category": "documentation",
+    "description": "Create ai_docs/simulation.md reference",
+    "steps": [
+      "Document simulation architecture",
+      "Document available config options",
+      "Document API for sim client",
+      "Include example code snippets"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F306",
+    "category": "infrastructure",
+    "description": "Add simulation to CI workflow",
+    "steps": [
+      "Install MuJoCo in CI environment",
+      "Run simulation tests in CI",
+      "Use headless rendering in CI",
+      "Update .github/workflows/ci.yml"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F307",
+    "category": "functional",
+    "description": "Implement domain randomization for physics parameters",
+    "steps": [
+      "Create DomainRandomizer class",
+      "Support randomizing mass, friction, damping",
+      "Support randomizing joint limits within range",
+      "Run: uv run pytest tests/test_simulation.py::test_domain_randomization"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F308",
+    "category": "functional",
+    "description": "Implement visual domain randomization",
+    "steps": [
+      "Support randomizing textures",
+      "Support randomizing lighting",
+      "Support randomizing camera position",
+      "Run: uv run pytest tests/test_simulation.py::test_visual_randomization"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F309",
+    "category": "functional",
+    "description": "Implement sensor noise domain randomization",
+    "steps": [
+      "Support randomizing noise levels",
+      "Support randomizing sensor biases",
+      "Support randomizing sensor delays",
+      "Run: uv run pytest tests/test_simulation.py::test_sensor_randomization"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F310",
+    "category": "functional",
+    "description": "Implement parallel simulation support",
+    "steps": [
+      "Create ParallelSimulation class",
+      "Support running N environments simultaneously",
+      "Use multiprocessing for parallelism",
+      "Run: uv run pytest tests/test_simulation.py::test_parallel_sim"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F311",
+    "category": "functional",
+    "description": "Implement batch action processing for parallel sims",
+    "steps": [
+      "Accept batched action arrays",
+      "Process all environments in parallel",
+      "Return batched observations",
+      "Run: uv run pytest tests/test_simulation.py::test_batch_processing"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F312",
+    "category": "functional",
+    "description": "Implement custom scenario loading",
+    "steps": [
+      "Support loading scenario from YAML file",
+      "Define initial robot pose",
+      "Define environment objects",
+      "Run: uv run pytest tests/test_simulation.py::test_scenario_loading"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F313",
+    "category": "functional",
+    "description": "Create example scenarios for testing",
+    "steps": [
+      "Create data/scenarios/default.yaml",
+      "Create data/scenarios/tabletop.yaml with table",
+      "Create data/scenarios/cluttered.yaml with obstacles",
+      "Verify scenarios load correctly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F314",
+    "category": "functional",
+    "description": "Implement environment object spawning",
+    "steps": [
+      "Support adding objects to simulation at runtime",
+      "Support primitive shapes (box, sphere, cylinder)",
+      "Support mesh objects from file",
+      "Run: uv run pytest tests/test_simulation.py::test_object_spawning"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F315",
+    "category": "functional",
+    "description": "Implement teleoperation interface for simulation",
+    "steps": [
+      "Create TeleoperationController class",
+      "Support keyboard input for joint control",
+      "Support gamepad input for motion",
+      "Run: uv run python -m reachy_agent.simulation.teleop --sim"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F316",
+    "category": "functional",
+    "description": "Implement keyboard teleoperation mappings",
+    "steps": [
+      "Map WASD to head pitch/yaw",
+      "Map QE to head roll",
+      "Map arrow keys to body rotation",
+      "Map number keys to emotions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F317",
+    "category": "functional",
+    "description": "Implement simulation reset variations",
+    "steps": [
+      "Support reset to random pose within limits",
+      "Support reset with domain randomization",
+      "Support reset to specific saved state",
+      "Run: uv run pytest tests/test_simulation.py::test_reset_variations"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F318",
+    "category": "functional",
+    "description": "Implement reward function framework for RL",
+    "steps": [
+      "Create RewardFunction base class",
+      "Implement pose tracking reward",
+      "Implement energy efficiency reward",
+      "Run: uv run pytest tests/test_simulation.py::test_reward_functions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F319",
+    "category": "functional",
+    "description": "Implement Gymnasium environment wrapper",
+    "steps": [
+      "Create ReachyGymEnv class",
+      "Implement standard Gym interface (step, reset, etc.)",
+      "Define observation and action spaces",
+      "Run: uv run pytest tests/test_simulation.py::test_gym_env"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F320",
+    "category": "functional",
+    "description": "Add simulation data export utilities",
+    "steps": [
+      "Export trajectories to CSV format",
+      "Export sensor data to CSV format",
+      "Export video with annotations",
+      "Run: uv run pytest tests/test_simulation.py::test_data_export"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F321",
+    "category": "functional",
+    "description": "Implement simulation speed control",
+    "steps": [
+      "Support pause/resume simulation",
+      "Support slow motion (0.1x - 1x)",
+      "Support fast forward (1x - 10x)",
+      "Add keyboard shortcuts for speed control"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F322",
+    "category": "functional",
+    "description": "Implement simulation stepping modes",
+    "steps": [
+      "Support continuous stepping",
+      "Support single-step mode for debugging",
+      "Support step-until-condition mode",
+      "Run: uv run pytest tests/test_simulation.py::test_stepping_modes"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F323",
+    "category": "documentation",
+    "description": "Create simulation API reference documentation",
+    "steps": [
+      "Document all simulation classes",
+      "Document configuration options",
+      "Document extension points",
+      "Add to docs/simulation-api.md"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F324",
+    "category": "documentation",
+    "description": "Create simulation tutorial with examples",
+    "steps": [
+      "Create examples/sim_basic.py for basic usage",
+      "Create examples/sim_recording.py for recording",
+      "Create examples/sim_teleop.py for teleoperation",
+      "Create examples/sim_domain_rand.py for domain randomization"
+    ],
+    "passes": false
   }
 ]
