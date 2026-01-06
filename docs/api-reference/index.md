@@ -39,7 +39,7 @@ The agent exposes 23 MCP tools organized into two servers:
 
 | Interface | Description |
 |-----------|-------------|
-| **[ReachyClient](python-api.md#reachyclient)** | Hardware abstraction protocol |
+| **[ReachyClient](python-api.md#reachyclient-protocol)** | Hardware abstraction protocol |
 | **[MockClient](python-api.md#mockclient)** | Testing without hardware |
 | **[MuJoCoReachyClient](python-api.md#mujocoreachyclient)** | Physics simulation |
 
