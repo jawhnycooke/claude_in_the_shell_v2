@@ -1,0 +1,2445 @@
+[
+  {
+    "id": "F001",
+    "category": "infrastructure",
+    "description": "Create project directory structure with all required folders",
+    "steps": [
+      "Verify src/reachy_agent/ exists with all subdirectories",
+      "Verify config/, prompts/, data/, specs/, tests/ exist",
+      "Verify __init__.py files in all Python packages"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F002",
+    "category": "infrastructure",
+    "description": "Set up pyproject.toml with all dependencies and metadata",
+    "steps": [
+      "Verify project metadata (name, version, description)",
+      "Verify all required dependencies are listed",
+      "Verify optional dependencies [voice] and [dev] groups",
+      "Verify tool configurations (black, ruff, mypy, pytest)"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F003",
+    "category": "infrastructure",
+    "description": "Create .env.example with required environment variables",
+    "steps": [
+      "Verify ANTHROPIC_API_KEY is documented",
+      "Verify OPENAI_API_KEY is documented as optional",
+      "Verify REACHY_DEBUG option is documented"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F004",
+    "category": "infrastructure",
+    "description": "Create .gitignore with Python, IDE, and data exclusions",
+    "steps": [
+      "Verify Python artifacts are ignored (__pycache__, *.pyc, venv/)",
+      "Verify .env files are ignored",
+      "Verify ChromaDB data directory is ignored",
+      "Verify IDE folders (.vscode/, .idea/) are ignored"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F005",
+    "category": "infrastructure",
+    "description": "Create README.md with project overview and setup instructions",
+    "steps": [
+      "Verify project description is clear",
+      "Verify setup instructions use uv",
+      "Verify CLI commands are documented"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F006",
+    "category": "infrastructure",
+    "description": "Implement EventEmitter base class for event-driven architecture",
+    "steps": [
+      "Create src/reachy_agent/utils/events.py",
+      "Verify EventEmitter supports on(), emit(), and off() methods",
+      "Verify type hints are complete",
+      "Run: uv run pytest tests/test_utils.py::test_event_emitter"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F007",
+    "category": "infrastructure",
+    "description": "Implement structured logging setup with structlog",
+    "steps": [
+      "Create src/reachy_agent/utils/logging.py",
+      "Verify logger configuration with JSON output",
+      "Verify log level control from environment",
+      "Run: uv run pytest tests/test_utils.py::test_logging"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F008",
+    "category": "infrastructure",
+    "description": "Implement configuration loading from YAML files",
+    "steps": [
+      "Create src/reachy_agent/utils/config.py",
+      "Verify loads config/default.yaml",
+      "Verify Pydantic models for type safety",
+      "Verify environment variable overrides",
+      "Run: uv run pytest tests/test_utils.py::test_config_loading"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F009",
+    "category": "infrastructure",
+    "description": "Create config/default.yaml with sensible defaults",
+    "steps": [
+      "Verify agent section (model, name)",
+      "Verify voice section (personas, wake_sensitivity)",
+      "Verify motion section (tick_hz)",
+      "Verify memory section (path)"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F010",
+    "category": "infrastructure",
+    "description": "Create config/permissions.yaml with 3-tier rules",
+    "steps": [
+      "Verify AUTONOMOUS tools are listed",
+      "Verify CONFIRM tools are listed",
+      "Verify FORBIDDEN tools are listed",
+      "Verify glob patterns work correctly"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F011",
+    "category": "functional",
+    "description": "Define ReachyClient protocol interface",
+    "steps": [
+      "Create src/reachy_agent/robot/client.py",
+      "Verify Protocol defines all required methods",
+      "Verify type hints are complete",
+      "Run: uv run mypy src/reachy_agent/robot/client.py"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F012",
+    "category": "functional",
+    "description": "Implement MockReachyClient for testing without hardware",
+    "steps": [
+      "Create src/reachy_agent/robot/mock.py",
+      "Verify implements ReachyClient protocol",
+      "Verify simulates motor movements with delays",
+      "Verify returns realistic sensor data",
+      "Run: uv run pytest tests/test_robot.py::test_mock_client"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F013",
+    "category": "functional",
+    "description": "Implement SDKReachyClient for real hardware communication",
+    "steps": [
+      "Create src/reachy_agent/robot/sdk.py",
+      "Verify implements ReachyClient protocol",
+      "Verify connects to Reachy SDK via Zenoh",
+      "Verify handles connection errors gracefully",
+      "Run: uv run pytest tests/test_robot.py::test_sdk_client --mock"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F014",
+    "category": "functional",
+    "description": "Implement move_head() method in robot client",
+    "steps": [
+      "Verify accepts pitch, yaw, roll, duration parameters",
+      "Verify validates angle limits",
+      "Verify smooth interpolation to target position",
+      "Run: uv run pytest tests/test_robot.py::test_move_head"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F015",
+    "category": "functional",
+    "description": "Implement look_at() method for 3D point targeting",
+    "steps": [
+      "Verify accepts x, y, z coordinates",
+      "Verify calculates required head angles",
+      "Verify smooth motion to target",
+      "Run: uv run pytest tests/test_robot.py::test_look_at"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F016",
+    "category": "functional",
+    "description": "Implement rotate_body() method for base rotation",
+    "steps": [
+      "Verify accepts angle and duration",
+      "Verify handles 360\u00b0 continuous rotation",
+      "Verify smooth acceleration/deceleration",
+      "Run: uv run pytest tests/test_robot.py::test_rotate_body"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F017",
+    "category": "functional",
+    "description": "Implement reset_position() to return to neutral pose",
+    "steps": [
+      "Verify returns head to (0, 0, 0)",
+      "Verify returns body to 0\u00b0",
+      "Verify smooth motion with configurable duration",
+      "Run: uv run pytest tests/test_robot.py::test_reset_position"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F018",
+    "category": "functional",
+    "description": "Implement set_antennas() for antenna control",
+    "steps": [
+      "Verify accepts left_angle and right_angle",
+      "Verify validates angle limits",
+      "Verify independent control of each antenna",
+      "Run: uv run pytest tests/test_robot.py::test_set_antennas"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F019",
+    "category": "functional",
+    "description": "Implement nod() gesture for affirmative response",
+    "steps": [
+      "Verify intensity parameter controls motion amplitude",
+      "Verify natural timing (not too fast/slow)",
+      "Run: uv run pytest tests/test_robot.py::test_nod"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F020",
+    "category": "functional",
+    "description": "Implement shake() gesture for negative response",
+    "steps": [
+      "Verify intensity parameter controls motion amplitude",
+      "Verify natural yaw motion",
+      "Run: uv run pytest tests/test_robot.py::test_shake"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F021",
+    "category": "functional",
+    "description": "Implement wake_up() to enable motors",
+    "steps": [
+      "Verify activates all motor joints",
+      "Verify sets compliant mode to False",
+      "Verify returns success/failure status",
+      "Run: uv run pytest tests/test_robot.py::test_wake_up"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F022",
+    "category": "functional",
+    "description": "Implement sleep() to disable motors and enter low-power mode",
+    "steps": [
+      "Verify sets compliant mode to True",
+      "Verify disables all motor torque",
+      "Verify safe power-down sequence",
+      "Run: uv run pytest tests/test_robot.py::test_sleep"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F023",
+    "category": "functional",
+    "description": "Implement is_awake() status check",
+    "steps": [
+      "Verify returns boolean status",
+      "Verify checks motor compliant state",
+      "Run: uv run pytest tests/test_robot.py::test_is_awake"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F024",
+    "category": "functional",
+    "description": "Implement get_status() for comprehensive robot state",
+    "steps": [
+      "Verify returns joint positions and velocities",
+      "Verify returns motor states (awake/asleep)",
+      "Verify returns error states if any",
+      "Run: uv run pytest tests/test_robot.py::test_get_status"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F025",
+    "category": "functional",
+    "description": "Implement get_position() to read current joint angles",
+    "steps": [
+      "Verify returns dict with all joint names and angles",
+      "Verify returns head (pitch, yaw, roll, z) positions",
+      "Verify returns body rotation angle",
+      "Run: uv run pytest tests/test_robot.py::test_get_position"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F026",
+    "category": "functional",
+    "description": "Implement get_limits() to query joint angle constraints",
+    "steps": [
+      "Verify returns min/max for each joint",
+      "Verify returns speed limits",
+      "Run: uv run pytest tests/test_robot.py::test_get_limits"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F027",
+    "category": "functional",
+    "description": "Implement capture_image() from camera",
+    "steps": [
+      "Verify captures frame from USB camera",
+      "Verify supports multiple formats (JPEG, PNG)",
+      "Verify returns base64-encoded image or file path",
+      "Run: uv run pytest tests/test_robot.py::test_capture_image"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F028",
+    "category": "functional",
+    "description": "Implement get_sensor_data() for IMU/accelerometer",
+    "steps": [
+      "Verify reads accelerometer data",
+      "Verify reads gyroscope data",
+      "Verify returns structured dict with all readings",
+      "Run: uv run pytest tests/test_robot.py::test_get_sensor_data"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F029",
+    "category": "functional",
+    "description": "Implement detect_sound_direction() using mic array",
+    "steps": [
+      "Verify uses 4-mic array for direction finding",
+      "Verify returns azimuth angle",
+      "Verify returns confidence score",
+      "Run: uv run pytest tests/test_robot.py::test_detect_sound_direction"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F030",
+    "category": "functional",
+    "description": "Create Robot MCP server with 20 tools",
+    "steps": [
+      "Create src/reachy_agent/mcp/robot.py",
+      "Verify uses FastMCP framework",
+      "Verify all 20 tools are registered",
+      "Run: uv run pytest tests/test_mcp.py::test_robot_server"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F031",
+    "category": "functional",
+    "description": "Implement move_head MCP tool wrapper",
+    "steps": [
+      "Verify tool schema matches spec",
+      "Verify calls robot client move_head()",
+      "Verify returns success/error response",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F032",
+    "category": "functional",
+    "description": "Implement look_at MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with x, y, z parameters",
+      "Verify calls robot client look_at()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F033",
+    "category": "functional",
+    "description": "Implement rotate_body MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with angle and duration",
+      "Verify calls robot client rotate_body()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F034",
+    "category": "functional",
+    "description": "Implement reset_position MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client reset_position()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F035",
+    "category": "functional",
+    "description": "Implement play_emotion MCP tool with emotion library",
+    "steps": [
+      "Verify loads emotion from data/emotions/ directory",
+      "Verify plays animation sequence on robot",
+      "Verify returns when animation completes",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F036",
+    "category": "functional",
+    "description": "Implement play_sequence MCP tool for emotion chains",
+    "steps": [
+      "Verify accepts array of emotion names",
+      "Verify accepts array of delays between emotions",
+      "Verify plays emotions in sequence",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F037",
+    "category": "functional",
+    "description": "Implement set_antennas MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with left and right angles",
+      "Verify calls robot client set_antennas()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F038",
+    "category": "functional",
+    "description": "Implement nod MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with intensity parameter",
+      "Verify calls robot client nod()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F039",
+    "category": "functional",
+    "description": "Implement shake MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with intensity parameter",
+      "Verify calls robot client shake()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F040",
+    "category": "functional",
+    "description": "Implement speak MCP tool for TTS output",
+    "steps": [
+      "Verify tool schema with text and optional voice",
+      "Verify integrates with voice pipeline",
+      "Verify blocks until speech completes",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F041",
+    "category": "functional",
+    "description": "Implement listen MCP tool for speech recognition",
+    "steps": [
+      "Verify tool schema with timeout parameter",
+      "Verify captures audio from mic",
+      "Verify returns transcribed text",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F042",
+    "category": "functional",
+    "description": "Implement capture_image MCP tool wrapper",
+    "steps": [
+      "Verify tool schema with format parameter",
+      "Verify calls robot client capture_image()",
+      "Verify returns image data or URL",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F043",
+    "category": "functional",
+    "description": "Implement get_sensor_data MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client get_sensor_data()",
+      "Verify returns formatted sensor readings",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F044",
+    "category": "functional",
+    "description": "Implement detect_sound_direction MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client detect_sound_direction()",
+      "Verify returns angle and confidence",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F045",
+    "category": "functional",
+    "description": "Implement wake_up MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client wake_up()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F046",
+    "category": "functional",
+    "description": "Implement sleep MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client sleep()",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F047",
+    "category": "functional",
+    "description": "Implement is_awake MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client is_awake()",
+      "Verify returns boolean status",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F048",
+    "category": "functional",
+    "description": "Implement get_status MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client get_status()",
+      "Verify returns comprehensive state dict",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F049",
+    "category": "functional",
+    "description": "Implement get_position MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client get_position()",
+      "Verify returns joint angles",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F050",
+    "category": "functional",
+    "description": "Implement get_limits MCP tool wrapper",
+    "steps": [
+      "Verify tool schema",
+      "Verify calls robot client get_limits()",
+      "Verify returns joint constraints",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F051",
+    "category": "functional",
+    "description": "Implement tool result caching with 200ms TTL",
+    "steps": [
+      "Verify caches read-only tool results",
+      "Verify cache expires after 200ms",
+      "Verify cache key includes tool name and parameters",
+      "Run: uv run pytest tests/test_mcp.py::test_tool_caching"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F052",
+    "category": "functional",
+    "description": "Define MemoryType enum with 3 types",
+    "steps": [
+      "Create src/reachy_agent/memory/manager.py",
+      "Verify CONVERSATION, FACT, CONTEXT types",
+      "Verify expiry rules for each type",
+      "Run: uv run mypy src/reachy_agent/memory/manager.py"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F053",
+    "category": "functional",
+    "description": "Define Memory dataclass with metadata support",
+    "steps": [
+      "Verify id, content, memory_type, created_at fields",
+      "Verify metadata dict for custom fields",
+      "Verify expires_at computed property",
+      "Run: uv run pytest tests/test_memory.py::test_memory_model"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F054",
+    "category": "functional",
+    "description": "Implement MemoryManager with ChromaDB backend",
+    "steps": [
+      "Verify ChromaDB client initialization",
+      "Verify collection creation with embeddings",
+      "Verify uses all-MiniLM-L6-v2 (384 dimensions)",
+      "Run: uv run pytest tests/test_memory.py::test_memory_manager_init"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F055",
+    "category": "functional",
+    "description": "Implement store() method to save memories",
+    "steps": [
+      "Verify accepts content, memory_type, and metadata",
+      "Verify generates unique ID",
+      "Verify stores in ChromaDB with embedding",
+      "Run: uv run pytest tests/test_memory.py::test_store_memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F056",
+    "category": "functional",
+    "description": "Implement search() method for semantic search",
+    "steps": [
+      "Verify accepts query string",
+      "Verify optional memory_type filter",
+      "Verify optional limit parameter",
+      "Verify returns SearchResult with scores",
+      "Run: uv run pytest tests/test_memory.py::test_search_memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F057",
+    "category": "functional",
+    "description": "Implement get_context_window() for conversation history",
+    "steps": [
+      "Verify returns last N conversation turns",
+      "Verify default N=5",
+      "Verify ordered by timestamp (newest first)",
+      "Run: uv run pytest tests/test_memory.py::test_context_window"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F058",
+    "category": "functional",
+    "description": "Implement forget() method to delete memories",
+    "steps": [
+      "Verify accepts memory ID",
+      "Verify removes from ChromaDB",
+      "Verify returns success/failure",
+      "Run: uv run pytest tests/test_memory.py::test_forget_memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F059",
+    "category": "functional",
+    "description": "Implement automatic expiry cleanup for CONVERSATION and CONTEXT",
+    "steps": [
+      "Verify CONVERSATION expires after 30 days",
+      "Verify CONTEXT expires at end of day",
+      "Verify FACT never expires",
+      "Verify cleanup runs periodically",
+      "Run: uv run pytest tests/test_memory.py::test_memory_expiry"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F060",
+    "category": "functional",
+    "description": "Create Memory MCP server with 3 tools",
+    "steps": [
+      "Create src/reachy_agent/mcp/memory.py",
+      "Verify store_memory tool",
+      "Verify search_memory tool",
+      "Verify forget_memory tool",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F061",
+    "category": "functional",
+    "description": "Implement store_memory MCP tool",
+    "steps": [
+      "Verify tool schema with content, type, metadata",
+      "Verify calls MemoryManager.store()",
+      "Verify returns memory ID",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F062",
+    "category": "functional",
+    "description": "Implement search_memory MCP tool",
+    "steps": [
+      "Verify tool schema with query and optional filters",
+      "Verify calls MemoryManager.search()",
+      "Verify returns results with relevance scores",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F063",
+    "category": "functional",
+    "description": "Implement forget_memory MCP tool",
+    "steps": [
+      "Verify tool schema with memory_id",
+      "Verify calls MemoryManager.forget()",
+      "Verify returns success status",
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.memory"
+    ],
+    "passes": true
+  },
+  {
+    "id": "F064",
+    "category": "functional",
+    "description": "Define PermissionTier enum with 3 levels",
+    "steps": [
+      "Create src/reachy_agent/permissions/evaluator.py",
+      "Verify AUTONOMOUS, CONFIRM, FORBIDDEN tiers",
+      "Run: uv run mypy src/reachy_agent/permissions/evaluator.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F065",
+    "category": "functional",
+    "description": "Define PermissionRule dataclass",
+    "steps": [
+      "Verify pattern (glob string) field",
+      "Verify tier field",
+      "Verify reason field for FORBIDDEN tools",
+      "Run: uv run pytest tests/test_permissions.py::test_permission_rule"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F066",
+    "category": "functional",
+    "description": "Implement PermissionEvaluator with glob matching",
+    "steps": [
+      "Verify loads rules from config/permissions.yaml",
+      "Verify glob pattern matching (e.g., 'robot.*', 'memory.store*')",
+      "Verify first-match-wins rule resolution",
+      "Run: uv run pytest tests/test_permissions.py::test_evaluator_init"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F067",
+    "category": "functional",
+    "description": "Implement evaluate() method for tool authorization",
+    "steps": [
+      "Verify accepts tool name",
+      "Verify returns PermissionTier",
+      "Verify matches against glob patterns",
+      "Run: uv run pytest tests/test_permissions.py::test_evaluate"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F068",
+    "category": "functional",
+    "description": "Implement audit logging for permission decisions",
+    "steps": [
+      "Verify logs tool name, tier, timestamp",
+      "Verify logs to ~/.reachy/audit.jsonl",
+      "Verify one JSON object per line",
+      "Run: uv run pytest tests/test_permissions.py::test_audit_logging"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F069",
+    "category": "functional",
+    "description": "Implement Agent SDK pre-tool hook for FORBIDDEN tools",
+    "steps": [
+      "Create src/reachy_agent/permissions/hooks.py",
+      "Verify blocks FORBIDDEN tools before execution",
+      "Verify returns error message to agent",
+      "Run: uv run pytest tests/test_permissions.py::test_forbidden_hook"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F070",
+    "category": "functional",
+    "description": "Implement Agent SDK pre-tool hook for CONFIRM tools",
+    "steps": [
+      "Verify prompts for user confirmation",
+      "Verify blocks if user declines",
+      "Verify allows if user approves",
+      "Run: uv run pytest tests/test_permissions.py::test_confirm_hook"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F071",
+    "category": "functional",
+    "description": "Implement Agent SDK post-tool hook for audit logging",
+    "steps": [
+      "Verify logs all tool executions (even AUTONOMOUS)",
+      "Verify includes tool name, result, timestamp",
+      "Run: uv run pytest tests/test_permissions.py::test_post_tool_audit"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F072",
+    "category": "functional",
+    "description": "Create prompts/system.md with default system prompt",
+    "steps": [
+      "Verify includes personality guidelines",
+      "Verify includes available tools reference",
+      "Verify includes memory usage instructions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F073",
+    "category": "functional",
+    "description": "Create prompts/personas/jarvis.md for default assistant",
+    "steps": [
+      "Verify YAML frontmatter with wake_words: ['hey jarvis', 'jarvis']",
+      "Verify YAML frontmatter with voice: 'echo'",
+      "Verify personality description in markdown"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F074",
+    "category": "functional",
+    "description": "Create prompts/personas/motoko.md for Major Kusanagi persona",
+    "steps": [
+      "Verify YAML frontmatter with wake_words: ['hey motoko', 'major']",
+      "Verify YAML frontmatter with voice: 'nova'",
+      "Verify personality matches Ghost in the Shell character"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F075",
+    "category": "functional",
+    "description": "Create prompts/personas/batou.md for Batou persona",
+    "steps": [
+      "Verify YAML frontmatter with wake_words: ['hey batou', 'batou']",
+      "Verify YAML frontmatter with voice: 'onyx'",
+      "Verify personality matches Ghost in the Shell character"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F076",
+    "category": "functional",
+    "description": "Implement PersonaManager for persona loading and management",
+    "steps": [
+      "Create src/reachy_agent/voice/persona.py",
+      "Verify auto-discovers personas from prompts/personas/",
+      "Verify parses YAML frontmatter",
+      "Verify loads markdown content",
+      "Run: uv run pytest tests/test_voice.py::test_persona_manager"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F077",
+    "category": "functional",
+    "description": "Implement get_persona() method to retrieve by name",
+    "steps": [
+      "Verify returns Persona dataclass",
+      "Verify includes wake_words, voice, prompt",
+      "Run: uv run pytest tests/test_voice.py::test_get_persona"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F078",
+    "category": "functional",
+    "description": "Implement get_persona_by_wake_word() for voice activation",
+    "steps": [
+      "Verify matches wake word to persona",
+      "Verify case-insensitive matching",
+      "Run: uv run pytest tests/test_voice.py::test_get_persona_by_wake_word"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F079",
+    "category": "functional",
+    "description": "Implement AudioManager for PyAudio stream management",
+    "steps": [
+      "Create src/reachy_agent/voice/audio.py",
+      "Verify initializes PyAudio",
+      "Verify opens input stream from mic",
+      "Verify opens output stream to speaker",
+      "Run: uv run pytest tests/test_voice.py::test_audio_manager"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F080",
+    "category": "functional",
+    "description": "Implement read_input_stream() for mic audio capture",
+    "steps": [
+      "Verify returns audio chunks",
+      "Verify handles buffer overflow gracefully",
+      "Run: uv run pytest tests/test_voice.py::test_read_input_stream"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F081",
+    "category": "functional",
+    "description": "Implement write_output_stream() for speaker playback",
+    "steps": [
+      "Verify accepts audio chunks",
+      "Verify handles buffer underflow gracefully",
+      "Run: uv run pytest tests/test_voice.py::test_write_output_stream"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F082",
+    "category": "functional",
+    "description": "Implement WakeWordDetector with OpenWakeWord",
+    "steps": [
+      "Create src/reachy_agent/voice/wake_word.py",
+      "Verify loads models for all persona wake words",
+      "Verify processes audio chunks in real-time",
+      "Run: uv run pytest tests/test_voice.py::test_wake_word_detector"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F083",
+    "category": "functional",
+    "description": "Implement process_audio() for wake word detection",
+    "steps": [
+      "Verify accepts audio chunk",
+      "Verify returns detected persona and confidence",
+      "Verify respects sensitivity threshold",
+      "Run: uv run pytest tests/test_voice.py::test_process_audio"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F084",
+    "category": "functional",
+    "description": "Implement RealtimeClient for OpenAI Realtime API",
+    "steps": [
+      "Create src/reachy_agent/voice/realtime.py",
+      "Verify WebSocket connection to OpenAI",
+      "Verify handles connection errors with retries",
+      "Run: uv run pytest tests/test_voice.py::test_realtime_client"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F085",
+    "category": "functional",
+    "description": "Implement send_audio() for streaming STT",
+    "steps": [
+      "Verify sends audio chunks via WebSocket",
+      "Verify handles backpressure",
+      "Run: uv run pytest tests/test_voice.py::test_send_audio"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F086",
+    "category": "functional",
+    "description": "Implement receive_transcript() for STT results",
+    "steps": [
+      "Verify receives transcript messages",
+      "Verify handles partial and final transcripts",
+      "Verify returns text and confidence",
+      "Run: uv run pytest tests/test_voice.py::test_receive_transcript"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F087",
+    "category": "functional",
+    "description": "Implement send_tts_request() for text-to-speech",
+    "steps": [
+      "Verify sends text with voice parameter",
+      "Verify supports all OpenAI voices",
+      "Run: uv run pytest tests/test_voice.py::test_send_tts_request"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F088",
+    "category": "functional",
+    "description": "Implement receive_audio() for TTS audio stream",
+    "steps": [
+      "Verify receives audio chunks from WebSocket",
+      "Verify handles streaming playback",
+      "Run: uv run pytest tests/test_voice.py::test_receive_audio"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F089",
+    "category": "functional",
+    "description": "Implement VoicePipeline with event-driven architecture",
+    "steps": [
+      "Create src/reachy_agent/voice/pipeline.py",
+      "Verify extends EventEmitter",
+      "Verify initializes all voice components",
+      "Run: uv run pytest tests/test_voice.py::test_voice_pipeline"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F090",
+    "category": "functional",
+    "description": "Implement start() method to begin voice processing",
+    "steps": [
+      "Verify starts wake word detection loop",
+      "Verify starts audio stream reading",
+      "Run: uv run pytest tests/test_voice.py::test_pipeline_start"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F091",
+    "category": "functional",
+    "description": "Implement stop() method to cleanup voice resources",
+    "steps": [
+      "Verify stops all audio streams",
+      "Verify closes WebSocket connections",
+      "Verify cleanup is graceful",
+      "Run: uv run pytest tests/test_voice.py::test_pipeline_stop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F092",
+    "category": "functional",
+    "description": "Implement wake_detected event emission and handling",
+    "steps": [
+      "Verify emits event with persona and confidence",
+      "Verify transitions to listening state",
+      "Run: uv run pytest tests/test_voice.py::test_wake_detected_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F093",
+    "category": "functional",
+    "description": "Implement listening_start event emission",
+    "steps": [
+      "Verify emits when wake word detected",
+      "Verify starts audio capture for STT",
+      "Run: uv run pytest tests/test_voice.py::test_listening_start_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F094",
+    "category": "functional",
+    "description": "Implement listening_end event with silence detection",
+    "steps": [
+      "Verify detects end of speech (silence)",
+      "Verify emits event with audio duration",
+      "Run: uv run pytest tests/test_voice.py::test_listening_end_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F095",
+    "category": "functional",
+    "description": "Implement transcribed event emission",
+    "steps": [
+      "Verify emits when STT completes",
+      "Verify includes text and confidence",
+      "Run: uv run pytest tests/test_voice.py::test_transcribed_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F096",
+    "category": "functional",
+    "description": "Implement processing event for Claude query",
+    "steps": [
+      "Verify emits when sending to agent",
+      "Verify includes query text",
+      "Run: uv run pytest tests/test_voice.py::test_processing_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F097",
+    "category": "functional",
+    "description": "Implement response event for Claude reply",
+    "steps": [
+      "Verify emits when agent responds",
+      "Verify includes response text",
+      "Run: uv run pytest tests/test_voice.py::test_response_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F098",
+    "category": "functional",
+    "description": "Implement speaking_start event for TTS playback",
+    "steps": [
+      "Verify emits when TTS begins",
+      "Verify includes text and voice",
+      "Run: uv run pytest tests/test_voice.py::test_speaking_start_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F099",
+    "category": "functional",
+    "description": "Implement speaking_end event for TTS completion",
+    "steps": [
+      "Verify emits when TTS finishes",
+      "Verify returns to wake word detection",
+      "Run: uv run pytest tests/test_voice.py::test_speaking_end_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F100",
+    "category": "functional",
+    "description": "Implement interrupted event for barge-in support",
+    "steps": [
+      "Verify emits when wake word detected during TTS",
+      "Verify stops current TTS playback",
+      "Verify transitions to listening",
+      "Run: uv run pytest tests/test_voice.py::test_interrupted_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F101",
+    "category": "functional",
+    "description": "Implement error event emission for voice failures",
+    "steps": [
+      "Verify emits on WebSocket errors",
+      "Verify emits on audio device errors",
+      "Verify includes error type and message",
+      "Run: uv run pytest tests/test_voice.py::test_error_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F102",
+    "category": "functional",
+    "description": "Implement timeout event for hung operations",
+    "steps": [
+      "Verify emits on STT timeout",
+      "Verify emits on TTS timeout",
+      "Verify includes phase name",
+      "Run: uv run pytest tests/test_voice.py::test_timeout_event"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F103",
+    "category": "functional",
+    "description": "Implement voice event debug logging with --debug-voice flag",
+    "steps": [
+      "Verify all events logged with timestamps",
+      "Verify payload data included in logs",
+      "Verify structured logging format"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F104",
+    "category": "functional",
+    "description": "Implement BlendController for 30Hz motion control loop",
+    "steps": [
+      "Create src/reachy_agent/motion/controller.py",
+      "Verify runs at 30Hz (33.33ms per tick)",
+      "Verify blends PRIMARY and OVERLAY sources",
+      "Run: uv run pytest tests/test_motion.py::test_blend_controller"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F105",
+    "category": "functional",
+    "description": "Implement start() method to begin motion loop",
+    "steps": [
+      "Verify starts background thread at 30Hz",
+      "Verify handles timing drift correction",
+      "Run: uv run pytest tests/test_motion.py::test_controller_start"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F106",
+    "category": "functional",
+    "description": "Implement stop() method to halt motion loop",
+    "steps": [
+      "Verify stops background thread gracefully",
+      "Verify completes current tick before stopping",
+      "Run: uv run pytest tests/test_motion.py::test_controller_stop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F107",
+    "category": "functional",
+    "description": "Implement set_primary_source() for idle/emotion control",
+    "steps": [
+      "Verify accepts MotionSource instance",
+      "Verify switches PRIMARY source atomically",
+      "Run: uv run pytest tests/test_motion.py::test_set_primary_source"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F108",
+    "category": "functional",
+    "description": "Implement set_overlay_source() for wobble effects",
+    "steps": [
+      "Verify accepts MotionSource instance",
+      "Verify overlays on top of PRIMARY",
+      "Run: uv run pytest tests/test_motion.py::test_set_overlay_source"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F109",
+    "category": "functional",
+    "description": "Implement motion blending algorithm",
+    "steps": [
+      "Verify gets positions from PRIMARY source",
+      "Verify gets deltas from OVERLAY source",
+      "Verify adds overlay deltas to primary positions",
+      "Verify clamps to joint limits",
+      "Run: uv run pytest tests/test_motion.py::test_motion_blending"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F110",
+    "category": "functional",
+    "description": "Define MotionSource protocol interface",
+    "steps": [
+      "Verify get_positions() method returns joint dict",
+      "Verify get_deltas() method returns offset dict",
+      "Run: uv run mypy src/reachy_agent/motion/controller.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F111",
+    "category": "functional",
+    "description": "Implement IdleBehavior as PRIMARY motion source",
+    "steps": [
+      "Create src/reachy_agent/motion/idle.py",
+      "Verify implements MotionSource protocol",
+      "Verify generates subtle random movements",
+      "Run: uv run pytest tests/test_motion.py::test_idle_behavior"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F112",
+    "category": "functional",
+    "description": "Implement idle head drift motion",
+    "steps": [
+      "Verify slow pitch variations",
+      "Verify slow yaw variations",
+      "Verify respects joint limits",
+      "Run: uv run pytest tests/test_motion.py::test_idle_head_drift"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F113",
+    "category": "functional",
+    "description": "Implement idle antenna wiggle motion",
+    "steps": [
+      "Verify independent antenna movements",
+      "Verify natural timing (not synchronized)",
+      "Run: uv run pytest tests/test_motion.py::test_idle_antenna_wiggle"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F114",
+    "category": "functional",
+    "description": "Implement idle micro-adjustments for 'alive' feel",
+    "steps": [
+      "Verify small, occasional body shifts",
+      "Verify unpredictable timing",
+      "Run: uv run pytest tests/test_motion.py::test_idle_micro_adjustments"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F115",
+    "category": "functional",
+    "description": "Implement SpeechWobble as OVERLAY motion source",
+    "steps": [
+      "Create src/reachy_agent/motion/wobble.py",
+      "Verify implements MotionSource protocol",
+      "Verify get_deltas() returns head motion offsets",
+      "Run: uv run pytest tests/test_motion.py::test_speech_wobble"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F116",
+    "category": "functional",
+    "description": "Implement wobble head bob synchronized to speech",
+    "steps": [
+      "Verify gentle pitch oscillation",
+      "Verify timing matches speech cadence",
+      "Run: uv run pytest tests/test_motion.py::test_wobble_head_bob"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F117",
+    "category": "functional",
+    "description": "Implement wobble antenna flutter during speech",
+    "steps": [
+      "Verify rapid small antenna movements",
+      "Verify stops when speech ends",
+      "Run: uv run pytest tests/test_motion.py::test_wobble_antenna_flutter"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F118",
+    "category": "functional",
+    "description": "Implement wobble start() method triggered by TTS",
+    "steps": [
+      "Verify activates wobble motion",
+      "Verify resets phase for natural start",
+      "Run: uv run pytest tests/test_motion.py::test_wobble_start"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F119",
+    "category": "functional",
+    "description": "Implement wobble stop() method when TTS ends",
+    "steps": [
+      "Verify deactivates wobble motion",
+      "Verify smooth return to PRIMARY motion",
+      "Run: uv run pytest tests/test_motion.py::test_wobble_stop"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F120",
+    "category": "functional",
+    "description": "Implement EmotionPlayback as PRIMARY motion source",
+    "steps": [
+      "Create src/reachy_agent/motion/emotion.py",
+      "Verify implements MotionSource protocol",
+      "Verify loads animation from .npz files",
+      "Run: uv run pytest tests/test_motion.py::test_emotion_playback"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F121",
+    "category": "functional",
+    "description": "Implement emotion animation loading from data/emotions/",
+    "steps": [
+      "Verify loads .npz file by name",
+      "Verify parses joint trajectories",
+      "Verify handles missing files gracefully",
+      "Run: uv run pytest tests/test_motion.py::test_load_emotion"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F122",
+    "category": "functional",
+    "description": "Implement emotion playback with interpolation",
+    "steps": [
+      "Verify interpolates between keyframes",
+      "Verify respects animation timing",
+      "Verify loops back to idle when complete",
+      "Run: uv run pytest tests/test_motion.py::test_emotion_playback_interpolation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F123",
+    "category": "functional",
+    "description": "Implement emotion sequence playback support",
+    "steps": [
+      "Verify plays multiple emotions with delays",
+      "Verify transitions smoothly between emotions",
+      "Run: uv run pytest tests/test_motion.py::test_emotion_sequence"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F124",
+    "category": "functional",
+    "description": "Create data/emotions/ directory structure",
+    "steps": [
+      "Verify directory exists",
+      "Verify manifest.json with emotion metadata",
+      "Verify placeholder for emotion .npz files"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F125",
+    "category": "functional",
+    "description": "Create data/emotions/manifest.json with emotion library index",
+    "steps": [
+      "Verify lists all 81 emotions",
+      "Verify includes metadata (duration, intensity)",
+      "Verify includes emotion categories"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F126",
+    "category": "functional",
+    "description": "Integrate motion controller with voice pipeline for wobble",
+    "steps": [
+      "Verify speaking_start event activates wobble",
+      "Verify speaking_end event deactivates wobble",
+      "Run: uv run pytest tests/test_integration.py::test_voice_motion_integration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F127",
+    "category": "functional",
+    "description": "Implement AgentOptions builder for configuration",
+    "steps": [
+      "Create src/reachy_agent/agent/options.py",
+      "Verify builds claude-agent-sdk AgentOptions",
+      "Verify loads system prompt from prompts/system.md",
+      "Run: uv run pytest tests/test_agent.py::test_agent_options"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F128",
+    "category": "functional",
+    "description": "Implement MCP server configuration in AgentOptions",
+    "steps": [
+      "Verify adds robot MCP server",
+      "Verify adds memory MCP server",
+      "Verify uses stdio transport",
+      "Run: uv run pytest tests/test_agent.py::test_mcp_configuration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F129",
+    "category": "functional",
+    "description": "Implement permission hooks integration in AgentOptions",
+    "steps": [
+      "Verify registers pre-tool hook for authorization",
+      "Verify registers post-tool hook for audit logging",
+      "Run: uv run pytest tests/test_agent.py::test_permission_hooks_integration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F130",
+    "category": "functional",
+    "description": "Implement model selection in AgentOptions",
+    "steps": [
+      "Verify defaults to claude-haiku-4-5-20251001",
+      "Verify reads from config file",
+      "Verify respects environment variable override",
+      "Run: uv run pytest tests/test_agent.py::test_model_selection"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F131",
+    "category": "functional",
+    "description": "Implement ReachyAgentLoop main coordinator",
+    "steps": [
+      "Create src/reachy_agent/agent/loop.py",
+      "Verify initializes all subsystems",
+      "Verify creates Agent instance from claude-agent-sdk",
+      "Run: uv run pytest tests/test_agent.py::test_agent_loop_init"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F132",
+    "category": "functional",
+    "description": "Implement agent loop startup sequence",
+    "steps": [
+      "Verify initializes robot client",
+      "Verify initializes memory manager",
+      "Verify initializes motion controller",
+      "Verify initializes voice pipeline (if enabled)",
+      "Run: uv run pytest tests/test_agent.py::test_agent_loop_startup"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F133",
+    "category": "functional",
+    "description": "Implement agent loop shutdown sequence",
+    "steps": [
+      "Verify stops motion controller",
+      "Verify stops voice pipeline",
+      "Verify closes robot connection",
+      "Verify cleanup is graceful",
+      "Run: uv run pytest tests/test_agent.py::test_agent_loop_shutdown"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F134",
+    "category": "functional",
+    "description": "Implement text-based query processing",
+    "steps": [
+      "Verify accepts text query",
+      "Verify adds conversation window to context",
+      "Verify calls Claude agent",
+      "Verify stores conversation in memory",
+      "Run: uv run pytest tests/test_agent.py::test_text_query"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F135",
+    "category": "functional",
+    "description": "Implement voice-based query processing",
+    "steps": [
+      "Verify triggered by voice pipeline transcribed event",
+      "Verify loads active persona prompt",
+      "Verify processes through agent",
+      "Verify triggers TTS for response",
+      "Run: uv run pytest tests/test_agent.py::test_voice_query"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F136",
+    "category": "functional",
+    "description": "Implement conversation window injection into prompts",
+    "steps": [
+      "Verify gets last 5 turns from memory",
+      "Verify formats as conversation history",
+      "Verify prepends to system prompt",
+      "Run: uv run pytest tests/test_agent.py::test_conversation_window"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F137",
+    "category": "functional",
+    "description": "Implement automatic conversation storage after each turn",
+    "steps": [
+      "Verify stores user query as CONVERSATION",
+      "Verify stores agent response as CONVERSATION",
+      "Verify includes timestamp metadata",
+      "Run: uv run pytest tests/test_agent.py::test_auto_conversation_storage"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F138",
+    "category": "functional",
+    "description": "Implement persona switching on wake word change",
+    "steps": [
+      "Verify wake_detected event includes persona",
+      "Verify loads new persona prompt",
+      "Verify updates agent system prompt",
+      "Run: uv run pytest tests/test_agent.py::test_persona_switching"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F139",
+    "category": "functional",
+    "description": "Implement error recovery for agent failures",
+    "steps": [
+      "Verify catches API errors gracefully",
+      "Verify provides user-friendly error messages",
+      "Verify logs full error details",
+      "Run: uv run pytest tests/test_agent.py::test_error_recovery"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F140",
+    "category": "functional",
+    "description": "Create __main__.py CLI entry point with Typer",
+    "steps": [
+      "Create src/reachy_agent/__main__.py",
+      "Verify uses Typer for CLI",
+      "Verify main() function as entry point",
+      "Run: uv run python -m reachy_agent --help"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F141",
+    "category": "functional",
+    "description": "Implement 'run' CLI command for interactive mode",
+    "steps": [
+      "Verify --voice flag for voice mode",
+      "Verify --mock flag for mock hardware",
+      "Verify --debug-voice flag for event logging",
+      "Run: uv run python -m reachy_agent run --help"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F142",
+    "category": "functional",
+    "description": "Implement 'check' CLI command for health check",
+    "steps": [
+      "Verify checks robot connectivity",
+      "Verify checks API key validity",
+      "Verify checks memory database",
+      "Verify prints status report",
+      "Run: uv run python -m reachy_agent check"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F143",
+    "category": "functional",
+    "description": "Implement 'version' CLI command",
+    "steps": [
+      "Verify prints version from pyproject.toml",
+      "Run: uv run python -m reachy_agent version"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F144",
+    "category": "functional",
+    "description": "Implement interactive REPL for text-based queries",
+    "steps": [
+      "Verify uses Rich for pretty printing",
+      "Verify shows prompt and accepts input",
+      "Verify displays agent responses",
+      "Verify supports 'quit' or 'exit' commands",
+      "Run: uv run python -m reachy_agent run"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F145",
+    "category": "functional",
+    "description": "Implement voice mode startup message",
+    "steps": [
+      "Verify prints active personas",
+      "Verify prints wake words",
+      "Verify indicates listening state"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F146",
+    "category": "functional",
+    "description": "Implement Ctrl+C handler for graceful shutdown",
+    "steps": [
+      "Verify catches KeyboardInterrupt",
+      "Verify calls agent loop shutdown",
+      "Verify exits cleanly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F147",
+    "category": "functional",
+    "description": "Create scripts/download_emotions.py for emotion library setup",
+    "steps": [
+      "Verify downloads emotion .npz files",
+      "Verify saves to data/emotions/",
+      "Verify validates files after download",
+      "Run: uv run python scripts/download_emotions.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F148",
+    "category": "functional",
+    "description": "Create scripts/test_hardware.py for connectivity testing",
+    "steps": [
+      "Verify tests robot SDK connection",
+      "Verify tests camera access",
+      "Verify tests microphone/speaker",
+      "Verify prints diagnostic report",
+      "Run: uv run python scripts/test_hardware.py"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F149",
+    "category": "functional",
+    "description": "Create scripts/setup_pi.sh for Raspberry Pi configuration",
+    "steps": [
+      "Verify installs system dependencies",
+      "Verify configures audio devices",
+      "Verify sets up Python environment",
+      "Verify creates systemd service (optional)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F150",
+    "category": "functional",
+    "description": "Implement health check endpoint (HTTP server optional)",
+    "steps": [
+      "Verify checks all subsystems",
+      "Verify returns JSON status report",
+      "Verify includes uptime and resource usage"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F151",
+    "category": "functional",
+    "description": "Implement structured logging throughout codebase",
+    "steps": [
+      "Verify all modules use structlog",
+      "Verify consistent log levels",
+      "Verify JSON output format",
+      "Verify log includes component name"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F152",
+    "category": "functional",
+    "description": "Implement debug logging for robot commands",
+    "steps": [
+      "Verify logs all robot method calls",
+      "Verify logs parameters and responses",
+      "Verify includes timing information"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F153",
+    "category": "functional",
+    "description": "Implement debug logging for memory operations",
+    "steps": [
+      "Verify logs all store/search/forget calls",
+      "Verify logs ChromaDB queries",
+      "Verify includes result counts"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F154",
+    "category": "functional",
+    "description": "Create tests/conftest.py with shared fixtures",
+    "steps": [
+      "Verify mock robot client fixture",
+      "Verify mock memory manager fixture",
+      "Verify test configuration fixture",
+      "Run: uv run pytest --co tests/"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F155",
+    "category": "functional",
+    "description": "Write unit tests for EventEmitter",
+    "steps": [
+      "Create tests/test_utils.py",
+      "Verify tests event registration",
+      "Verify tests event emission",
+      "Verify tests event unregistration",
+      "Run: uv run pytest tests/test_utils.py -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F156",
+    "category": "functional",
+    "description": "Write unit tests for config loading",
+    "steps": [
+      "Verify tests YAML parsing",
+      "Verify tests Pydantic validation",
+      "Verify tests environment overrides",
+      "Run: uv run pytest tests/test_utils.py::test_config -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F157",
+    "category": "functional",
+    "description": "Write unit tests for MockReachyClient",
+    "steps": [
+      "Create tests/test_robot.py",
+      "Verify tests all movement methods",
+      "Verify tests sensor methods",
+      "Run: uv run pytest tests/test_robot.py -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F158",
+    "category": "functional",
+    "description": "Write unit tests for MemoryManager",
+    "steps": [
+      "Create tests/test_memory.py",
+      "Verify tests store/search/forget",
+      "Verify tests context window",
+      "Verify tests expiry logic",
+      "Run: uv run pytest tests/test_memory.py -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F159",
+    "category": "functional",
+    "description": "Write unit tests for PermissionEvaluator",
+    "steps": [
+      "Create tests/test_permissions.py",
+      "Verify tests glob matching",
+      "Verify tests all three tiers",
+      "Run: uv run pytest tests/test_permissions.py -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F160",
+    "category": "functional",
+    "description": "Write unit tests for PersonaManager",
+    "steps": [
+      "Create tests/test_voice.py",
+      "Verify tests persona loading",
+      "Verify tests wake word matching",
+      "Run: uv run pytest tests/test_voice.py::test_persona -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F161",
+    "category": "functional",
+    "description": "Write unit tests for WakeWordDetector",
+    "steps": [
+      "Verify tests audio processing",
+      "Verify tests detection threshold",
+      "Run: uv run pytest tests/test_voice.py::test_wake_word -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F162",
+    "category": "functional",
+    "description": "Write unit tests for VoicePipeline events",
+    "steps": [
+      "Verify tests all event types",
+      "Verify tests event flow",
+      "Verify tests barge-in scenario",
+      "Run: uv run pytest tests/test_voice.py::test_pipeline -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F163",
+    "category": "functional",
+    "description": "Write unit tests for BlendController",
+    "steps": [
+      "Create tests/test_motion.py",
+      "Verify tests 30Hz timing",
+      "Verify tests motion blending",
+      "Run: uv run pytest tests/test_motion.py::test_controller -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F164",
+    "category": "functional",
+    "description": "Write unit tests for IdleBehavior",
+    "steps": [
+      "Verify tests position generation",
+      "Verify tests movement smoothness",
+      "Run: uv run pytest tests/test_motion.py::test_idle -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F165",
+    "category": "functional",
+    "description": "Write unit tests for SpeechWobble",
+    "steps": [
+      "Verify tests delta generation",
+      "Verify tests start/stop behavior",
+      "Run: uv run pytest tests/test_motion.py::test_wobble -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F166",
+    "category": "functional",
+    "description": "Write unit tests for EmotionPlayback",
+    "steps": [
+      "Verify tests animation loading",
+      "Verify tests interpolation",
+      "Verify tests sequence playback",
+      "Run: uv run pytest tests/test_motion.py::test_emotion -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F167",
+    "category": "functional",
+    "description": "Write unit tests for AgentOptions builder",
+    "steps": [
+      "Create tests/test_agent.py",
+      "Verify tests configuration building",
+      "Verify tests MCP setup",
+      "Run: uv run pytest tests/test_agent.py::test_options -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F168",
+    "category": "functional",
+    "description": "Write unit tests for ReachyAgentLoop",
+    "steps": [
+      "Verify tests startup sequence",
+      "Verify tests query processing",
+      "Verify tests shutdown sequence",
+      "Run: uv run pytest tests/test_agent.py::test_loop -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F169",
+    "category": "functional",
+    "description": "Write integration tests for voice-to-agent flow",
+    "steps": [
+      "Create tests/test_integration.py",
+      "Verify tests end-to-end voice query",
+      "Verify tests persona switching",
+      "Run: uv run pytest tests/test_integration.py::test_voice_flow -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F170",
+    "category": "functional",
+    "description": "Write integration tests for agent-to-robot flow",
+    "steps": [
+      "Verify tests MCP tool execution",
+      "Verify tests permission checks",
+      "Run: uv run pytest tests/test_integration.py::test_agent_robot -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F171",
+    "category": "functional",
+    "description": "Write integration tests for memory persistence",
+    "steps": [
+      "Verify tests conversation storage and retrieval",
+      "Verify tests fact storage and retrieval",
+      "Run: uv run pytest tests/test_integration.py::test_memory_persistence -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F172",
+    "category": "functional",
+    "description": "Configure pytest for async test support",
+    "steps": [
+      "Verify pytest-asyncio plugin installed",
+      "Verify asyncio_mode = auto in pyproject.toml",
+      "Run: uv run pytest --asyncio-mode=auto"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F173",
+    "category": "functional",
+    "description": "Configure pytest for coverage reporting",
+    "steps": [
+      "Verify pytest-cov plugin installed",
+      "Verify coverage config in pyproject.toml",
+      "Run: uv run pytest --cov=src --cov-report=html"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F174",
+    "category": "style",
+    "description": "Run Black formatter on entire codebase",
+    "steps": [
+      "Run: uvx black .",
+      "Verify no formatting errors",
+      "Verify 88-character line length"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F175",
+    "category": "style",
+    "description": "Run isort on entire codebase",
+    "steps": [
+      "Run: uvx isort . --profile black",
+      "Verify imports are sorted correctly",
+      "Verify no conflicts with Black"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F176",
+    "category": "style",
+    "description": "Run Ruff linter on entire codebase",
+    "steps": [
+      "Run: uvx ruff check .",
+      "Verify no linting errors",
+      "Fix any violations"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F177",
+    "category": "style",
+    "description": "Run mypy type checker on entire codebase",
+    "steps": [
+      "Run: uvx mypy src/",
+      "Verify no type errors",
+      "Verify all functions have type hints"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F178",
+    "category": "documentation",
+    "description": "Create ai_docs/REFERENCE.md with external links",
+    "steps": [
+      "Verify links to Claude API docs",
+      "Verify links to MCP specification",
+      "Verify links to Reachy SDK docs",
+      "Verify links to OpenAI Realtime API",
+      "Verify links to ChromaDB docs"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F179",
+    "category": "documentation",
+    "description": "Create ai_docs/code-standards.md",
+    "steps": [
+      "Verify documents type hint requirements",
+      "Verify documents docstring format",
+      "Verify documents naming conventions",
+      "Verify documents testing requirements"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F180",
+    "category": "documentation",
+    "description": "Create ai_docs/mcp-tools.md quick reference",
+    "steps": [
+      "Verify lists all 20 robot tools",
+      "Verify lists all 3 memory tools",
+      "Verify includes parameter descriptions",
+      "Verify includes usage examples"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F181",
+    "category": "documentation",
+    "description": "Create ai_docs/dev-commands.md cheat sheet",
+    "steps": [
+      "Verify lists all CLI commands",
+      "Verify lists development commands",
+      "Verify lists testing commands",
+      "Verify lists debugging tips"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F182",
+    "category": "documentation",
+    "description": "Add comprehensive docstrings to all public functions",
+    "steps": [
+      "Verify Google-style docstrings",
+      "Verify includes Args, Returns, Raises sections",
+      "Verify includes usage examples where helpful"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F183",
+    "category": "documentation",
+    "description": "Add module-level docstrings to all Python files",
+    "steps": [
+      "Verify describes module purpose",
+      "Verify lists key classes/functions",
+      "Verify includes usage notes where relevant"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F184",
+    "category": "documentation",
+    "description": "Add inline comments for complex logic sections",
+    "steps": [
+      "Verify motion blending algorithm is commented",
+      "Verify event flow logic is commented",
+      "Verify permission evaluation is commented"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F185",
+    "category": "functional",
+    "description": "Verify all imports use absolute paths from reachy_agent",
+    "steps": [
+      "Check no relative imports in src/",
+      "Run: uvx ruff check . --select I"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F186",
+    "category": "functional",
+    "description": "Verify all __init__.py files export public APIs",
+    "steps": [
+      "Check __all__ is defined where appropriate",
+      "Verify imports are clean and minimal"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F187",
+    "category": "functional",
+    "description": "Add type hints to all function signatures",
+    "steps": [
+      "Verify parameters have type hints",
+      "Verify return types are specified",
+      "Run: uvx mypy src/ --strict"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F188",
+    "category": "functional",
+    "description": "Verify no mutable default arguments in functions",
+    "steps": [
+      "Check all function definitions",
+      "Run: uvx ruff check . --select B006"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F189",
+    "category": "functional",
+    "description": "Add error handling for all external API calls",
+    "steps": [
+      "Verify Claude API calls have try/except",
+      "Verify OpenAI API calls have try/except",
+      "Verify ChromaDB calls have try/except"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F190",
+    "category": "functional",
+    "description": "Add timeout handling for all network operations",
+    "steps": [
+      "Verify WebSocket operations have timeouts",
+      "Verify HTTP requests have timeouts",
+      "Verify SDK calls have timeouts"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F191",
+    "category": "functional",
+    "description": "Add retry logic for transient failures",
+    "steps": [
+      "Verify WebSocket reconnection logic",
+      "Verify API retry with exponential backoff",
+      "Verify max retry limits"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F192",
+    "category": "functional",
+    "description": "Implement graceful degradation for voice failures",
+    "steps": [
+      "Verify falls back to text mode if voice unavailable",
+      "Verify continues operation if TTS fails",
+      "Verify logs degradation events"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F193",
+    "category": "functional",
+    "description": "Verify motion controller handles missing emotion files",
+    "steps": [
+      "Verify logs warning if emotion not found",
+      "Verify continues with idle motion",
+      "Run: uv run pytest tests/test_motion.py::test_missing_emotion -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F194",
+    "category": "functional",
+    "description": "Verify robot client handles disconnection gracefully",
+    "steps": [
+      "Verify detects Zenoh disconnection",
+      "Verify attempts reconnection",
+      "Verify provides clear error messages",
+      "Run: uv run pytest tests/test_robot.py::test_disconnection -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F195",
+    "category": "functional",
+    "description": "Add resource cleanup in all context managers",
+    "steps": [
+      "Verify __enter__ and __exit__ methods",
+      "Verify cleanup in finally blocks",
+      "Run: uvx ruff check . --select SIM105"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F196",
+    "category": "functional",
+    "description": "Verify all threads are properly joined on shutdown",
+    "steps": [
+      "Check motion controller thread cleanup",
+      "Check voice pipeline thread cleanup",
+      "Run: uv run pytest tests/test_shutdown.py -v"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F197",
+    "category": "functional",
+    "description": "Verify no memory leaks in long-running operations",
+    "steps": [
+      "Test motion controller for 1000 ticks",
+      "Test voice pipeline for 100 conversations",
+      "Monitor memory usage growth"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F198",
+    "category": "functional",
+    "description": "Add performance metrics logging",
+    "steps": [
+      "Verify logs motion loop timing",
+      "Verify logs agent response latency",
+      "Verify logs tool execution time"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F199",
+    "category": "functional",
+    "description": "Implement rate limiting for API calls",
+    "steps": [
+      "Verify Claude API respects rate limits",
+      "Verify OpenAI API respects rate limits",
+      "Verify queues requests when at limit"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F200",
+    "category": "functional",
+    "description": "Run end-to-end smoke test in mock mode",
+    "steps": [
+      "Run: uv run python -m reachy_agent run --mock",
+      "Verify starts without errors",
+      "Verify accepts text query",
+      "Verify processes response",
+      "Verify exits cleanly"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F201",
+    "category": "functional",
+    "description": "Run end-to-end test with MCP Inspector",
+    "steps": [
+      "Run: npx @modelcontextprotocol/inspector python -m reachy_agent.mcp.robot",
+      "Verify all 20 tools are listed",
+      "Verify can call each tool successfully"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F202",
+    "category": "functional",
+    "description": "Verify test coverage meets 80% minimum",
+    "steps": [
+      "Run: uv run pytest --cov=src --cov-report=term",
+      "Verify overall coverage >= 80%",
+      "Verify no critical paths uncovered"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F203",
+    "category": "documentation",
+    "description": "Add troubleshooting section to README",
+    "steps": [
+      "Document common setup issues",
+      "Document API key problems",
+      "Document hardware connectivity issues",
+      "Document voice pipeline issues"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F204",
+    "category": "documentation",
+    "description": "Add examples/ directory with usage examples",
+    "steps": [
+      "Create example for basic text interaction",
+      "Create example for voice interaction",
+      "Create example for motion control",
+      "Create example for memory usage"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F205",
+    "category": "infrastructure",
+    "description": "Add GitHub Actions CI workflow (optional)",
+    "steps": [
+      "Create .github/workflows/ci.yml",
+      "Verify runs tests on push",
+      "Verify runs linting",
+      "Verify checks type hints"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F206",
+    "category": "infrastructure",
+    "description": "Add pre-commit hooks configuration (optional)",
+    "steps": [
+      "Create .pre-commit-config.yaml",
+      "Verify runs black on commit",
+      "Verify runs ruff on commit",
+      "Verify runs mypy on commit"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F207",
+    "category": "functional",
+    "description": "Implement config validation on startup",
+    "steps": [
+      "Verify checks for required environment variables",
+      "Verify validates config file syntax",
+      "Verify provides clear error messages for misconfigurations"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F208",
+    "category": "functional",
+    "description": "Add startup health check before entering main loop",
+    "steps": [
+      "Verify robot connectivity (if not mock)",
+      "Verify API keys are valid",
+      "Verify memory database is accessible",
+      "Verify voice devices are available (if voice mode)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F209",
+    "category": "functional",
+    "description": "Implement watchdog for motion controller thread",
+    "steps": [
+      "Verify detects if motion thread stops",
+      "Verify attempts restart",
+      "Verify logs watchdog events"
+    ],
+    "passes": false
+  },
+  {
+    "id": "F210",
+    "category": "functional",
+    "description": "Implement watchdog for voice pipeline thread",
+    "steps": [
+      "Verify detects if voice thread stops",
+      "Verify attempts restart",
+      "Verify logs watchdog events"
+    ],
+    "passes": false
+  }
+]
